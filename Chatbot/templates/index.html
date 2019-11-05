@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rail</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"> -->
+</head>
+</head>
+<body>
+	<div class="top">
+		<div class="top-info" style = "background-image: url({{ url_for('static', filename='img/icon_location.png')}});">
+			<p class="city">Norwich</p>
+			<p class="cutOff">|</p>
+			<p class="swapCity">others</p>
+
+			<div class="top-info-right">
+				<a href="chatbot"><p class="officialApp">Chat-bot</p></a>
+				<p class="cutOff2">|</p>
+				<p class="chatbot">Contacts</p>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="nav">
+		<div class="nav-info">
+			<img src="{{ url_for('static', filename='img/log.jpg') }}" alt="log">
+
+			<div class="repulation">
+				<p class="repulation-1" style = "background-image: url({{ url_for('static', filename='img/rIcon1.png') }});">Since 1998</p>
+				<p class="repulation-2" style = "background-image: url({{ url_for('static', filename='img/rIcon3.png') }});">Based on UEA</p>
+				<p class="repulation-3" style = "background-image: url({{ url_for('static', filename='img/rIcon2.png') }});">Accurate Enquiries</p>
+			</div>
+
+			<div class="nav-info-text">
+				<ul>
+					<a href="/"><li>Home</li></a>
+					<li>Train time & tickets</li>
+					<a href="chatbot"><li>Chat-Bot</li></a>
+					<li><a href="/">About us</a></li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="banner" style = "background-image: url({{ url_for('static', filename='img/banner.jpg') }});">
+		
+		<div class="subNav">
+			
+			<div class="subNav-local">
+				
+				<div class="subNav-local-info">
+					<p class="subNav-p1">Company Introduce</p>
+					<p class="subNav-p2">|</p>
+					<p class="subNav-p3">Join Us</p>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="corporationIntro">
+		
+		<div class="cIntro-text">
+		
+			<h2>Company Introduce</h2>
+		
+		</div>
+
+		<div class="cIntro-contents" style = "background-image: url({{ url_for('static', filename='img/corporationImg.jpg') }});">
+
+			<div class="cIntro-contents-text-bg">
+
+				<div class="cIntro-contents-text">
+					<p>We handle an average of two and a half million journey planning enquiries every week day through our contact centre, mobile, apps, website and through information services supplied to 3rd parties. We offer journey planning, ticket sales, real time information, fares information and a range of rail-related information to rail customers.</p>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="brandCulture-bg" style = "background-image: url({{ url_for('static', filename='img/secBanner.jpg') }});">
+		
+		<div class="brandCulture">
+			<p class="BCtitle">Company Culture</p>
+			<h3 class="BCh1">Tenet</h3>
+			<p class="BCp1">Increase Higher Accuracy Train Time Search</p>
+			<h3 class="BCh2">Vision</h3>
+			<p class="BCp2">Serve the people</p>
+			<h3 class="BCh3">Service Concept</h3>
+			<p class="BCp3">Make Trouble for ourself, make better for all</p>
+
+
+		</div>
+
+	</div>
+
+
+
+	<div class="bottom">
+		
+		<div class="upper-block" style = "background-image: url({{ url_for('static', filename='img/botLog.png') }});">
+
+			<div class="upper-block-list">
+				<ul>
+					<a href = "/"><li>Home</li></a>
+					<a href=""><li>Train time & tickets</li></a>
+					<a href="chatbot"><li>Chat-Bot</li></a>
+					<a href="/"><li>About us</li></a>
+				</ul>
+			</div>
+		</div>
+	
+		<div class="bottom-block clearfix">
+			
+			<div class="block-1">
+				<p class="block-1-title-1">Rail Enquiries</p>
+				<p class="block-1-title-2">|</p>
+				<p class="block-1-title-3">Norwich</p>
+
+				<div class="block-1-inside">
+					<p class="address">Location：xxxxxxxxxxxxxxxxxxxxxxx</p>
+					<p class="tNumber">Telephone ：07000000000</p>
+				</div>
+
+				<div class="block-1-icon" style = "background-image: url({{ url_for('static', filename='img/icon-botPhone.png') }});">
+					<p class="hotline">24hrs hot line：</p>
+					<p class="hlNumber">000-0000-000</p>
+				</div>
+			</div>
+
+			<div class="block-2">
+				<div class="contactInfo">
+					<p>Contact Us</p>
+					<img class="QRcode" src="{{ url_for('static', filename='img/QRcode-2.jpg') }}" alt="QRcode-2">
+				</div>
+			</div>
+
+			<div class="block-3">
+				<div class="linkInfo">
+					<p class="link-title">Friendly link</p>
+					<div class="friendly clearfix">
+						<p>None</p>
+						
+					</div>
+				</div>
+			</div>
+
+			<div class="footer">
+				<p>©2018 Rail Enquiries</p>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
