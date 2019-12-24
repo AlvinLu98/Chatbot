@@ -18,10 +18,15 @@ def process_sentence(raw_input):
     tokens = nltk.word_tokenize(raw_input)
     tagged = nltk.pos_tag(tokens)
     
+    print("############################### SpaCy ###############################")
     for token in doc:
         print(token.text, token.pos_, token.tag_, token.dep_)
-        
+
+    for ent in doc.ents:
+        print(ent.text, ent.label_)
+
     print()
+    print("############################### NLTK ###############################")
     for tags in tagged:
         print(tags)
     
@@ -52,7 +57,7 @@ def train_booking():
 
 ##################################################################################################
 #                                     Train delay processing
-##################################################################################################-
+###################################################################################################
 #Extract train delay info from the sentence
 def train_delay():
     return 0

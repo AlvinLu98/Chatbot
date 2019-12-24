@@ -11,7 +11,7 @@ class Form_filler():
     def __init__(self):
         options = webdriver.ChromeOptions()
 
-        # options.add_argument("--headless")
+        options.add_argument("--headless")
         options.add_argument("--disable-gpu")
         options.add_argument("--log-level=3")
         options.add_argument("--disable-extensions")
@@ -24,6 +24,17 @@ class Form_filler():
     ##################################################################################################
     def initiate_website(self, url):
         self.browser.get(url)
+
+    def restart_browser(self):
+        options = webdriver.ChromeOptions()
+
+        options.add_argument("--headless")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--log-level=3")
+        options.add_argument("--disable-extensions")
+        options.add_argument("test-type")
+
+        self.browser = webdriver.Chrome("chromedriver.exe", options=options)
 
     ##################################################################################################
     #                                     Completing tickets
@@ -38,6 +49,7 @@ class Form_filler():
         ret_url = self.browser.current_url
 
         self.browser.quit()
+        self.restart_browser()
         return ret_url
     
     def return_ticket(self, url, orig, dest, t_type, dep_date, dep_hour, dep_min, ret_date, ret_hour, 
@@ -52,6 +64,7 @@ class Form_filler():
         ret_url = self.browser.current_url
 
         self.browser.quit()
+        self.restart_browser()
         return ret_url
 
     def fill_general(self, orig, dest, t_type, date, hour, minute, amount):
@@ -142,8 +155,8 @@ class Form_filler():
 
 def main():
     test = Form_filler()
-    # test.single_ticket('https://www.thetrainline.com/', 'Norwich', "Gatwick Airport", "open", 
-    # "12-Feb-20", "07", "45", 2)
+    test.single_ticket('https://www.thetrainline.com/', 'Norwich', "Gatwick Airport", "open", 
+    "12-Feb-20", "07", "45", 2)
 
     test.return_ticket('https://www.thetrainline.com/', 'Norwich', "Gatwick Airport", "return", 
     "12-Feb-20", "07", "45", "14-Feb-20", "08", "09", 2)
