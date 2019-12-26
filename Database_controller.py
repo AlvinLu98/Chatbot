@@ -17,6 +17,7 @@ def connect_DB(dbfile):
 def setup_database():
     station_data()
     general_conversation()
+    historical_data()
 
 def station_data():
     conn = connect_DB("chatbot.db")
@@ -47,6 +48,15 @@ def general_conversation():
     conn.commit
     conn.close
 
+def historical_data():
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+    query = "CREATE TABLE IF NOT EXISTS Historical_data(origin CHAR(3), dep_delay INTEGER, destination CHAR(3), arr_delay INTEGER, month CHAR(2), day VARCHAR(8))"
+    cur.execute("DROP TABLE IF EXISTS Historical_data")
+    cur.execute(query)
+    conn.commit
+    conn.close
+
 ##################################################################################################
 #                                         Booking queries
 ##################################################################################################
@@ -69,6 +79,16 @@ def get_station_code(code):
     rows = cur.fetchall()
     conn.close()
     return rows
+
+def add_historical_data(historical_data):
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+
+    sql_query = "INSERT INTO Historical_data VALUES ? ? ? ? ? ?"
+    cur.execute(sql_query, (historical_data[0], historical_data[1], historical_data[2],
+    historical_data[3], historical_data[4], historical_data[5]))
+    conn.commit
+    conn.close
 
 ##################################################################################################
 #                                           Testing
