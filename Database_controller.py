@@ -51,7 +51,7 @@ def general_conversation():
 def historical_data():
     conn = connect_DB("chatbot.db")
     cur = conn.cursor()
-    query = "CREATE TABLE IF NOT EXISTS Historical_data(origin CHAR(3), dep_delay INTEGER, destination CHAR(3), arr_delay INTEGER, month CHAR(2), day VARCHAR(8))"
+    query = "CREATE TABLE IF NOT EXISTS Historical_data(origin CHAR(3), exp_dep VARCHAR(4), dep_delay INTEGER, destination CHAR(3), exp_arr VARCHAR(4), arr_delay INTEGER, month CHAR(2), day VARCHAR(8), toc CHAR(2))"
     cur.execute("DROP TABLE IF EXISTS Historical_data")
     cur.execute(query)
     conn.commit
@@ -80,15 +80,28 @@ def get_station_code(code):
     conn.close()
     return rows
 
+##################################################################################################
+#                                      Prediction queries
+##################################################################################################
 def add_historical_data(historical_data):
     conn = connect_DB("chatbot.db")
     cur = conn.cursor()
+    sql_query = "INSERT INTO Historical_data VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    data = (historical_data[0], historical_data[1], historical_data[2], historical_data[3], historical_data[4],
+     historical_data[5], historical_data[6], historical_data[7], historical_data[8])
+    cur.execute(sql_query, data)
+    conn.commit()
+    conn.close()
 
-    sql_query = "INSERT INTO Historical_data VALUES ? ? ? ? ? ?"
-    cur.execute(sql_query, (historical_data[0], historical_data[1], historical_data[2],
-    historical_data[3], historical_data[4], historical_data[5]))
-    conn.commit
-    conn.close
+def get_all_historical_data():
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+
+    sql_query = "SELECT * FROM Historical_Data"
+    cur.execute(sql_query)
+    rows = cur.fetchall()
+    conn.close()
+    return rows
 
 ##################################################################################################
 #                                           Testing
@@ -98,8 +111,11 @@ if __name__ == '__main__':
     rows = get_station_name("Norwich")
     rows2 = get_station_code("NRW")
 
-    for row in rows:
-        print(row[1])
+    # for row in rows:
+    #     print(row[1])
 
-    for row in rows2:
-        print(row[0])
+    # for row in rows2:
+    #     print(row[0])
+
+    # test = ["NRW", "0500", 2, "LST", "0600", 4, "05", "6", "GE"]
+    # add_historical_data(test)

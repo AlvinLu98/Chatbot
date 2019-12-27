@@ -3,11 +3,13 @@ import json
 import csv
 import Database_controller
 
-def get_training_data(query, s_year, e_year):
+def add_training_data(query):
     rids  = retrieve_past_rids(query)
     data = retrieve_hisotrical_arrival_data(rids, query[6])
+    print("Adding data to database.....")
     for entry in data:
-        print(entry)
+        Database_controller.add_historical_data(entry)
+        
 
 #https://wiki.openraildata.com/index.php/HSP
 def retrieve_past_rids(query):
@@ -30,6 +32,7 @@ def retrieve_past_rids(query):
 
     request = requests.post(url, headers=headers, auth=auths, json=data)
     if(request):
+        print("Gathering data for %4s on %8s....." %(query[4][:4], query[6]))
         readData = json.loads(request.text)
         for service in readData['Services']:
             service_rids = service['serviceAttributesMetrics']['rids']
@@ -43,6 +46,7 @@ def retrieve_hisotrical_arrival_data(rids, day):
     headers = { "Content-Type": "application/json" }
     auths = ("lulianghao@gmail.com", "AI_CW_Group2")
 
+    print("Processing data.......")
     for rid in rids:
         data = {
               "rid": rid
@@ -51,12 +55,13 @@ def retrieve_hisotrical_arrival_data(rids, day):
         if(request):
             readData = json.loads(request.text)
             service_date = readData['serviceAttributesDetails']['date_of_service']
+            toc = readData['serviceAttributesDetails']['toc_code']
             stops = readData['serviceAttributesDetails']['locations']
             num_stops = len(stops)
 
             if num_stops > 1:
                 for s in range(num_stops - 1):
-                    for e in range(num_stops - s):
+                    for e in range(1, num_stops - s):
                         current_data = stops[s]
                         next_data = stops[s + e]
 
@@ -65,7 +70,12 @@ def retrieve_hisotrical_arrival_data(rids, day):
                         destination = next_data['location']
 
                         #Departure data
-                        exp_dep = current_data['gbtt_ptd']
+                        exp_dep = " "
+                        if not current_data['gbtt_ptd']:
+                            exp_dep = current_data['gbtt_pta']
+                        else:   
+                            exp_dep = current_data['gbtt_ptd']
+                        
                         act_dep = ""
                         if(not current_data['actual_td']):
                             act_dep = exp_dep
@@ -73,7 +83,12 @@ def retrieve_hisotrical_arrival_data(rids, day):
                             act_dep = current_data['actual_td']
 
                         #Arrival data
-                        exp_arr = next_data['gbtt_pta']
+                        exp_arr = ""
+                        if not next_data['gbtt_pta']:
+                            exp_arr = next_data['gbtt_ptd']
+                        else:
+                            exp_arr = next_data['gbtt_pta']
+
                         act_arr = ""
                         if(not next_data['actual_ta']):
                             act_arr = exp_arr
@@ -81,22 +96,19 @@ def retrieve_hisotrical_arrival_data(rids, day):
                             act_arr = next_data['actual_ta']
 
                         #Delay data
-                        dep_delay = 0
-                        if exp_dep:
-                            dep_delay = time_diff(exp_dep, act_dep)
-                        
-                        arr_delay = 0
-                        if exp_arr:
-                            arr_delay = time_diff(exp_arr, act_arr)
+                        dep_delay = time_diff(exp_dep, act_dep)
+                        arr_delay = time_diff(exp_arr, act_arr)
+
                         historical_entry = []
                         historical_entry.append(origin)
+                        historical_entry.append(exp_dep)
                         historical_entry.append(dep_delay)
                         historical_entry.append(destination)
+                        historical_entry.append(exp_arr)
                         historical_entry.append(arr_delay)
                         historical_entry.append(service_date.split('-')[1])
                         historical_entry.append(day)
-                        print(historical_entry)
-
+                        historical_entry.append(toc)
                         historical_data.append(historical_entry)
     return historical_data
 
@@ -108,21 +120,43 @@ def to_minutes(time):
 def time_diff(time_1, time_2):
     time_1_min = to_minutes(time_1)
     time_2_min = to_minutes(time_2)
-
     diff_min = time_2_min - time_1_min
 
     time_1_hr = int(time_1[:2])
     time_2_hr = int(time_2[:2])
-    if(time_1_hr > time_2_hr):
+    if time_1_hr != 0 and time_2_hr == 0:
         diff_min += 1440 #add 1 day in mins to the difference
-    
+    elif time_2_hr != 0 and time_1_hr == 0:
+        diff_min -= 1440
     return diff_min
 
 def main():
-    # print(str(time_diff("20:00", "00:35")))
+    # print(str(time_diff("2359", "0010")))
     
-    rids = retrieve_past_rids(["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "SATURDAY"])
-    retrieve_hisotrical_arrival_data(rids, "SATURDAY")
+    # rids = retrieve_past_rids(["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "SATURDAY"])
+    # retrieve_hisotrical_arrival_data(rids, "SATURDAY")
+
+    query1 = ["NRW", "LST", "0000", "2359", "2018-01-01", "2018-12-31", "WEEKDAY"]
+    query2 = ["NRW", "LST", "0000", "2359", "2018-01-01", "2018-12-31", "SATURDAY"]
+    query3 = ["NRW", "LST", "0000", "2359", "2018-01-01", "2018-12-31", "SUNDAY"]
+
+    query4 = ["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "WEEKDAY"]
+    query5 = ["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "SATURDAY"]
+    query6 = ["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "SUNDAY"]
+
+    query7 = ["NRW", "LST", "0000", "2359", "2016-01-01", "2016-12-31", "WEEKDAY"]
+    query8 = ["NRW", "LST", "0000", "2359", "2016-01-01", "2016-12-31", "SATURDAY"]
+    query9 = ["NRW", "LST", "0000", "2359", "2016-01-01", "2016-12-31", "SUNDAY"]
+
+    add_training_data(query1)
+    add_training_data(query2)
+    add_training_data(query3)
+    add_training_data(query4)
+    add_training_data(query5)
+    add_training_data(query6)
+    add_training_data(query7)
+    add_training_data(query8)
+    add_training_data(query9)
     
 if __name__ == '__main__':
     main()
