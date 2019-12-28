@@ -17,7 +17,7 @@ def connect_DB(dbfile):
 def setup_database():
     station_data()
     general_conversation()
-    historical_data()
+    # historical_data()
 
 def station_data():
     conn = connect_DB("chatbot.db")
@@ -49,6 +49,14 @@ def general_conversation():
     conn.close
 
 def historical_data():
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+    query = "CREATE TABLE IF NOT EXISTS Historical_data(origin CHAR(3), exp_dep VARCHAR(4), dep_delay INTEGER, destination CHAR(3), exp_arr VARCHAR(4), arr_delay INTEGER, month CHAR(2), day VARCHAR(8), toc CHAR(2))"
+    cur.execute(query)
+    conn.commit
+    conn.close
+
+def training_model():
     conn = connect_DB("chatbot.db")
     cur = conn.cursor()
     query = "CREATE TABLE IF NOT EXISTS Historical_data(origin CHAR(3), exp_dep VARCHAR(4), dep_delay INTEGER, destination CHAR(3), exp_arr VARCHAR(4), arr_delay INTEGER, month CHAR(2), day VARCHAR(8), toc CHAR(2))"
