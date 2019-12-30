@@ -110,7 +110,7 @@ def train(file, epochs=100, valSplit=0.1, batchSize=32):
     output_data = output_data[indices]
     shape = input_data[0].shape
     model = tf.keras.Sequential()
-    model.add(layers.Dense(32, activation = 'relu', input_shape=shape))
+    model.add(layers.Dense(32, activation = 'relu', input_shape=shapes))
     #model.add(layers.Dropout(0.2))
     #model.add(layers.Dense(128, activation = 'relu'))
     #model.add(layers.Dropout(0.2))

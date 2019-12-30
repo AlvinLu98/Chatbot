@@ -9,7 +9,13 @@ def add_training_data(query):
     print("Adding data to database.....")
     for entry in data:
         Database_controller.add_historical_data(entry)
-        
+
+def add_test_data(query):
+    rids  = retrieve_past_rids(query)
+    data = retrieve_hisotrical_arrival_data(rids, query[6])
+    print("Adding data to test database.....")
+    for entry in data:
+        Database_controller.add_test_data(entry)
 
 #https://wiki.openraildata.com/index.php/HSP
 def retrieve_past_rids(query):
@@ -136,27 +142,35 @@ def main():
     # rids = retrieve_past_rids(["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "SATURDAY"])
     # retrieve_hisotrical_arrival_data(rids, "SATURDAY")
 
-    query1 = ["NRW", "LST", "0000", "2359", "2018-01-01", "2018-12-31", "WEEKDAY"]
-    query2 = ["NRW", "LST", "0000", "2359", "2018-01-01", "2018-12-31", "SATURDAY"]
-    query3 = ["NRW", "LST", "0000", "2359", "2018-01-01", "2018-12-31", "SUNDAY"]
+    # query1 = ["NRW", "LST", "0000", "2359", "2018-01-01", "2018-12-31", "WEEKDAY"]
+    # query2 = ["NRW", "LST", "0000", "2359", "2018-01-01", "2018-12-31", "SATURDAY"]
+    # query3 = ["NRW", "LST", "0000", "2359", "2018-01-01", "2018-12-31", "SUNDAY"]
 
-    query4 = ["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "WEEKDAY"]
-    query5 = ["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "SATURDAY"]
-    query6 = ["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "SUNDAY"]
+    # query4 = ["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "WEEKDAY"]
+    # query5 = ["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "SATURDAY"]
+    # query6 = ["NRW", "LST", "0000", "2359", "2017-01-01", "2017-12-31", "SUNDAY"]
 
-    query7 = ["NRW", "LST", "0000", "2359", "2016-01-01", "2016-12-31", "WEEKDAY"]
-    query8 = ["NRW", "LST", "0000", "2359", "2016-01-01", "2016-12-31", "SATURDAY"]
-    query9 = ["NRW", "LST", "0000", "2359", "2016-01-01", "2016-12-31", "SUNDAY"]
+    # query7 = ["NRW", "LST", "0000", "2359", "2016-01-01", "2016-12-31", "WEEKDAY"]
+    # query8 = ["NRW", "LST", "0000", "2359", "2016-01-01", "2016-12-31", "SATURDAY"]
+    # query9 = ["NRW", "LST", "0000", "2359", "2016-01-01", "2016-12-31", "SUNDAY"]
 
-    add_training_data(query1)
-    add_training_data(query2)
-    add_training_data(query3)
-    add_training_data(query4)
-    add_training_data(query5)
-    add_training_data(query6)
-    add_training_data(query7)
-    add_training_data(query8)
-    add_training_data(query9)
+    # add_training_data(query1)
+    # add_training_data(query2)
+    # add_training_data(query3)
+    # add_training_data(query4)
+    # add_training_data(query5)
+    # add_training_data(query6)
+    # add_training_data(query7)
+    # add_training_data(query8)
+    # add_training_data(query9)
+
+    query10 = ["NRW", "LST", "0000", "2359", "2015-01-01", "2015-12-31", "WEEKDAY"]
+    query11= ["NRW", "LST", "0000", "2359", "2015-01-01", "2015-12-31", "SATURDAY"]
+    query12 = ["NRW", "LST", "0000", "2359", "2015-01-01", "2015-12-31", "SUNDAY"]
+
+    add_test_data(query10)
+    add_test_data(query11)
+    add_test_data(query12)
     
 if __name__ == '__main__':
     main()

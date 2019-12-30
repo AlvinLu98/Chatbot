@@ -18,6 +18,7 @@ def setup_database():
     station_data()
     general_conversation()
     # historical_data()
+    test_data()
 
 def station_data():
     conn = connect_DB("chatbot.db")
@@ -56,11 +57,19 @@ def historical_data():
     conn.commit
     conn.close
 
+def test_data():
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+    query = "CREATE TABLE IF NOT EXISTS Test_data(origin CHAR(3), exp_dep VARCHAR(4), dep_delay INTEGER, destination CHAR(3), exp_arr VARCHAR(4), arr_delay INTEGER, month CHAR(2), day VARCHAR(8), toc CHAR(2))"
+    cur.execute(query)
+    conn.commit
+    conn.close
+
 def training_model():
     conn = connect_DB("chatbot.db")
     cur = conn.cursor()
-    query = "CREATE TABLE IF NOT EXISTS Historical_data(origin CHAR(3), exp_dep VARCHAR(4), dep_delay INTEGER, destination CHAR(3), exp_arr VARCHAR(4), arr_delay INTEGER, month CHAR(2), day VARCHAR(8), toc CHAR(2))"
-    cur.execute("DROP TABLE IF EXISTS Historical_data")
+    query = "CREATE TABLE IF NOT EXISTS Model_data(model_name VARCHAR(50) PRIMARY KEY)"
+    cur.execute("DROP TABLE IF EXISTS Model_data")
     cur.execute(query)
     conn.commit
     conn.close
@@ -111,6 +120,25 @@ def get_all_historical_data():
     conn.close()
     return rows
 
+def add_test_data(historical_data):
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+    sql_query = "INSERT INTO Test_data VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    data = (historical_data[0], historical_data[1], historical_data[2], historical_data[3], historical_data[4],
+     historical_data[5], historical_data[6], historical_data[7], historical_data[8])
+    cur.execute(sql_query, data)
+    conn.commit()
+    conn.close()
+
+def get_all_test_data():
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+
+    sql_query = "SELECT * FROM Test_data"
+    cur.execute(sql_query)
+    rows = cur.fetchall()
+    conn.close()
+    return rows
 ##################################################################################################
 #                                           Testing
 ##################################################################################################
