@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2018/W32TeX)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: Group_2 Final report.aux
+The style file: agsm.bst
+Database file #1: Outline_Ref.bib
+Warning--entry type for "Oracle" isn't style-file defined
+--line 1 of file Outline_Ref.bib
+Warning--entry type for "ChatBotPros" isn't style-file defined
+--line 15 of file Outline_Ref.bib
+Warning--entry type for "ChatBotProsCons" isn't style-file defined
+--line 29 of file Outline_Ref.bib
+Warning--entry type for "NLPIntro" isn't style-file defined
+--line 43 of file Outline_Ref.bib
+You've used 4 entries,
+            2909 wiz_defined-function locations,
+            659 strings with 5364 characters,
+and the built_in function-call counts, 6398 in all, are:
+= -- 940
+> -- 96
+< -- 0
++ -- 395
+- -- 28
+* -- 456
+:= -- 1490
+add.period$ -- 4
+call.type$ -- 4
+change.case$ -- 56
+chr.to.int$ -- 4
+cite$ -- 4
+duplicate$ -- 44
+empty$ -- 105
+format.name$ -- 36
+if$ -- 1105
+int.to.chr$ -- 5
+int.to.str$ -- 0
+missing$ -- 0
+newline$ -- 19
+num.names$ -- 40
+pop$ -- 36
+preamble$ -- 1
+purify$ -- 60
+quote$ -- 0
+skip$ -- 41
+stack$ -- 0
+substring$ -- 1219
+swap$ -- 4
+text.length$ -- 56
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 16
+warning$ -- 0
+while$ -- 84
+width$ -- 0
+write$ -- 50
+(There were 4 warnings)

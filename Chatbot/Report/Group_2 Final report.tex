@@ -1,0 +1,150 @@
+\documentclass[11pt]{article}
+
+
+\usepackage[]{graphics}
+\usepackage{natbib}
+\usepackage{rotating}
+\usepackage{subfloat}
+\usepackage{pgfgantt}
+\usepackage[margin=2cm]{geometry}
+
+%opening
+\title{Developing a train booking chatbot: First Interim Report}
+\author{Group 2M: Alvin Lu, Joe Newman and YuTing Liu}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+According to \citet{Oracle}, Chat-bots are computer programmes that can simulate and process natural language conversation with humans. Chatbot has received major increase in popularity for organisations recently due to its capability to resolve tasks using natural language with greater efficiency relative to a human operator. While general (conversational) chatbot exists and are able to respond and process a wide range of conversation and instructions, most chatbots that are developed are specialised in a certain task. The aim of this project is to develop a task-oriented chatbot that can locate the cheapest train ticket given the details, predict train delays for selected train routes and provide contingencies for experts during a train journey.
+
+\subsection{Background and Motivation}
+Chatbots was first introduced in the 1960s. Initially, chatbots were developed with the goal to mimic natural conversation (of a specific group of individual) without any specific goals or tasks to be accomplished. Some notable early chatbots are ELIZA, PARRY which uses simple systems such as response pairing. Another major development was the growth of chatbots that uses pattern matching instead of pairing pre-defined response pairs. The classic example of such chatbot is Jabberwocky, which has been used for academic research. Chatbots grew significantly in popularity in the early 2000s, organisations are developing task-oriented chatbots to handle specific tasks online. General purpose chatbots such as Siri, Google assistant and Alexa became more common this decade. These chatbots have a ability to process and handle large amount of different tasks.
+
+Chatbots provide various advantages to the operations of an organisation, and with the increase of platforms and open-source programs that aids the development of chatbot, the amount of chatbots deployed online has been growing significantly. Unlike human customer support, Chatbots are able to process multiple user request in parallel and are always available any time of the day \citep{ChatBotPros}. Chatbots can also engage customer proactively to engage with customers, collecting and monitoring customer data during the process. More advanced chatbot can also improve the organisations presence in the global market by providing chatbots in different languages. Some online platforms also allow chatbots to be deployed to other platforms such as social media which would further increase the amount of engagement an organisation has on its market \cite{ChatBotPros}.
+
+There are also certain limitations on chatbots as well. Task-oriented chatbots are usually constrained in the type of conversations it could process, conversation that went out of scope might result in \citep{ChatBotProsCons}:
+\begin{itemize}
+	\item Default response when chatbots fail to process the conversation
+	\item Inaccurate assumption of users intention, causing problems in communication
+\end{itemize}
+Whilst it's possible to develop chatbots that are capable of handling large amount of tasks, it's time consuming and costly to deploy such chatbot that may not be utilised fully. Therefore, an additional objective of this project is to develop a chatbot that is capable of handling most conversation within the scope of the tasks while providing relevant information when the conversation goes out of scope.
+
+\subsection{Components of a Chatbot}
+There are multiple different components in the background that simulates natural language conversation in a task-oriented chatbot.
+\subsubsection{Natural language processing}
+Natural language processing (NLP) is a crucial part of a chatbot. NLP functions to process sentences that user entered and extract the intentions of the user \citep{NLPIntro}. Two of the main method of understanding natural sentences: Syntactic analysis works by applying grammatical rules and grouping words in sentences to derive meaning from the sentence. On the other hand, Semantic analysis aims to derive meaning of words by trying to understand the meaning of words by analysing the sentence, context and grammar \citep{NLPIntro}.
+
+\subsubsection{Reasoning engine}
+While NLP processes and understands the meaning of a sentence, a reasoning engine is responsible mapping the extracted meaning to actions. A reasoning engine usually uses a set of rules to determine the type of action it's supposed to take.
+
+\subsubsection{Web Scraping}
+Web-scraping is the process of extracting structured data from the web for other processes. Web scrapers has the ability to submit and fill in information online as well to request for further information such as automatically filling in a form. Web scraping is an important component for a train booking chatbot as well because information about train tickets has to be obtained online.
+
+\subsubsection{Data mining}
+Data mining is the act of extracting previously unknown information from data and converting into a structured format for other uses. The purpose of data mining is to discover pattern, anomalies or correlations. Data mining is usually done on combination with other aspects of computing such as AI, Statistics and Machine learning and the information obtained would be used for some other operations.
+
+\subsubsection{Predictive model}
+A predictive model provides forecast of certain outcomes. A predictive model is usually trained with existing structured data using a specified method or a combination of different method and makes a forecast based on the data it's trained on. For the train booking chatbot, it will be trained on previous train delay data and provide predictions on delays of new unseen train delays. 
+
+\subsubsection{Knowledge-base system}
+Knowledge-base system contains a collection of information that can be accessed using an inference engine. These information is typically used as part of a decision making process and for the chatbot, it will be used to save information regarding actions to take in case of an emergency.
+
+\section{Methods, Tools and Frameworks}
+\subsection{Methods}
+As there as multiple different components for a chatbot, the components will be developed separately with clear requirements set for each of the components to decrease the amount of bugs that may occur during the combination of different components. Team members will be assigned with 1 to 3 components that are linked to develop, with constant updates on the progress
+
+\subsubsection{Code management}
+As components will be developed independently, all codes will be uploaded to GitHub repository. Compilation and error checking will be assigned to one member. Each member will create a separate branch for code development and codes will be merged after a meeting with the full team.
+             
+\subsection{Languages, Packages, Tools}
+
+\subsubsection{Language}
+The chatbot will be developed in Python using other packages that may be originally written in other languages. For User interface, it will be written in HTML and CSS.
+
+\subsubsection{Packages}
+For \textbf{Natural language processing}, spaCy is currently the package chosen for the development of the chatbot. spaCy is a natural language processing package developed for Python programs. It also provides guides on utilising the text entered for deep learning which would work well with other Python packages that will be used. \textbf{Web scraping} wise, BeautifulSoup will be used as the package for web scraping. Tests will need to be run on different \textbf{Predictive models} to decide which model works best for the train delay problem. The package that will be used for this is SciKit learn. Currently, there are 2 packages being considered for \textbf{reasoning engine} which is durable and PyKnow.
+
+For ticketing data and historical train data, the information will initially be sourced from BR fares and the national rail database.
+
+
+\subsection{Work Plan}
+\begin{sideways}
+	\begin{ganttchart}[x unit=0.264 cm, y unit chart = 0.55 cm, vgrid, title label font=\scriptsize,canvas/.style={draw=black, dotted}]{1}{70} \label{gantt}
+		\gantttitle[x unit=2.31cm]{Work plan for developing Chat-bot shown in semester week numbers}{8} \\
+		\gantttitlelist[x unit=1.848cm]{8,...,17}{1} \\
+		\gantttitlelist[x unit=0.264cm]{1,...,70}{1} \\
+		\ganttgroup{Research}{1}{21}\\
+		\ganttbar{Background research}{1}{5} \\
+		\ganttbar{Analyse current systems}{1}{5} \\
+		\ganttlinkedbar{Draft specification}{6}{10} \\
+		\ganttbar{Package review}{1}{5} \\
+		\ganttlinkedbar{Test/ Setup packages}{6}{17} \ganttnewline
+		\ganttlinkedbar{Write report}{18}{65} \ganttnewline
+		\ganttbar{Allocate components}{18}{20} \\
+		\ganttmilestone{Initial design}{21} \ganttnewline
+		
+		\ganttgroup{Development}{22}{50}\\
+		\ganttbar{Prototyping}{22}{50} \\
+		\ganttbar{NLP}{22}{32} \\
+		\ganttlinkedbar{Reasoning engine}{33}{50} \\
+		\ganttbar{Data mining}{22}{30} \\
+		\ganttlinkedbar{Prediction model}{31}{50} \\
+		\ganttbar{Web scraper}{22}{35} \\
+		\ganttlinkedbar{Web scraper}{36}{45} \\
+		\ganttlinkedbar{UI}{46}{50} \\
+		\ganttlinkedbar{Compile and test}{51}{60}\\
+		\ganttmilestone{Product completed}{60} \ganttnewline
+		
+		\ganttgroup{Submission}{61}{67}\\
+		\ganttbar{Final testing}{61}{64}\\
+		\ganttlinkedbar{Demonstration}{66}{66} \\
+		\ganttmilestone{Coursework completed}{67} \ganttnewline
+		
+		
+		\ganttlink{elem5}{elem7} \\
+		\ganttlink{elem7}{elem8} \\
+		\ganttlink{elem6}{elem22} \\
+		\ganttlink{elem18}{elem19} \\
+		\ganttlink{elem22}{elem23}\\
+	\end{ganttchart}
+	
+\end{sideways}
+\clearpage   
+%------------------------------------------------------------------------
+\section{Design of the Chatbot}
+
+ 
+\subsection{The Architecture of the chatbot}
+
+\subsection{User Interface} 
+
+\subsection{NLP}
+
+\subsection{Knowledge-base}
+
+\subsection{Inferring Engine}
+
+\subsection{Prediction Model}
+
+\section{Implementation}
+\subsection{Development stages}
+
+\section{Prototyping}
+
+\section{Testing}
+
+
+\section{Evaluation and Discussion}
+
+\section{Conclusion or Summary}
+
+\clearpage
+\bibliographystyle{agsm}
+%\bibliographystyle{apalike}
+% you should use your own bibtex file to replace the following example_ref bib file.
+\bibliography{Outline_Ref} 
+
+\end{document}

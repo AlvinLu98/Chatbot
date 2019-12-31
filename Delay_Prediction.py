@@ -2,6 +2,7 @@ import Database_controller
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import StandardScaler
 
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
@@ -219,8 +220,7 @@ def train_weighted_kNN(training, actual, k, file_name):
 #                                          Neural Network 
 ##################################################################################################
 def train_neural_network(training, actual, h_layers, state, file_name):
-    nn = MLPRegressor(hidden_layer_sizes=h_layers, random_state=state, max_iter=1000, 
-    learning_rate_init=0.01, early_stopping=True, alpha=0.05)
+    nn = MLPRegressor(hidden_layer_sizes=h_layers, random_state=state, max_iter=2000, early_stopping=True)
     nn.fit(training, np.ravel(actual))
     dump(nn, file_name)
     return nn
@@ -266,21 +266,16 @@ def main():
 
     print("----------------------------------- Training -----------------------------------")
     print("Neural Network.....")
-    # train_neural_network(train_d, train_a, (3,), 9, "2_layer_NN.joblib")
-
-    mlp = MLPRegressor(early_stopping=True, max_iter=1000)
-    parameter_space = {
-        'hidden_layer_sizes': [(3,), (5,), (10,)],
-        'activation': ['tanh', 'relu'],
-        'solver': ['sgd', 'adam'],
-        'alpha': [0.0001, 0.05],
-        'learning_rate': ['constant', 'adaptive'],
-        'learning_rate_init': [0.001, 0.01]
-    }
-    best_val = GridSearchCV(mlp, parameter_space, n_jobs=-1, cv=3)
-    best_val.fit(data, np.ravel(actual))
-    print("Best params: ", best_val.best_params_)
-    dump(best_val.best_estimator_, "BEST_NN.joblib")
+    train_neural_network(train_d, train_a, (5, 10), 4, "2_layer_NN.joblib")
+    # mlp = MLPRegressor(early_stopping=True, max_iter=2000)
+    # parameter_space = {
+    #     'hidden_layer_sizes': [(2,), (3,), (4,), (5,), (10,), (15,), (20,)],
+    #     'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    # }
+    # best_val = GridSearchCV(mlp, parameter_space, n_jobs=-1, cv=3)
+    # best_val.fit(data, np.ravel(actual))
+    # print("Best params: ", best_val.best_params_)
+    # dump(best_val.best_estimator_, "BEST_NN.joblib")
 
     # print("Decision Tree.....")
     # train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
