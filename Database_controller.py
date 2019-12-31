@@ -18,6 +18,7 @@ def setup_database():
     station_data()
     general_conversation()
     # historical_data()
+    intent_data()
     test_data()
 
 def station_data():
@@ -46,8 +47,29 @@ def general_conversation():
     query = "CREATE TABLE IF NOT EXISTS Conversation(sentence VARCHAR(300), response VARCHAR(300))"
     cur.execute("DROP TABLE IF EXISTS Conversation")
     cur.execute(query)
-    conn.commit
-    conn.close
+    with open('Conversation.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            sql_query = "INSERT INTO Conversation(sentence, response) VALUES(?,?);"
+            sql_data = (row[0], row[1])
+            cur.execute(sql_query, sql_data)
+    conn.commit()
+    conn.close()
+
+def intent_data():
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+    query = "CREATE TABLE IF NOT EXISTS Intent_sentence(sentence VARCHAR(300), intent CHAR(1))"
+    cur.execute("DROP TABLE IF EXISTS Intent_sentence")
+    cur.execute(query)
+    with open('Sentence_Intent.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            sql_query = "INSERT INTO Intent_sentence(sentence, intent) VALUES(?,?);"
+            sql_data = (row[0], row[1])
+            cur.execute(sql_query, sql_data)
+    conn.commit()
+    conn.close()
 
 def historical_data():
     conn = connect_DB("chatbot.db")
@@ -136,6 +158,30 @@ def get_all_test_data():
 
     sql_query = "SELECT * FROM Test_data"
     cur.execute(sql_query)
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+##################################################################################################
+#                                      Reasoning queries
+##################################################################################################
+def get_all_intent_sentences():
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+
+    sql_query = "SELECT * FROM Intent_sentence"
+    cur.execute(sql_query)
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+def get_chat_response(chat):
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+
+    sql_query = "SELECT * FROM Conversation WHERE sentence = ?"
+    sql_data = chat
+    cur.execute(sql_query, sql_data)
     rows = cur.fetchall()
     conn.close()
     return rows
