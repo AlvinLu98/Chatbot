@@ -1,6 +1,10 @@
 
 # Blockage contingencies from Norwich to Colchester
 
+# Between two of the stations there are multiple cases.
+# 3 Partial block cases for Diss to Ipswich
+# 2 Full block cases for Stowmarket to Ipswich
+
 from pyknow import *
 import Chatbot
 
