@@ -266,7 +266,7 @@ def main():
 
     print("----------------------------------- Training -----------------------------------")
     print("Neural Network.....")
-    train_neural_network(train_d, train_a, (5, 10), 4, "2_layer_NN.joblib")
+    train_neural_network(train_d, train_a, (5, 32), 4, "2_layer_NN.joblib")
     # mlp = MLPRegressor(early_stopping=True, max_iter=2000)
     # parameter_space = {
     #     'hidden_layer_sizes': [(2,), (3,), (4,), (5,), (10,), (15,), (20,)],

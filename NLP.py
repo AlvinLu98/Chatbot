@@ -16,10 +16,16 @@ nlp = spacy.load("en_core_web_lg")
 ##################################################################################################
 #                                   Basic sentence processing
 ##################################################################################################
+def pre_processing(raw_input):
+    raw_input = lower_case(raw_input)
+    raw_input = remove_punct(raw_input)
+    raw_input = replace_abbreviations(raw_input)
+    return raw_input
 
 #Takes the raw input and returns tokenized words  
 def process_sentence(raw_input):
     print("############################### Tokenisation ###############################")
+    raw_input = pre_processing(raw_input)
     doc = nlp(raw_input)
     for token in doc:
         print("%10s %10s %5s %5s %10s %10s %r" %(token.text, token.head.text, token.pos_, token.tag_, 
@@ -43,14 +49,6 @@ def get_dependencies(doc):
     print()
     return doc.noun_chunks
 
-#Remove punctuation and cases from users
-def filter_input():
-    return 0
-
-#Changes the format of the date entered
-def format_date():
-    return 0
-
 #Calculates the similarity between two words
 def calculate_similarity(word_1, word_2):
     return 0
@@ -60,7 +58,7 @@ def process_intent(raw_input, intent):
     return 0
 
 ##################################################################################################
-#                                     Additional Scentence Proccessing can be used
+#                               Additional Sentence Proccessing
 ##################################################################################################
 
 #Lower Case input scentence, For example: There is an APPLE!!! => there is an apple!!!
@@ -111,7 +109,7 @@ def replace_abbreviations(text):
     new_text = new_text.replace('\'', ' ')
     return new_text
 
-#Use NLTK library to tokenize, quick easy way
+#Use NLTK library to tokenize
 def tokenize(text):
     tokens = word_tokenize(text)  # W+ means that either a word character (A-Za-z0-9_) or a dash (-) can go there.
     return tokens
@@ -147,7 +145,6 @@ def lemmatizing(tokenized_tag_list):
         elif correct_pos == False:
             lemmatized.append(tokenized_tag[0])
     return lemmatized
-
 
 #Remove meaning less stop words
 def remove_stopwords(tokenized_list):

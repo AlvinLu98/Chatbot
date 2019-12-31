@@ -155,11 +155,11 @@ class Form_filler():
 
 def main():
     test = Form_filler()
-    test.single_ticket('https://www.thetrainline.com/', 'Norwich', "Gatwick Airport", "open", 
-    "12-Feb-20", "07", "45", 2)
+    # print(test.single_ticket('https://www.thetrainline.com/', 'Norwich', "Gatwick Airport", "open", 
+    # "12-Feb-20", "07", "45", 2))
 
-    test.return_ticket('https://www.thetrainline.com/', 'Norwich', "Gatwick Airport", "return", 
-    "12-Feb-20", "07", "45", "14-Feb-20", "08", "09", 2)
+    print(test.return_ticket('https://www.thetrainline.com/', 'Norwich', "Gatwick Airport", "return", 
+    "12-Feb-20", "07", "45", "14-Feb-20", "08", "09", 2))
     
 if __name__ == '__main__':
     main()
