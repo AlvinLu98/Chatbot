@@ -4,6 +4,7 @@ Created on Sun Oct 27 13:25:49 2019
 @author: Alvin Lu
 """
 import nltk
+import pandas
 import spacy
 import string
 import re
@@ -159,6 +160,41 @@ def remove_stopwords(tokenized_list):
 #5. remove_stopwords
 
 #6. Vectorizer (Unigram, Bigram, TF-IDF)
+
+###############CountVectorizer###############
+from sklearn.feature_extraction.text import CountVectorizer
+def getCountVectorizer(data_X_Y):
+    count_vect = CountVectorizer()
+    X_counts = count_vect.fit_transform(data_X_Y['clean_sentence'])
+    # print(X_counts.shape)          #这里可以调取矩阵的大小
+    # print(count_vect.get_feature_names())      #这里可以调取每一个feature的名字
+    X_counts_df = pandas.DataFrame(X_counts.toarray(), columns=count_vect.get_feature_names())
+    #print(X_counts_df)
+    # return X_counts_df
+    return X_counts
+
+
+###############Vectorizing Raw Data: N-Grams###############
+def getNGramVectorizer(data_X_Y):
+    ngram_vect = CountVectorizer(ngram_range=(2, 2))  # It applies only bigram vectorizer
+    X_counts = ngram_vect.fit_transform(data_X_Y['clean_sentence'])
+    X_counts_df = pandas.DataFrame(X_counts.toarray(), columns=ngram_vect.get_feature_names())
+    #print(X_counts_df)
+    # return X_counts_df
+    return X_counts
+
+
+###############Vectorizing Raw Data: TF-IDF###############
+from sklearn.feature_extraction.text import TfidfVectorizer
+def getTfidfVectorizer(data_X_Y):
+    tfidf_vect = TfidfVectorizer()
+    X_tfidf = tfidf_vect.fit_transform(data_X_Y['clean_sentence'])
+    X_tfidf_df = pandas.DataFrame(X_tfidf.toarray(), columns=tfidf_vect.get_feature_names())
+    #print(X_tfidf_df)
+    # X_tfidf_feat = pandas.concat([data_X_Y['body_len'], data_X_Y['punct%'], pandas.DataFrame(X_tfidf.toarray())], axis=1)
+    # return X_tfidf_df
+    return X_tfidf
+
 ##################################################################################################
 #                                     Train booking processing
 ##################################################################################################
