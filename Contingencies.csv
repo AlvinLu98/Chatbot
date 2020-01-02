@@ -1,0 +1,304 @@
+partial,norwich,diss,schedule,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Operate as Norwich - Colchester Shuttle> \n\
+                    PM PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Operate as Norwich - Colchester Shuttle> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Operate as Norwich - Colchester Shuttle> \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
+partial,norwich,diss,advice,None,
+full,norwich,diss,schedule,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Diss> \n\
+                    PM PEAK \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Diss> \n\
+                    OFF-PEAK \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Diss> \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
+full,norwich,diss,advice,6P40 / 6P41 to divert via Ely & Thetford,
+partial,diss,ipswich,schedule,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Opertates Norwich - Colchester Shuttle> \n\
+                    PM PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Opertates Norwich - Colchester Shuttle> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Opertates Norwich - Colchester Shuttle> \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",Diss to Haughley Junction Line Working
+partial,diss,ipswich,advice,Consider cancelling 6A33 / 6P40,Diss to Haughley Junction Line Working
+partial,diss,ipswich,schedule,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        1 per hour: Greater Anglia G/E Services--<> \n\
+                    PM PEAK \n\
+                        1 per hour: Greater Anglia G/E Services--<> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Freight-1 Freight Path each direction per hour-<Freight to be diverted via London where possible.,> \n\
+                        1 per hour: Greater Anglia G/E Services--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates as Cambridge - Stowmarket Shuttle where \n\
+                                    possible, however if Stowmarket unavailable, Shuttle to Bury St Edmunds only.> \n\
+                        1 per hour: Greater Anglia Ipswich Shuttle--<Operates as Liverpool Street - Ipswich> \n\
+                    PM PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates as Cambridge - Stowmarket Shuttle where \n\
+                                    possible, however if Stowmarket unavailable, Shuttle to Bury St Edmunds only.> \n\
+                        1 per hour: Greater Anglia Ipswich Shuttle--<Operates as Liverpool Street - Ipswich> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates as Cambridge - Stowmarket Shuttle where \n\
+                                    possible, however if Stowmarket unavailable, Shuttle to Bury St Edmunds only.> \n\
+                        1 per hour: Greater Anglia Ipswich Shuttle--<Operates as Liverpool Street - Ipswich> \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",Haughley Junction to East Suffolk Junction Working
+partial,diss,ipswich,advice,"Freight to be diverted via London \n\
+            Monitor inbound freight, liaise with freight York & SSM Cambridge re-holding points",Haughley Junction to East Suffolk Junction Working
+partial,diss,ipswich,schedule,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        4 per hour: Greater Anglia G/E Services--<> \n\
+                    PM PEAK \n\
+                        4 per hour: Greater Anglia G/E Services--<> \n\ \n\
+                    OFF-PEAK \n\
+                        1 per hour: Freight-1 Freight Path each direction per hour-<> \n\
+                        4 per hour: Greater Anglia G/E Services--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        None \n\
+                    PM PEAK \n\
+                        None \n\
+                    OFF-PEAK \n\
+                        None \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",East Suffolk Junction to Ipswich Working
+partial,diss,ipswich,advice,"All 1Pxx services stop addl Stowmarket. \n\
+            If 2Wxx term stowmarket…bus service Ipswich-Needham Mkt-Stowmarket.",East Suffolk Junction to Ipswich Working
+full,diss,stowmarket,schedule,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates Cambridge - Bury St Edmunds> \n\
+                        1 per hour: Greater Anglia G/E Service--<Operates Bury St Edmunds - Peterborough> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Ipswich> \n\
+                    PM PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates Cambridge - Bury St Edmunds> \n\
+                        1 per hour: Greater Anglia G/E Service--<Operates Bury St Edmunds - Peterborough> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Ipswich> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates Cambridge - Bury St Edmunds> \n\
+                        1 per hour: Greater Anglia G/E Service--<Operates Bury St Edmunds - Peterborough> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Ipswich> \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
+full,diss,stowmarket,advice,Freight to be diverted via London Where possible,
+full,stowmarket,ipswich,schedule,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates Cambridge - Stowmarket> \n\
+                        1 per hour: Greater Anglia G/E Service--<Operates Stowmarket - Peterborough> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Ipswich> \n\
+                    PM PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates Cambridge - Stowmarket> \n\
+                        1 per hour: Greater Anglia G/E Service--<Operates Stowmarket - Peterborough> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Ipswich> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates Cambridge - Stowmarket> \n\
+                        1 per hour: Greater Anglia G/E Service--<Operates Stowmarket - Peterborough> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Ipswich> \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",Haughley Junction Avaliable (GE24)
+full,stowmarket,ipswich,advice,Will require shunting in and out of the loop at Stowmarket,Haughley Junction Avaliable (GE24)
+full,stowmarket,ipswich,schedule,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates Cambridge - Bury St Edmunds> \n\
+                        1 per hour: Greater Anglia G/E Service--<Operates Bury St Edmunds - Peterborough> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Ipswich> \n\
+                    PM PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates Cambridge - Bury St Edmunds> \n\
+                        1 per hour: Greater Anglia G/E Service--<Operates Bury St Edmunds - Peterborough> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Ipswich> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Greater Anglia Cambridge - Ipswich Service--<Operates Cambridge - Bury St Edmunds> \n\
+                        1 per hour: Greater Anglia G/E Service--<Operates Bury St Edmunds - Peterborough> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Ipswich> \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",London End Crossover Avaliable (GE24A)
+full,stowmarket,ipswich,advice,In the event that Stowmarket loop is not accessible and Stowmarket London End crossover can not be used.,London End Crossover Avaliable (GE24A)
+partial,ipswich,manningtree,advice,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        2 per hour: Greater Anglia G/E Services--<> \n\
+                    PM PEAK \n\
+                        2 per hour: Greater Anglia G/E Services--<> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Freight-1 Freight Path each direction per hour-<> \n\
+                        2 per hour: Greater Anglia G/E Services--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Operates Liverpool Street - Colchester> \n\
+                    PM PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Operates Liverpool Street - Colchester> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Operates Liverpool Street - Colchester> \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>""",
+partial,ipswich,manningtree,schedule,Consider extending services through to Manningtree / ECS to Mistley and return for PM peak & Off peak also where possible.,
+full,ipswich,manningtree,advice,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Freight-1 Freight Path each direction per hour-<> \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Mannningtree> \n\
+                        2 per hour: Greater Anglia Ipswich Shuttle--<Operates as Norwich - Ipswich Shuttle> \n\
+                    PM PEAK \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Mannningtree> \n\
+                        2 per hour: Greater Anglia Ipswich Shuttle--<Operates as Norwich - Ipswich Shuttle> \n\
+                    OFF-PEAK \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Mannningtree> \n\
+                        2 per hour: Greater Anglia Ipswich Shuttle--<Operates as Norwich - Ipswich Shuttle> \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
+full,ipswich,manningtree,schedule,"Shunting to take place at Manningtree North Jn if available. Shunting can also take place at Mistley. Permission should be obtained from Operations \n\
+            on-call level 2 to start passenger services from the down main platform (platform 3) at Manningtree if this is necessary. \n\
+            Divert freight via BurySt Edmunds & across country up to W9 traffic only",
+partial,manningtree,colchester,schedule,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        2 per hour: Greater Anglia G/E Services--<> \n\
+                    PM PEAK \n\
+                        2 per hour: Greater Anglia G/E Services--<> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Freight-1 Freight Path each direction per hour-<> \n\
+                        2 per hour: Greater Anglia G/E Services--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Operates Liverpool Street - Colchester> \n\
+                    PM PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Operates Liverpool Street - Colchester> \n\
+                    OFF-PEAK \n\
+                        1 per hour: Greater Anglia Colchester Shuttle--<Operates Liverpool Street - Colchester> \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
+partial,manningtree,colchester,advice,"GriffinWharf may be blocked \n\
+             “Flighting” of trains is preferable to ensure as many trains through the sections as possible.",
+full,manningtree,colchester,schedule,"RUNNING AS BOOKED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia services that are unaffected by this incident--<> \n\
+            AMENDED SERVICES <calling pattern> \n\
+                    AM PEAK \n\
+                        2 per hour: Greater Anglia G/E Service--<Operates Norwich - Manningtree> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Colchester> \n\
+                    PM PEAK \n\
+                        2 per hour: Greater Anglia G/E Service--<Operates Norwich - Manningtree> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Colchester> \n\
+                    OFF-PEAK \n\
+                        2 per hour: Greater Anglia G/E Service--<Operates Norwich - Manningtree> \n\
+                        2 per hour: Greater Anglia G/E Services--<Operates Liverpool Street - Colchester> \n\
+            CANCELLED \n\
+                    AM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    PM PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
+                    OFF-PEAK \n\
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
+full,manningtree,colchester,advice,Divert freight via BurySt Edmunds & across country up to W9 traffic only,

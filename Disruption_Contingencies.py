@@ -5,7 +5,7 @@
 # 3 Partial block cases for Diss to Ipswich
 # 2 Full block cases for Stowmarket to Ipswich
 
-from pyknow import *
+from experta import *
 import Chatbot
 
 class BlockedRoute(Fact):
@@ -16,7 +16,7 @@ class BlockedRoute(Fact):
 ###################################################################################
     @Rule(BlockedRoute(blockage="partial", start="Norwich", to="Diss", intent="schedule"))
     def partial_norwich_diss_schedule(self):
-        chatbot.message(
+        return(
             "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -41,11 +41,11 @@ class BlockedRoute(Fact):
 
     @Rule(BlockedRoute(blockage="partial", start="Norwich", to="Diss", intent="advise"))
     def partial_norwich_diss_advise(self):
-        chatbot.message("None")
+        return("None")
 
     @Rule(BlockedRoute(blockage="full", start="Norwich", to="Diss", intent="schedule"))
     def full_norwich_diss_schedule(self):
-        chatbot.message(
+        return(
             "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -71,7 +71,7 @@ class BlockedRoute(Fact):
 
     @Rule(BlockedRoute(blockage="full", start="Norwich", to="Diss", intent="advise"))
     def full_norwich_diss_advise(self):
-        chatbot.message("6P40 / 6P41 to divert via Ely & Thetford")
+        return("6P40 / 6P41 to divert via Ely & Thetford")
 
 
 ###################################################################################
@@ -84,7 +84,7 @@ class BlockedRoute(Fact):
 # A : Diss to Haughley Junction Line Working
     @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="schedule"))
     def partial_diss_ipswich_scheduleA(self):
-        chatbot.message(
+        return(
             "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -109,12 +109,12 @@ class BlockedRoute(Fact):
 
     @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="advise"))
     def partial_diss_ipswich_adviseA(self):
-        chatbot.message("Consider cancelling 6A33 / 6P40")
+        return("Consider cancelling 6A33 / 6P40")
 
 # B : Haughley Junction to East Suffolk Junction Working
     @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="schedule"))
     def partial_diss_ipswich_scheduleB(self):
-        chatbot.message(
+       return(
              "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         1 per hour: Greater Anglia G/E Services--<> \n\
@@ -146,14 +146,14 @@ class BlockedRoute(Fact):
 
     @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="advise"))
     def partial_diss_ipswich_adviseB(self):
-        chatbot.message(
+        return(
             "Freight to be diverted via London \n\
             Monitor inbound freight, liaise with freight York & SSM Cambridge re-holding points")
 
 # C : East Suffolk Junction to Ipswich Working
     @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="schedule"))
     def partial_diss_ipswich_scheduleC(self):
-        chatbot.message(
+        return(
             "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         4 per hour: Greater Anglia G/E Services--<> \n\
@@ -179,7 +179,7 @@ class BlockedRoute(Fact):
 
     @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="advise"))
     def partial_diss_ipswich_adviseC(self):
-        chatbot.message(
+        return(
             "All 1Pxx services stop addl Stowmarket. \n\
             If 2Wxx term stowmarket…bus service Ipswich-Needham Mkt-Stowmarket.")
 
@@ -189,7 +189,7 @@ class BlockedRoute(Fact):
 ###################################################################################
     @Rule(BlockedRoute(blockage="full", start="Diss", to="Stowmarket", intent="schedule"))
     def full_diss_stowmarket_schedule(self):
-        chatbot.message(
+        return(
             "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -221,7 +221,7 @@ class BlockedRoute(Fact):
 
     @Rule(BlockedRoute(blockage="full", start="Diss", to="Stowmarket", intent="advise"))
     def full_diss_stowmarket_advise(self):
-        chatbot.message("Freight to be diverted via London Where possible")
+        return("Freight to be diverted via London Where possible")
 
 ###################################################################################
 #               Stowmarket to Ipswich (Full Blockages A/B)
@@ -232,7 +232,7 @@ class BlockedRoute(Fact):
 # A : Haughley Junction Avaliable (GE24)
     @Rule(BlockedRoute(blockage="full", start="Stowmarket", to="Ipswich", intent="schedule"))
     def full_stowmarket_ipswich_scheduleA(self):
-        chatbot.message(
+        return(
             "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -264,12 +264,12 @@ class BlockedRoute(Fact):
 
     @Rule(BlockedRoute(blockage="full", start="Stowmarket", to="Ipswich", intent="advise"))
     def full_stowmarket_ipswich_adviseA(self):
-        chatbot.message("Will require shunting in and out of the loop at Stowmarket")
+        return("Will require shunting in and out of the loop at Stowmarket")
 
 # B : London End Crossover Avaliable (GE24A)
     @Rule(BlockedRoute(blockage="full", start="Stowmarket", to="Ipswich", intent="schedule"))
     def full_stowmarket_ipswich_scheduleB(self):
-        chatbot.message(
+        return(
             "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -300,7 +300,7 @@ class BlockedRoute(Fact):
 
     @Rule(BlockedRoute(blockage="full", start="Stowmarket", to="Ipswich", intent="advise"))
     def full_stowmarket_ipswich_adviseB(self):
-        chatbot.message("In the event that Stowmarket loop is not accessible and Stowmarket London End crossover can not be used.")
+        return("In the event that Stowmarket loop is not accessible and Stowmarket London End crossover can not be used.")
 
 
 ###################################################################################
@@ -308,7 +308,7 @@ class BlockedRoute(Fact):
 ###################################################################################
     @Rule(BlockedRoute(blockage="partial", start="Ipswich", to="Manningtree", intent="schedule"))
     def partial_ipswich_manningtree_schedule(self):
-        chatbot.message(
+        return(
             "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         2 per hour: Greater Anglia G/E Services--<> \n\
@@ -333,12 +333,12 @@ class BlockedRoute(Fact):
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
     @Rule(BlockedRoute(blockage="partial", start="Ipswich", to="Manningtree", intent="advise"))
-    def full_ipswich_manningtree_advise(self):
-        chatbot.message("Consider extending services through to Manningtree / ECS to Mistley and return for PM peak & Off peak also where possible.")
+    def partial_ipswich_manningtree_advise(self):
+        return("Consider extending services through to Manningtree / ECS to Mistley and return for PM peak & Off peak also where possible.")
 
     @Rule(BlockedRoute(blockage="full", start="Ipswich", to="Manningtree", intent="schedule"))
     def full_ipswich_manningtree_schedule(self):
-        chatbot.message(
+        return(
             "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -367,7 +367,7 @@ class BlockedRoute(Fact):
 
     @Rule(BlockedRoute(blockage="full", start="Ipswich", to="Manningtree", intent="advise"))
     def full_ipswich_manningtree_advise(self):
-        chatbot.message(
+        return(
             "Shunting to take place at Manningtree North Jn if available. Shunting can also take place at Mistley. Permission should be obtained from Operations \n\
             on-call level 2 to start passenger services from the down main platform (platform 3) at Manningtree if this is necessary. \n\
             Divert freight via BurySt Edmunds & across country up to W9 traffic only")
@@ -378,7 +378,7 @@ class BlockedRoute(Fact):
 ###################################################################################
     @Rule(BlockedRoute(blockage="partial", start="Manningtree", to="Colchester", intent="schedule"))
     def partial_manningtree_colchester_schedule(self):
-        chatbot.message(
+        return(
             "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         2 per hour: Greater Anglia G/E Services--<> \n\
@@ -404,13 +404,13 @@ class BlockedRoute(Fact):
 
     @Rule(BlockedRoute(blockage="partial", start="Manningtree", to="Colchester", intent="advise"))
     def partial_manningtree_colchester_advise(self):
-        chatbot.message(
+        return(
             "- GriffinWharf may be blocked \n\
              -“Flighting” of trains is preferable to ensure as many trains through the sections as possible.")
 
     @Rule(BlockedRoute(blockage="full", start="Manningtree", to="Colchester", intent="schedule"))
     def full_manningtree_colchester_schedule(self):
-        chatbot.message(
+        return(
             "RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -438,7 +438,7 @@ class BlockedRoute(Fact):
 
     @Rule(BlockedRoute(blockage="full", start="Manningtree", to="Colchester", intent="advise"))
     def full_manningtree_colchester_advise(self):
-        chatbot.message("Divert freight via BurySt Edmunds & across country up to W9 traffic only")
+        return("Divert freight via BurySt Edmunds & across country up to W9 traffic only")
 
 #####
 
