@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 
 
-\usepackage[]{graphics}
+\usepackage[]{graphicx}
 \usepackage{natbib}
 \usepackage{rotating}
 \usepackage{subfloat}
@@ -9,7 +9,7 @@
 \usepackage[margin=2cm]{geometry}
 
 %opening
-\title{Developing a train booking chatbot: First Interim Report}
+\title{Developing a train booking chatbot: Final report}
 \author{Group 2M: Alvin Lu, Joe Newman and YuTing Liu}
 
 
@@ -35,13 +35,13 @@ Whilst it's possible to develop chatbots that are capable of handling large amou
 \subsection{Components of a Chatbot}
 There are multiple different components in the background that simulates natural language conversation in a task-oriented chatbot.
 \subsubsection{Natural language processing}
-Natural language processing (NLP) is a crucial part of a chatbot. NLP functions to process sentences that user entered and extract the intentions of the user \citep{NLPIntro}. Two of the main method of understanding natural sentences: Syntactic analysis works by applying grammatical rules and grouping words in sentences to derive meaning from the sentence. On the other hand, Semantic analysis aims to derive meaning of words by trying to understand the meaning of words by analysing the sentence, context and grammar \citep{NLPIntro}.
+Natural language processing (NLP) is a crucial part of a chatbot as it functions as the connection between natural language conversation to the background functionalities. NLP functions to process sentences that user entered and extract the intentions of the user \citep{NLPIntro}. Two of the main method of understanding natural sentences: Syntactic analysis works by applying grammatical rules and grouping words in sentences to derive meaning from the sentence. On the other hand, Semantic analysis aims to derive meaning of words by trying to understand the meaning of words by analysing the sentence, context and grammar \citep{NLPIntro}.
 
 \subsubsection{Reasoning engine}
-While NLP processes and understands the meaning of a sentence, a reasoning engine is responsible mapping the extracted meaning to actions. A reasoning engine usually uses a set of rules to determine the type of action it's supposed to take.
+While NLP processes and understands the meaning of a sentence, a reasoning engine is responsible mapping the extracted meaning to actions. It uses defined rules or models to discover the aim or intent of the user and provides relevant responses accordingly.
 
 \subsubsection{Web Scraping}
-Web-scraping is the process of extracting structured data from the web for other processes. Web scrapers has the ability to submit and fill in information online as well to request for further information such as automatically filling in a form. Web scraping is an important component for a train booking chatbot as well because information about train tickets has to be obtained online.
+Web-scraping is the process of extracting structured data from the web for other processes. The module can go through a webpage and extract information that is required. Web scrapers also has the ability to submit and fill in information online as well to request for further information such as automatically filling in a form. Web scraping is an important component for a train booking chatbot as well because information about train tickets has to be obtained online.
 
 \subsubsection{Data mining}
 Data mining is the act of extracting previously unknown information from data and converting into a structured format for other uses. The purpose of data mining is to discover pattern, anomalies or correlations. Data mining is usually done on combination with other aspects of computing such as AI, Statistics and Machine learning and the information obtained would be used for some other operations.
@@ -69,6 +69,12 @@ For \textbf{Natural language processing}, spaCy is currently the package chosen 
 
 For ticketing data and historical train data, the information will initially be sourced from BR fares and the national rail database.
 
+SpaCy, NLTK, Scrapy, Selenium, BeautifulSoup, Sci-kit learn, Numpy, SQLite, Joblib, Experta, HSP
+
+\subsubsection{Tools}
+Visual studio code
+Github
+DB Browser
 
 \subsection{Work Plan}
 \begin{sideways}
@@ -92,7 +98,7 @@ For ticketing data and historical train data, the information will initially be 
 		\ganttlinkedbar{Reasoning engine}{33}{50} \\
 		\ganttbar{Data mining}{22}{30} \\
 		\ganttlinkedbar{Prediction model}{31}{50} \\
-		\ganttbar{Web scraper}{22}{35} \\
+		\ganttbar{Database}{22}{35} \\
 		\ganttlinkedbar{Web scraper}{36}{45} \\
 		\ganttlinkedbar{UI}{46}{50} \\
 		\ganttlinkedbar{Compile and test}{51}{60}\\
@@ -120,29 +126,102 @@ For ticketing data and historical train data, the information will initially be 
 \subsection{The Architecture of the chatbot}
 
 \subsection{User Interface} 
-The user interface was implemented by using the \textit{Flask} framework. 
+The user interface will be created using \textit{HTML} and \textit{CSS} as it provides portability and flexibility during development ans usage. HTML and CSS provides a simple framework for updating and customising the visuals allowing replication of the chatbot across sites with different designs. The user interface will be connected to the back-end using Python \textit{Flask}. While the current plan is to deploy the chatbot online and embedded within a website, existing frameworks such as \textit{Django} and \textit{PhoneGap}.
 
 \subsection{NLP}
+Natural language processing mainly rely on the \textit{SpaCy} framework to filter, process and extract required information. The chatbot will also utilise a minor amount of \textit{NLTK} functions to increase the accuracy at which the chatbot picks up the relevant information.
+
+NLP will be the link between the chatbot and background functions that handles train booking, delay prediction and contingency planning. The system will extract information such as location, dates and key words using token tagging and dependencies trained by existing models provided by the framework. Location and date in the sentences will be usually be obtained using the entity tagger present in \textit{SpaCy}. Each function will aim to retrieve a set of pre-defined information.
+
+Error prevention will also be implemented into the system where spelling mistakes on station names by using trained models to predict the which location is the most likely station that is intended by the user.
+
+\subsection{Reasoning engine}
+The reasoning engine will be trained using K-nearest neighbours with a database of sentences tagged with intention. The model will be used to predict the intent of sentences entered by users. The sentences will be tagged with '\textbf{B}', '\textbf{C}', '\textbf{D}' and '\textbf{N}' representing \textbf{B}ooking, \textbf{C}ontingencies, \textbf{D}elays and \textbf{N}ormal conversations. Additional training data can potentially be added into the database to improve prediction accuracy in the future. The model is trained by vectorising the sentences. The vectors are then hashed to decrease the size to accommodate future growth. As the model predicts by comparing sentence similarity, sentences that contains different location name will still be classified accurately without the need for the specific sentence to be included in the model.
+
+The decision to utilise kNN is to ensure that majority of inputs can be recognised. The model can be constantly updated to adapt to the way user requests for different services. This will allow the system to continue to function efficiently as communication methods change in the future which pre-defined rules might not be able to achieve. As the model predicts by sentence similarity, additional intents can be added easily in the future to expand functionality of the chatbot.
+
+\subsection{Website scraping}
+This module will utilise functions from the \textit{Scrapy}, \textit{BeautifulSoup} and \textit{Selenium} to complete the a booking form and scraping ticket data from the link returned from the form submission. The cheapest train ticket will be retrieved from the list of tickets available and along with the web link, returned to the user for booking.
 
 \subsection{Knowledge-base}
-
-\subsection{Inferring Engine}
+Contingency plans
 
 \subsection{Prediction Model}
 
-\subsection{Data Acquisition}
 
+\subsection{Data Acquisition}
+Data acquisition is designed into the system in two parts. Firstly, historical train data will be acquired, processed and saved into the local database using the \textit{HSP} API which provides data of previous trains and their delays. Historical data can be acquired by providing parameters such as the start and end date of data needed, time and type of day. 3 years of data for trains travelling from Norwich to London Liverpool street will be extracted as the initial dataset for training but the system will allow further addition of data should it be needed. The historical data will contain the following list of information: Origin station, Destination station, Departure time, Departure delay, Arrival time, Arrival delay, Month of year, Type of Date, TOC code. By having Data acquisition built into the system, delay prediction can be expanded in the future to increase the coverage of different train routes. Another consideration during the design of data acquisition was the change of train operating companies or train routes in the future. An example can be seen where there was a new route added from Diss to Hatfield Peverel in 2018 which was not available before. Having in-built data acquisition will improve the ability to update the system without reliance on external software.
+
+Aside from acquiring historical data, the chatbot will also record successful predictions of the user intent to reinforce the model for future predictions. The system will save the initial sentence that was used to determine the intention of the user but will not store the follow up sentences when the system is completing a specific task.
+
+\subsection{Database}
+The system database will be created using the package \textit{SQLite}. It will function to store active data that is used by the system which includes: Historical data, Sentence tagged with intent, Responses for normal conversations, Station codes and also a test dataset. These data will be accessed using SQL commands embedded in defined functions within the system. Although using SQL will increase the layers and development work needed for the system, having a database system provides greater flexibility in the way the data can be queried and updated without the need of defining our own methods. It will also provide stronger security as the data saved will not be written in plain files that are easily accessible and understandable by humans which would allow the potential of collecting more personal data in the future if required with a lower level of security concern.
 
 \section{Implementation}
-\subsection{Development stages}
+\subsection{Development stages} \label{Dev. stages}
+\subsubsection{Stage 1}
+During design of the chatbot, dependency analysis revealed that the chatbot relies heavily on the database. Most of the function within the system requires access to the database therefore the development of database is prioritised. Stage 1 focused purely on creating the functions for creation, updating and access of the database. Figure \ref{fig:Stage 1} shows a summary of dependencies between different modules in the system.
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Stage_1}
+	\caption{Stage 1 of Development process }\label{fig:Stage 1}
+\end{figure}
 
-\section{Prototyping}
+\subsubsection{Stage 2}
+After development of the database, priority is given to systems that are projected to be time consuming. From analysis of the modules, reasoning engine, natural language processing and data acquisition are chosen to be the modules to focus on for the second stage. 
+
+For the NLP module, having it developed early will allow discovery of how well SpaCy and NLTK discovers entities and dependencies and come up with contingencies if there was any problems during natural language processing. Reasoning engine for intent will also be developed early to ensure that the reasoning engine can accurately predict the intent of sentences by running test on different sentence types. During research, we found out that there are significant amount of historical train data and it will be take time to collect, process and store the data. The prediction module will also take time to test out different type of models and fine tuning the final model however due to its dependency on the data acquisition module the development needs postponed until Stage 3.
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Stage_2}
+	\caption{Stage 2 of Development process }\label{fig:Stage 2}
+\end{figure}
+
+
+\subsubsection{Stage 3}
+Stage 3 will focus on the three main functionalities of the chatbot, obtaining cheapest train ticket, providing contingency plans and predicting train delays. For stage 3, the critical task will be the prediction model where large amount of time will be needed for model training and finding the best model to predict delays.
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Stage_3}
+	\caption{Stage 3 of Development process }\label{fig:Stage 3}
+\end{figure}
+
+\subsubsection{Stage 4}
+The focus of stage 4 will be the development of the user interface where the users will be interacting with the chatbot. This stage will also involve the development of basic flask framework that allows communication between the back-end and front-end. During the development of UI, a reasoning engine for error handling in sentences will also be created identify spelling mistakes to improve the usability of the system
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Stage_4}
+	\caption{Stage 4 of Development process }\label{fig:Stage 4}
+\end{figure}
+
+\subsubsection{Stage 5}
+The final stage will be development of the chatbot controller that connects the flask framework to the python functionalities. Final testing will also be conducted during the stage to ensure that all modules function as expected. 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Stage_5}
+	\caption{Stage 5 of Development process }\label{fig:Stage 5}
+\end{figure}
+\subsection{Problems and Mitigations}
+During development of web scraping module, we found that the ticket data was generated dynamically using JavaScript. As a simple \textit{Scrapy Spider} does not retrieve html data generated dynamically, \textit{Selenium} web driver was used instead to retrieve the full web page and scraped using \textit{BeatifulSoup}.
+
+During evaluation of predictive models, most of models trained with the preset values obtained an extremely low $R^2$ value ($<$ 0.01) and returned highly inaccurate predictions. To improve the accuracy, we defined a list of different values for the settings of the models and by utilising cross validation, obtained the value setting that returns more accurate predictions and a higher $R^2$ value.
+
+To further address the issue, we modified the system to utilise a heterogeneous ensemble that uses a voting regressor to further improve the prediction accuracy.
 
 \section{Testing}
+Testing is done in different levels of implementation. Firstly, unit testing was done to all the individual modules by writing local main methods to test the functionality and check if it executes and behaves as expected. For modules that depends on input from another, dummy values were provided. These tests will also decrease coupling which will increase the portability of individual modules.
 
+Aside from that, integration testing will be conducted with the completion of a development stage detailed in section \ref{Dev. stages}. These tests focuses on the methods that depends on input from another modules which were previously tested with dummy values during unit testing. This allows early detection of bugs and inconsistencies which can be addressed in an earlier stage of development.
+
+After the system has been assembled, priority will be placed on white-box testing to test all the internal functionalities implemented alongside minor black-box testing to discover potential errors or mistakes. These tests will be monitored and previous working versions will be saved for recovery in case that the testing creates unforeseen irreversible effects.
 
 \section{Evaluation and Discussion}
-
+\subsection{Contribution}
+\begin{itemize}
+	\item Alvin  -
+	\item Joe    - 
+	\item YuTing -
+\end{itemize}
 \section{Conclusion or Summary}
 
 \clearpage

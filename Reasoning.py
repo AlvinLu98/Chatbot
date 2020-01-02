@@ -38,7 +38,7 @@ def predict(sentence):
 
 def main():
     train_model()
-    print(predict("My train is delayed"))
+    print(predict("Hello"))
 
 if __name__ == '__main__':
     main()

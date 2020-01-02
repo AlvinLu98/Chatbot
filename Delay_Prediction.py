@@ -266,32 +266,57 @@ def main():
 
     print("----------------------------------- Training -----------------------------------")
     print("Neural Network.....")
-    train_neural_network(train_d, train_a, (5, 32), 4, "2_layer_NN.joblib")
+    # train_neural_network(train_d, train_a, (5, 32), 4, "2_layer_NN.joblib")
     # mlp = MLPRegressor(early_stopping=True, max_iter=2000)
     # parameter_space = {
-    #     'hidden_layer_sizes': [(2,), (3,), (4,), (5,), (10,), (15,), (20,)],
-    #     'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        
     # }
     # best_val = GridSearchCV(mlp, parameter_space, n_jobs=-1, cv=3)
     # best_val.fit(data, np.ravel(actual))
     # print("Best params: ", best_val.best_params_)
     # dump(best_val.best_estimator_, "BEST_NN.joblib")
 
-    # print("Decision Tree.....")
+    print("Decision Tree.....")
     # train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
+    dt =  DecisionTreeRegressor()
+    parameter_space = {
+        'max_depth': [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
+        'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    }
+    best_tree = GridSearchCV(dt, parameter_space, n_jobs=-1, cv=3)
+    best_tree.fit(data, np.ravel(actual))
+    print("Best params: ", best_tree.best_params_)
+    dump(best_tree.best_estimator_, "BEST_Tree.joblib")
 
-    # print("Random forest.....")
+    print("Random forest.....")
     # train_random_forest(train_d, train_a, 4, None, "random_forest.joblib")
 
+    rf =  RandomForestRegressor()
+    parameter_space = {
+        'n_estimators': [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
+        'max_depth': [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
+        'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    }
+    best_forest = GridSearchCV(rf, parameter_space, n_jobs=-1, cv=3)
+    best_forest.fit(data, np.ravel(actual))
+    print("Best params: ", best_forest.best_params_)
+    dump(best_tree.best_estimator_, "BEST_Forest.joblib")
+
     print("---------------------------------- Prediction ----------------------------------")   
-    nn_pred = predict("2_layer_NN.joblib", test_d)
+    # nn_pred = predict("2_layer_NN.joblib", test_d)
     # dt_pred = predict("decision_tree_nomax.joblib", test_d)
     # rf_pred = predict("random_forest.joblib", test_d)
 
     best_nn_pred = predict("BEST_NN.joblib", test_d)
     print(evaluate_r2_score(test_a, best_nn_pred))
 
-    print(evaluate_r2_score(test_a, nn_pred))
+    best_tree_pred = predict("BEST_Tree.joblib", test_d)
+    print(evaluate_r2_score(test_a, best_tree_pred))
+
+    best_tree_pred = predict("BEST_Forest.joblib", test_d)
+    print(evaluate_r2_score(test_a, best_tree_pred))
+
+    # print(evaluate_r2_score(test_a, nn_pred))
     # print(evaluate_r2_score(test_a, dt_pred))
     # print(evaluate_r2_score(test_a, rf_pred))
 

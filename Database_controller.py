@@ -36,11 +36,6 @@ def station_data():
     conn.commit()
     conn.close()
 
-def booking_sentences():
-    conn = connect_DB("chatbot.db")
-    cur = conn.cursor()
-    query = "CREATE TABLE IF NOT EXISTS sentences(sentence VARCHAR(300) PRIMARY KEY, classification CHAR(1))"
-
 def general_conversation():
     conn = connect_DB("chatbot.db")
     cur = conn.cursor()
@@ -99,6 +94,17 @@ def training_model():
 ##################################################################################################
 #                                         Booking queries
 ##################################################################################################
+def get_all_station():
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+
+    sql_query = "SELECT * FROM Station?"
+    cur.execute(sql_query,)
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
 def get_station_name(station):
     conn = connect_DB("chatbot.db")
     cur = conn.cursor()
@@ -174,6 +180,15 @@ def get_all_intent_sentences():
     rows = cur.fetchall()
     conn.close()
     return rows
+
+def add_intent_sentences(sentence):
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+    sql_query = "INSERT INTO Intent_sentence VALUES(?, ?)"
+    data = (sentence[0], sentence[1])
+    cur.execute(sql_query, data)
+    conn.commit()
+    conn.close()
 
 def get_chat_response(chat):
     conn = connect_DB("chatbot.db")

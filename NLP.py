@@ -7,9 +7,14 @@ import nltk
 import spacy
 import string
 import re
+import Database_controller as dc
 
 from nltk import word_tokenize
 from spacy.lang.en.stop_words import stopword
+from sklearn.feature_extraction.text import HashingVectorizer
+from sklearn.neighbors import KNeighborsClassifier
+
+from joblib import dump, load
 
 nlp = spacy.load("en_core_web_lg")
 
@@ -56,6 +61,37 @@ def calculate_similarity(word_1, word_2):
 #Return the processed sentence depending on input
 def process_intent(raw_input, intent):
     return 0
+
+##################################################################################################
+#                                        Error recovery
+##################################################################################################
+def train_station_model():
+    rows = dc.get_all_station()
+    names, codes = name_code_split(rows)
+    names = preprocess_data(names)
+
+    kNN = KNeighborsClassifier(n_neighbors=3, weights='distance')
+    kNN.fit(names, codes)
+    dump(kNN, "station_model.joblib")
+
+def name_code_split(rows):
+    names = []
+    codes = []
+    for name, code in rows:
+        names.append(name)
+        codes.append(code)
+    return names, codes
+
+def preprocess_data(text):
+    vectoriser = HashingVectorizer(n_features=20)
+    vector = vectoriser.transform(text)
+    return vector
+
+def predict(name):
+    model = load("station_model.joblib")
+    vectoriser = HashingVectorizer(n_features=20)
+    vector = vectoriser.transform([name])
+    return model.predict(name)
 
 ##################################################################################################
 #                               Additional Sentence Proccessing
@@ -163,21 +199,21 @@ def remove_stopwords(tokenized_list):
 #                                     Train booking processing
 ##################################################################################################
 #Extract train booking info from the sentence
-def train_booking():
+def process_train_booking(sentence):
     return 0
 
 ##################################################################################################
 #                                     Train delay processing
 ###################################################################################################
 #Extract train delay info from the sentence
-def train_delay():
+def process_train_delay(sentence):
     return 0
 
 ##################################################################################################
 #                                   Staff function processing
 ##################################################################################################
 #Extract staff info from the sentence
-def staff_info():
+def processs_contingencies(sentence):
     return 0
 
 ##################################################################################################
@@ -187,6 +223,8 @@ def staff_info():
 def main():
     sentence = input("Please enter something: ")
     process_sentence(sentence)
+    train_station_model()
+    predict("Nowrich")
     
 if __name__ == '__main__':
     main()

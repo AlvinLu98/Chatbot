@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2018.9.12)  31 DEC 2019 15:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2018.9.12)  2 JAN 2020 15:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -22,6 +22,13 @@ File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
+(c:/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(c:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
 (c:/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
 
@@ -36,6 +43,9 @@ Package graphics Info: Driver file: pdftex.def on input line 99.
 (c:/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
 (c:/texlive/2018/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip43
@@ -46,16 +56,6 @@ LaTeX Info: Redefining \cite on input line 694.
 (c:/texlive/2018/texmf-dist/tex/latex/graphics/rotating.sty
 Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
 
-(c:/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
-
-(c:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks14
-)
-\Gin@req@height=\dimen103
-\Gin@req@width=\dimen104
-)
 (c:/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
@@ -568,35 +568,68 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
  [1
 
 {c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Overfull \hbox (54.74704pt too wide) in paragraph at lines 114--115
+Overfull \hbox (54.74704pt too wide) in paragraph at lines 120--121
 [] 
  []
 
 [3] [4] [5
 
-] (./Group_2 Final report.bbl) [6
+]
+<Stage_1.png, id=29, 600.3228pt x 402.7848pt>
+File: Stage_1.png Graphic file (type png)
+<use Stage_1.png>
+Package pdftex.def Info: Stage_1.png  used on input line 166.
+(pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
+<Stage_2.png, id=31, 600.3228pt x 402.7848pt>
+File: Stage_2.png Graphic file (type png)
+<use Stage_2.png>
+Package pdftex.def Info: Stage_2.png  used on input line 176.
+(pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
+ [6]
+<Stage_3.png, id=35, 600.3228pt x 402.7848pt>
+File: Stage_3.png Graphic file (type png)
+<use Stage_3.png>
+Package pdftex.def Info: Stage_3.png  used on input line 185.
+(pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
+<Stage_4.png, id=36, 600.3228pt x 402.7848pt>
+File: Stage_4.png Graphic file (type png)
+<use Stage_4.png>
+Package pdftex.def Info: Stage_4.png  used on input line 193.
+(pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
+ [7 <./Stage_1.png> <./Stage_2.png>]
+<Stage_5.png, id=43, 600.3228pt x 402.7848pt>
+File: Stage_5.png Graphic file (type png)
+<use Stage_5.png>
+Package pdftex.def Info: Stage_5.png  used on input line 201.
+(pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
+ [8 <./Stage_3.png> <./Stage_4.png>]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 207.
+ [9 <./Stage_5.png>] [10] (./Group_2 Final report.bbl) [11
 
-] (./Group_2 Final report.aux) ) 
+]
+(./Group_2 Final report.aux) ) 
 Here is how much of TeX's memory you used:
- 15034 strings out of 492641
- 314085 string characters out of 6133116
- 413388 words of memory out of 5000000
- 18654 multiletter control sequences out of 15000+600000
- 8798 words of font info for 31 fonts, out of 8000000 for 9000
+ 15068 strings out of 492641
+ 314573 string characters out of 6133116
+ 414617 words of memory out of 5000000
+ 18682 multiletter control sequences out of 15000+600000
+ 9157 words of font info for 32 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,8n,69p,915b,764s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2018/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmbx10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmbx12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.
-pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/te
-xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2018
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2018/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2018/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmti10.pfb>
-Output written on "Group_2 Final report.pdf" (6 pages, 136274 bytes).
+ 62i,8n,69p,1347b,764s stack positions out of 5000i,500n,10000p,200000b,80000s
+<c:/texlive/2018/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmbx12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
+fb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/tex
+live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2018/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2018/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2018/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmti10.pfb>
+Output written on "Group_2 Final report.pdf" (11 pages, 462973 bytes).
 PDF statistics:
- 58 PDF objects out of 1000 (max. 8388607)
- 41 compressed objects within 1 object stream
+ 90 PDF objects out of 1000 (max. 8388607)
+ 57 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 38 words of extra memory for PDF output out of 10000 (max. 10000000)
 
