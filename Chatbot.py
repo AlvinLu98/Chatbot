@@ -47,6 +47,7 @@ def process_contingencies(sentence):
 # between Diss to Ipswich(Full) and Stowmarket to Ipswich(Partial)
 
     sentence = request.form['blockage', 'origin', 'destination', 'intent']
+    sentence = NLP.process_contingencies
     response = Database_controller.get_contingency(sentence)
     if len(response) != 0:
         if 'blockage' and 'origin' and 'destination' and 'intent' in session:
