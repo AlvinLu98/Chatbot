@@ -36,13 +36,54 @@ def process_message():
         else:
             return jsonify(message = response[0])
 
-
+@app.route('/booking')
 def process_booking(sentence):
     return 0
 
+@app.route('/train contingencies')
 def process_contingencies(sentence):
-    return 0
 
+# multiple blockage points that alter the schedule and advise given
+# between Diss to Ipswich(Full) and Stowmarket to Ipswich(Partial)
+
+    sentence = request.form['blockage', 'origin', 'destination', 'intent']
+    response = Database_controller.get_contingency(sentence)
+    if len(response) != 0:
+        if 'blockage' and 'origin' and 'destination' and 'intent' in session:
+            if session['blockage'] == 'full':
+                if session['origin'] == 'Diss' and session['destination'] == 'Ipswich':
+                    if session['blockage'] == 'A':
+                        print(session['intent'] == 'scheduleA')
+                        print(session['intent'] == 'adviseA')
+                        return jsonify()
+                    if session['blockage'] == 'B':
+                        print(session['intent'] == 'scheduleB')
+                        print(session['intent'] == 'adviseB')
+                        return jsonify()
+                    if session['blockage'] == 'C':
+                        print(session['intent'] == 'scheduleC')
+                        print(session['intent'] == 'adviseC')
+                        return jsonify()
+                else:
+                    print(session['intent'])
+                    return jsonify()
+
+            if session['blockage'] == 'partial':
+                if session['origin'] == 'Stowmarket' and session['destination'] == 'Ipswich':
+                    if session['blockage'] == 'A':
+                        print(session['intent'])
+                        print(session['intent'] == 'scheduleA')
+                        print(session['intent'] == 'adviseA')
+                        return jsonify()
+                    if session['blockage'] == 'B':
+                        print(session['intent'] == 'scheduleB')
+                        print(session['intent'] == 'adviseB')
+                        return jsonify()
+                else:
+                    print(session['intent'])
+                    return jsonify()
+
+@app.route('/delay')
 def process_delay(sentence):
     return 0
 

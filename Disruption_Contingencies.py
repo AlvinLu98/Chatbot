@@ -82,7 +82,7 @@ class BlockedRoute(Fact):
 # C : East Suffolk Junction to Ipswich Working
 
 # A : Diss to Haughley Junction Line Working
-    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="schedule"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="scheduleA"))
     def partial_diss_ipswich_scheduleA(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -107,12 +107,12 @@ class BlockedRoute(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="advise"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="adviseA"))
     def partial_diss_ipswich_adviseA(self):
         return("Consider cancelling 6A33 / 6P40")
 
 # B : Haughley Junction to East Suffolk Junction Working
-    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="schedule"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="scheduleB"))
     def partial_diss_ipswich_scheduleB(self):
        return(
              "RUNNING AS BOOKED \n\
@@ -144,14 +144,14 @@ class BlockedRoute(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="advise"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="adviseB"))
     def partial_diss_ipswich_adviseB(self):
         return(
             "Freight to be diverted via London \n\
             Monitor inbound freight, liaise with freight York & SSM Cambridge re-holding points")
 
 # C : East Suffolk Junction to Ipswich Working
-    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="schedule"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="scheduleC"))
     def partial_diss_ipswich_scheduleC(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -177,7 +177,7 @@ class BlockedRoute(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="advise"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="adviseC"))
     def partial_diss_ipswich_adviseC(self):
         return(
             "All 1Pxx services stop addl Stowmarket. \n\
@@ -230,7 +230,7 @@ class BlockedRoute(Fact):
 # B : London End Crossover Avaliable (GE24A)
 
 # A : Haughley Junction Avaliable (GE24)
-    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="schedule"))
+    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="scheduleA"))
     def full_stowmarket_ipswich_scheduleA(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -262,12 +262,12 @@ class BlockedRoute(Fact):
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>"
         )
 
-    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="advise"))
+    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="adviseA"))
     def full_stowmarket_ipswich_adviseA(self):
         return("Will require shunting in and out of the loop at Stowmarket")
 
 # B : London End Crossover Avaliable (GE24A)
-    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="schedule"))
+    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="scheduleB"))
     def full_stowmarket_ipswich_scheduleB(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -298,7 +298,7 @@ class BlockedRoute(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="advise"))
+    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="adviseB"))
     def full_stowmarket_ipswich_adviseB(self):
         return("In the event that Stowmarket loop is not accessible and Stowmarket London End crossover can not be used.")
 
