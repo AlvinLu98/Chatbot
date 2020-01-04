@@ -16,7 +16,7 @@ class Time_of_day(Fact):
 ###################################################################################
 #               Norwich to Diss (Partial / Full) (Used Trowse contingencies)
 ###################################################################################
-    @Rule(BlockedRoute(blockage="partial", start="Norwich", to="Diss", intent="schedule"))
+    @Rule(BlockedRoute(blockage="partial", origin="Norwich", destination="Diss", intent="schedule"))
     def partial_norwich_diss_schedule(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -41,11 +41,11 @@ class Time_of_day(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="partial", start="Norwich", to="Diss", intent="advise"))
+    @Rule(BlockedRoute(blockage="partial", origin="Norwich", destination="Diss", intent="advise"))
     def partial_norwich_diss_advise(self):
         return("None")
 
-    @Rule(BlockedRoute(blockage="full", start="Norwich", to="Diss", intent="schedule"))
+    @Rule(BlockedRoute(blockage="full", origin="Norwich", destination="Diss", intent="schedule"))
     def full_norwich_diss_schedule(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -71,7 +71,7 @@ class Time_of_day(Fact):
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>"
         )
 
-    @Rule(BlockedRoute(blockage="full", start="Norwich", to="Diss", intent="advise"))
+    @Rule(BlockedRoute(blockage="full", origin="Norwich", destination="Diss", intent="advise"))
     def full_norwich_diss_advise(self):
         return("6P40 / 6P41 to divert via Ely & Thetford")
 
@@ -84,7 +84,7 @@ class Time_of_day(Fact):
 # C : East Suffolk Junction to Ipswich Working
 
 # A : Diss to Haughley Junction Line Working
-    @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="schedule"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="schedule"))
     def partial_diss_ipswich_scheduleA(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -109,12 +109,12 @@ class Time_of_day(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="advise"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="advise"))
     def partial_diss_ipswich_adviseA(self):
         return("Consider cancelling 6A33 / 6P40")
 
 # B : Haughley Junction to East Suffolk Junction Working
-    @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="schedule"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="schedule"))
     def partial_diss_ipswich_scheduleB(self):
        return(
              "RUNNING AS BOOKED \n\
@@ -146,14 +146,14 @@ class Time_of_day(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="advise"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="advise"))
     def partial_diss_ipswich_adviseB(self):
         return(
             "Freight to be diverted via London \n\
             Monitor inbound freight, liaise with freight York & SSM Cambridge re-holding points")
 
 # C : East Suffolk Junction to Ipswich Working
-    @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="schedule"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="schedule"))
     def partial_diss_ipswich_scheduleC(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -179,7 +179,7 @@ class Time_of_day(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="partial", start="Diss", to="Ipswich", intent="advise"))
+    @Rule(BlockedRoute(blockage="partial", origin="Diss", destination="Ipswich", intent="advise"))
     def partial_diss_ipswich_adviseC(self):
         return(
             "All 1Pxx services stop addl Stowmarket. \n\
@@ -189,7 +189,7 @@ class Time_of_day(Fact):
 ###################################################################################
 #               Diss to Stowmarket (Full)
 ###################################################################################
-    @Rule(BlockedRoute(blockage="full", start="Diss", to="Stowmarket", intent="schedule"))
+    @Rule(BlockedRoute(blockage="full", origin="Diss", destination="Stowmarket", intent="schedule"))
     def full_diss_stowmarket_schedule(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -221,7 +221,7 @@ class Time_of_day(Fact):
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>"
         )
 
-    @Rule(BlockedRoute(blockage="full", start="Diss", to="Stowmarket", intent="advise"))
+    @Rule(BlockedRoute(blockage="full", origin="Diss", destination="Stowmarket", intent="advise"))
     def full_diss_stowmarket_advise(self):
         return("Freight to be diverted via London Where possible")
 
@@ -232,7 +232,7 @@ class Time_of_day(Fact):
 # B : London End Crossover Avaliable (GE24A)
 
 # A : Haughley Junction Avaliable (GE24)
-    @Rule(BlockedRoute(blockage="full", start="Stowmarket", to="Ipswich", intent="schedule"))
+    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="schedule"))
     def full_stowmarket_ipswich_scheduleA(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -264,12 +264,12 @@ class Time_of_day(Fact):
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>"
         )
 
-    @Rule(BlockedRoute(blockage="full", start="Stowmarket", to="Ipswich", intent="advise"))
+    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="advise"))
     def full_stowmarket_ipswich_adviseA(self):
         return("Will require shunting in and out of the loop at Stowmarket")
 
 # B : London End Crossover Avaliable (GE24A)
-    @Rule(BlockedRoute(blockage="full", start="Stowmarket", to="Ipswich", intent="schedule"))
+    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="schedule"))
     def full_stowmarket_ipswich_scheduleB(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -300,7 +300,7 @@ class Time_of_day(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="full", start="Stowmarket", to="Ipswich", intent="advise"))
+    @Rule(BlockedRoute(blockage="full", origin="Stowmarket", destination="Ipswich", intent="advise"))
     def full_stowmarket_ipswich_adviseB(self):
         return("In the event that Stowmarket loop is not accessible and Stowmarket London End crossover can not be used.")
 
@@ -308,7 +308,7 @@ class Time_of_day(Fact):
 ###################################################################################
 #               Ipswich to ManningTree (Partial / Full blockage)
 ###################################################################################
-    @Rule(BlockedRoute(blockage="partial", start="Ipswich", to="Manningtree", intent="schedule"))
+    @Rule(BlockedRoute(blockage="partial", origin="Ipswich", destination="Manningtree", intent="schedule"))
     def partial_ipswich_manningtree_schedule(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -334,11 +334,11 @@ class Time_of_day(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="partial", start="Ipswich", to="Manningtree", intent="advise"))
+    @Rule(BlockedRoute(blockage="partial", origin="Ipswich", destination="Manningtree", intent="advise"))
     def partial_ipswich_manningtree_advise(self):
         return("Consider extending services through to Manningtree / ECS to Mistley and return for PM peak & Off peak also where possible.")
 
-    @Rule(BlockedRoute(blockage="full", start="Ipswich", to="Manningtree", intent="schedule"))
+    @Rule(BlockedRoute(blockage="full", origin="Ipswich", destination="Manningtree", intent="schedule"))
     def full_ipswich_manningtree_schedule(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -367,7 +367,7 @@ class Time_of_day(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="full", start="Ipswich", to="Manningtree", intent="advise"))
+    @Rule(BlockedRoute(blockage="full", origin="Ipswich", destination="Manningtree", intent="advise"))
     def full_ipswich_manningtree_advise(self):
         return(
             "Shunting to take place at Manningtree North Jn if available. Shunting can also take place at Mistley. Permission should be obtained from Operations \n\
@@ -378,7 +378,7 @@ class Time_of_day(Fact):
 ###################################################################################
 #               Manningtree to Colchester (partial / full blockage)
 ###################################################################################
-    @Rule(BlockedRoute(blockage="partial", start="Manningtree", to="Colchester", intent="schedule"))
+    @Rule(BlockedRoute(blockage="partial", origin="Manningtree", destination="Colchester", intent="schedule"))
     def partial_manningtree_colchester_schedule(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -404,13 +404,13 @@ class Time_of_day(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="partial", start="Manningtree", to="Colchester", intent="advise"))
+    @Rule(BlockedRoute(blockage="partial", origin="Manningtree", destination="Colchester", intent="advise"))
     def partial_manningtree_colchester_advise(self):
         return(
             "- GriffinWharf may be blocked \n\
              -“Flighting” of trains is preferable to ensure as many trains through the sections as possible.")
 
-    @Rule(BlockedRoute(blockage="full", start="Manningtree", to="Colchester", intent="schedule"))
+    @Rule(BlockedRoute(blockage="full", origin="Manningtree", destination="Colchester", intent="schedule"))
     def full_manningtree_colchester_schedule(self):
         return(
             "RUNNING AS BOOKED \n\
@@ -438,7 +438,7 @@ class Time_of_day(Fact):
                     OFF-PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>")
 
-    @Rule(BlockedRoute(blockage="full", start="Manningtree", to="Colchester", intent="advise"))
+    @Rule(BlockedRoute(blockage="full", origin="Manningtree", destination="Colchester", intent="advise"))
     def full_manningtree_colchester_advise(self):
         return("Divert freight via BurySt Edmunds & across country up to W9 traffic only")
 
