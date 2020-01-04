@@ -150,7 +150,7 @@ a {
 
 .nav {
     /*border: 1px solid black;*/
-    height: 99px;
+    height: 100px;
     background-color: #333333;
     min-width: 1400px;
 }
@@ -167,48 +167,10 @@ a {
     float: left;
 }
 
-.nav-info .repulation {
-    /*border: 1px solid red;*/
-    height: 99px;
-    width: 245px;
-    float: left;
-}
-
-.repulation .repulation-1 {
-    /*border: 1px solid black;*/
-    height: 33px;
-    line-height: 33px;
-    background: url(img/rIcon1.png) no-repeat 30px 50%;
-    padding-left: 60px;
-    color: #ff9c00;
-    font-size: 10.92px;
-}
-
-.repulation .repulation-2 {
-    /*border: 1px solid black;*/
-    height: 33px;
-    line-height: 33px;
-    background: url(img/rIcon3.png) no-repeat 55px 50%;
-    padding-left: 85px;
-    color: #ff9c00;
-    font-size: 10.92px;
-}
-
-.repulation .repulation-3 {
-    /*border: 1px solid black;*/
-    height: 33px;
-    line-height: 33px;
-    background: url(img/rIcon2.png) no-repeat 80px 50%;
-    padding-left: 110px;
-    color: #ff9c00;
-    font-size: 10.92px;
-}
-
 .nav-info .nav-info-text {
-    /*border: 1px solid black;*/
     width: 780px;
     height: 99px;
-    float: right;
+    float: left;
     line-height: 99px;
 }
 
@@ -238,7 +200,6 @@ a {
 .upper-block,
 .bottom-block {
     color: #ffffff;
-    /*opacity: 0.8;*/
 }
 
 .bottom .upper-block {
@@ -269,8 +230,6 @@ a {
     width: 1240px;
     height: 335px;
     margin: 0 auto;
-    /*float: left;*/
-    /*margin-left: 350px;*/
 }
 
 .bottom-block .block-1 {
@@ -309,29 +268,50 @@ a {
     font-size: 14px;
 }
 
-.block-1-inside .address {
+.block-1-inside .group {
     line-height: 30px;
+    color: #9fa0a0;
 }
 
-.block-1-inside .tNumber {
+.block-1-inside .group_info {
     line-height: 30px;
+    margin-left: 10px;
+    font-size: 12px;
+    color: #9fa0a0;
+}
+
+.block-1-inside .members {
+    line-height: 30px;
+    color: #9fa0a0;
+}
+
+.block-1-inside .members_info {
+    line-height: 30px;
+    margin-left: 10px;
+    font-size: 12px;
+    color: #9fa0a0;
 }
 
 .block-1-icon {
-    /*border: 1px solid black;*/
     width: 235px;
     height: 46px;
     margin-top: 15px;
-    background: url(img/icon-botPhone.png) no-repeat 0 50%;
 }
 
-.block-1-icon .hotline {
-    font-size: 10.11px;
+.block-1-icon img {
+    width: 37px;
+    height: 41px;
+    float: left;
+}
+
+.block-1-icon .email_title {
+    font-size: 12px;
     padding-left: 45px;
+    color: #9fa0a0;
 }
 
-.block-1-icon .hlNumber {
-    font-size: 25.26px;
+.block-1-icon .emails {
+    font-size: 10px;
     color: #ff6600;
     padding-left: 45px;
 }
@@ -344,24 +324,18 @@ a {
     margin-top: 40px;
 }
 
-.block-2 .contactInfo {
+.block-2 .resources {
     /*border: 1px solid black;*/
-    width: 360px;
+    width: 400px;
     height: 191px;
     margin: 0 auto;
     margin-top: 10px;
     /*background: url(img/QRcode-2.jpg) no-repeat 15% 100%;*/
 }
 
-.contactInfo p {
+.resources p {
     font-size: 18px;
     letter-spacing: 2px;
-}
-
-.contactInfo .QRcode {
-    padding-left: 35%;
-    padding-top: 25px;
-    width: 130px;
 }
 
 .bottom-block .block-3 {
@@ -381,7 +355,7 @@ a {
 }
 
 .linkInfo .link-title {
-    font-size: 18px;
+    font-size: 20px;
     letter-spacing: 2px;
 }
 
@@ -439,8 +413,20 @@ a {
     letter-spacing: 1px;
 }
 
-.friendly p {
+.resourcelist p {
     float: left;
-    margin: 20px 40px 0 0px;
-    font-size: 14px;
+    margin: 20px 20px 0 0px;
+    color: #9fa0a0;
+    font-size: 12px;
+}
+
+.chat_info p {
+    margin: 20px 20px 0 0px;
+    color: #9fa0a0;
+    font-size: 15px;
+}
+
+.resourcelink {
+    font-size: 12px;
+    color: #9fa0a0;
 }

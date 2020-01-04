@@ -2,45 +2,28 @@
 <html>
 
 <head>
-    <title>chatbot</title>
+    <title>Chatbot</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/static/chatbotStyle.css">
+    <link rel="stylesheet" type="text/css" href="/static/Chatbot.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <!-- ignore this -->
-    <div class="top">
-        <div class="top-info" style="background-image: url({{ url_for('static', filename='img/icon_location.png') }});">
-            <p class="city">Norwich</p>
-            <p class="cutOff">|</p>
-            <p class="swapCity">others</p>
-
-            <div class="top-info-right">
-                <a href="chatbot">
-                    <p class="officialApp">Chat-bot</p>
-                </a>
-                <p class="cutOff2">|</p>
-                <p class="chatbot">Contacts</p>
-            </div>
-
-        </div>
-    </div>
 
     <div class="nav">
         <div class="nav-info">
-            <img src="{{ url_for('static', filename='img/log.jpg') }}" alt="log">
-
-            <div class="repulation">
-                <p class="repulation-1" style="background-image: url({{ url_for('static', filename='img/rIcon1.png') }});">Since 1998</p>
-                <p class="repulation-2" style="background-image: url({{ url_for('static', filename='img/rIcon3.png') }});">Based on UEA</p>
-                <p class="repulation-3" style="background-image: url({{ url_for('static', filename='img/rIcon2.png') }});">Accurate Enquiries</p>
-            </div>
+            <img src="{{ url_for('static', filename='img/log.jpg') }}" alt="Logo">
 
             <div class="nav-info-text">
                 <ul>
-                    <a href="chatbot">
+                    <a href="/">
                         <li>Chat-Bot</li>
+                    </a>
+                    <a href="https://www.realtimetrains.co.uk/">
+                        <li>Live train times</li>
+                    </a>
+                    <a href="https://www.thetrainline.com/">
+                        <li>Book a train!</li>
                     </a>
                 </ul>
             </div>
@@ -60,7 +43,7 @@
                 </div>
             </div>
             <br>
-            <form id="userChat">
+            <form id="userChat" action="{{url_for('message')}}" method="POST">
                 <input type="text" name="chat" id="chatbox" placeholder="Type here and press 'Enter' key to send">
                 <input type="submit" hidden>
             </form>
@@ -69,64 +52,96 @@
 
     <!-- bottom -->
     <div class="bottom">
-
-        <div class="upper-block" style="background-image: url({{ url_for('static', filename='img/botLog.png') }});">
-
-            <div class="upper-block-list">
-                <ul>
-                    <a href="/">
-                        <li class="botcol">Home</li>
-                    </a>
-                    <a href="">
-                        <li>Train time & tickets</li>
-                    </a>
-                    <a href="chatbot">
-                        <li>Chat-Bot</li>
-                    </a>
-                    <a href="/">
-                        <li>About us</li>
-                    </a>
-                </ul>
-            </div>
-        </div>
-
         <div class="bottom-block clearfix">
 
             <div class="block-1">
-                <p class="block-1-title-1">Rail Enquiries</p>
+                <p class="block-1-title-1">Chatbot</p>
                 <p class="block-1-title-2">|</p>
-                <p class="block-1-title-3">Norwich</p>
+                <p class="block-1-title-3">CMP-7028A</p>
 
                 <div class="block-1-inside">
-                    <p class="address">Location：xxxxxxxxxxxxxxxxxxxxxxx</p>
-                    <p class="tNumber">Telephone ：07000000000</p>
+                    <p class="group">Group：
+                        <p class="group_info"> Group 2M 2019</p>
+                    </p>
+                    <p class="members"> Members:
+                        <p class="members_info"> Alvin, Joe, YuTing</p>
+                    </p>
                 </div>
 
-                <div class="block-1-icon" style="background-image: url({{ url_for('static', filename='img/icon-botPhone.png') }});">
-                    <p class="hotline">24hrs hot line：</p>
-                    <p class="hlNumber">000-0000-000</p>
+                <div class="block-1-icon">
+                    <img src="{{url_for('static', filename='img/email.png')}}" alt="Email_icon">
+                    <p class="email_title">Contacts：</p>
+                    <p class="emails">a.lu@uea.ac.uk</p>
+                    <p class="emails">j.newman@uea.ac.uk</p>
+                    <p class="emails">y.liu21@uea.ac.uk</p>
                 </div>
             </div>
 
             <div class="block-2">
-                <div class="contactInfo">
-                    <p>Contact Us</p>
-                    <img class="QRcode" src="{{ url_for('static', filename='img/QRcode-2.jpg') }}" alt="QRcode-2">
+                <div class="resources">
+                    <p>Resources</p>
+                    <div class="resourcelist">
+                        <p>Natural language processing:
+                            <a class="resourcelink" href="https://www.nltk.org/">
+                                <p>NLTK</p>
+                            </a>
+                            <a class="resourcelink" href="https://spacy.io/">
+                                <p>SpaCy</p>
+                            </a>
+                        </p>
+                        <p>Website scraping:
+                            <a class="resourcelink" href="https://selenium-python.readthedocs.io/">
+                                <p>Selenium</p>
+                            </a>
+                            <a class="resourcelink" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">
+                                <p>BeautifulSoup</p>
+                            </a>
+                        </p>
+                        <p>Knowledgebase:
+                            <a class="resourcelink" href="https://docs.python.org/2/library/sqlite3.html">
+                                <p>SQLite</p>
+                            </a>
+                            <a class="resourcelink" href="https://pypi.org/project/experta/">
+                                <p>Experta</p>
+                            </a>
+                        </p>
+                        <p>Prediction models:
+                            <a class="resourcelink" href="https://scikit-learn.org/stable/index.html">
+                                <p>Scikit-learn</p>
+                            </a>
+                            <a class="resourcelink" href="https://numpy.org/">
+                                <p>NumPy</p>
+                            </a>
+                            <a class="resourcelink" href="https://joblib.readthedocs.io/en/latest/">
+                                <p>Joblib</p>
+                            </a>
+                        </p>
+                        <p>Historical data:
+                            <a class="resourcelink" href="https://wiki.openraildata.com/index.php/HSP">
+                                <p>Historical service performance</p>
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <div class="block-3">
                 <div class="linkInfo">
-                    <p class="link-title">Friendly link</p>
-                    <div class="friendly clearfix">
-                        <p>None</p>
-
+                    <p class="link-title">Information</p>
+                    <div class="chat_info">
+                        <a href="https://github.com/AlvinLu98/Chatbot">
+                            <p>Source code</p>
+                        </a>
+                        <a href="https://github.com/AlvinLu98/Chatbot/blob/master/Report/Group_2%20Final%20report.pdf">
+                            <p>Report</p>
+                        </a>
                     </div>
                 </div>
             </div>
 
             <div class="footer">
-                <p>©2018 Rail Enquiries</p>
+                <p>©2020 Train Booking Chatbot</p>
+                <p>Adapted from bootstrap designed by Ming Hong Wang 2018</p>
             </div>
         </div>
 

@@ -339,6 +339,15 @@ def retrive_date(sentence):
             year = str(tomorrow.year)[-2:]
             date = day+"-"+month+"-"+year
             date = [datetime.datetime.strptime(date, "%d-%m-%y")]
+        if "next month" in sentence:
+            nextMonth = now + datetime.timedelta(months=1)
+            day = str(nextMonth.day)
+            day = day.rjust(2, "0")
+            month = str(nextMonth.month)
+            month = month.rjust(2, "0")
+            year = str(nextMonth.year)[-2:]
+            date = day+"-"+month+"-"+year
+            date = [datetime.datetime.strptime(date, "%d-%m-%y")]
     return date
 
 def retrive_train_time(sentence):

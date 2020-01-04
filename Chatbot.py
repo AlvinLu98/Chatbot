@@ -10,28 +10,18 @@ app.secret_key="AI_Chatbot"
 def index():
     return render_template('index.html')
 
-@app.route('/message')
-def process_message():
-    sentence = request.form['message']
+@app.route('/message', methods=['POST'])
+def message():
+    sentence = request.form['chat']
     sentence = NLP.pre_processing(sentence)
     response = Database_controller.get_chat_response(sentence)
-    if len(response) != 0:
-        intent = Reasoning.predict(sentence)
-        if 'intent' in session:
-            if session['intent'] == 'B':
-                print(session['intent'])
-                session['State'] = "Booking"
-                process_booking(sentence)
-            elif session['intent'] == 'C':
-                print(session['intent'])
-                session['State'] = "Contingencies"
-                process_contingencies(sentence)
-            elif session['intent'] == 'D':
-                print(session['intent'])
-                session['State'] = "Delay"
-                process_delay(sentence)
+    if len(response) == 0:
+        if 'state' in session:
+            response = handle_intent(sentence)
         else:
-            session['intent'] = intent
+            intent = Reasoning.predict(sentence)
+            session['state'] = intent
+            handle_intent(sentence)
     else:
         if len(response) > 1:
             i = randrange(len(response))
@@ -39,18 +29,28 @@ def process_message():
         else:
             return jsonify(message = response[0])
 
+def handle_intent(sentence):
+    if session['state'] == 'B':
+        response = process_booking(sentence)
+    elif session['state'] == 'C':
+        response = process_contingencies(sentence)
+    elif session['state'] == 'D':
+        response = process_delay(sentence)
+    else:
+        response = "I'm not sure what to do"
+    return response
 
 def process_booking(sentence):
-    return 0
+    origin, destination, t_type, date, hour, minute, amount = NLP.process_train_booking(sentence)
 
 def process_contingencies(sentence):
-    return 0
+    origin, destination, blockage, intent = NLP.processs_contingencies(sentence)
 
 def process_delay(sentence):
-    return 0
+    origin, destination, dep_time, dep_delay, arr_time, month, day = NLP.process_train_delay(sentence)
 
 def quit_process():
     return 0
-    
+
 if __name__ == '__main__':
     app.run(debug = True)
