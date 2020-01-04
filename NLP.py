@@ -253,9 +253,10 @@ def process_train_booking(sentence):
     origin, destination = retrieve_org_dest(s, n)
     t_type = retrieve_ticket_type(sentence)
     date = retrive_date(sentence)
-    hour, minute = retrive_time(sentence)
+    hour, minute = retrive_train_time(sentence)
     date, hour= process_time_date(date, hour)
-    return origin, destination, t_type, date, hour, minute
+    amount = process_amount(sentence)
+    return origin, destination, t_type, date, hour, minute, amount
 
 def retrieve_org_dest(s, n):
     entities = get_entities_spacy(s)
@@ -270,11 +271,14 @@ def retrieve_org_dest(s, n):
     if origin == None or destination == None:
         locations = []
         for entity in entities:
-            if entity.label_ == "GPE" or entity.label_ == "FAC":
+            if entity.label_ == "GPE" or entity.label_ == "FAC" or entity.label_ == "PERSON":
                 locations.append(entity.text)
         if len(locations) == 2:
-            origin = location[0]
-            destination = location[1]
+            origin = locations[0]
+            destination = locations[1]
+        elif len(locations) == 1:
+            origin = locations[0]
+            destination = locations[0]
     return origin, destination
 
 def retrieve_ticket_type(sentence):
@@ -337,7 +341,7 @@ def retrive_date(sentence):
             date = [datetime.datetime.strptime(date, "%d-%m-%y")]
     return date
 
-def retrive_time(sentence):
+def retrive_train_time(sentence):
     time = re.findall(r'\d{2}:\d{2}', sentence)
     hour = [None for i in range(len(time))]
     minute = [None for i in range(len(time))]
@@ -371,21 +375,100 @@ def process_time_date(date, hour):
                hour[i] = 0
     return date, hour
             
-    
+def process_amount(sentence):
+    amount = re.findall(r'\d+\s\btickets?\b', sentence)
+    amount = re.findall(r'\d+', amount[0])
+    print(amount)
+    return amount
         
 ##################################################################################################
 #                                     Train delay processing
 ###################################################################################################
 #Extract train delay info from the sentence
 def process_train_delay(sentence):
-    return 0
+    s, n = process_sentence(sentence)
+    origin, destination = retrieve_org_dest(s, n)
+    now = datetime.datetime.now()
+    month = now.month
+    if now.weekday() < 5:
+        day = "WEEKDAY"
+    elif now.weekday() == 5:
+        day = "SATURDAY"
+    else:
+        day = "SUNDAY"
+    dep_time, arr_time = retrieve_times(sentence)
+    dep_delay = delay_time(sentence)
+
+    return origin, destination, dep_time, dep_delay, arr_time, month, day
+
+def delay_time(sentence):
+    delay = re.findall(r'\d+\s\bminutes?\b', sentence)
+    if not delay:
+        delay = re.findall(r'\bdelayed\b\s\d+', sentence)
+    if len(delay) > 0:
+        delay = re.findall(r'\d+', delay[0])
+        return int(delay[0])
+    return None
+
+def retrieve_times(sentence):
+    time = re.findall(r'\d{2}:\d{2}', sentence)
+    hour = [None for i in range(len(time))]
+    minute = [None for i in range(len(time))]
+
+    if time is not None:
+        for i, t in enumerate(time): 
+            hour[i] = int(t[:2])
+            minute[i] = int(t[-2:])
+
+    times = [None for i in range(len(time))]
+    for i in range(len(times)):
+        times[i] = datetime.time(hour[i], minute[i], 0)
+
+    dep_time = None
+    arr_time = None
+    if len(times) == 2:
+        if times[0] < times[1]:
+            if times[0].hour != 0:
+                dep_time = times[0]
+                arr_time = times[1]
+            else:
+                dep_time = times[1]
+                arr_time = times[0]
+        elif times[1].hour != 0:
+            dep_time = times[1]
+            arr_time = times[0]
+        else:
+            dep_time = times[0]
+            arr_time = times[1]
+    elif len(times) == 1:
+        dep_time = times[0]
+        arr_time = times[0]
+    return dep_time, arr_time
 
 ##################################################################################################
 #                                   Staff function processing
 ##################################################################################################
 #Extract staff info from the sentence
 def processs_contingencies(sentence):
-    return 0
+    s, n = process_sentence(sentence)
+    origin, destination = retrieve_org_dest(s, n)
+    blockage = retrieve_blockage(sentence)
+    intent = retrieve_cont_intent(sentence)
+    return origin, destination, blockage, intent
+
+def retrieve_blockage(sentence):
+    blockage = re.findall(r'\S+\s\bblockage\b', sentence)
+    if len(blockage) > 0:
+        blockage = blockage[0].split(' ', 1)[0]
+    return blockage
+
+def retrieve_cont_intent(sentence):
+    if "advice" in sentence:
+        return "advice"
+    elif "schedule" in sentence:
+        return "schedule"
+    else:
+        return None
 
 ##################################################################################################
 #                                           Testing
@@ -395,7 +478,11 @@ def main():
     sentence = input("Please enter something: ")
     process_sentence(sentence)
 
-    print(process_train_booking(sentence))
+    # print(process_train_booking(sentence))
+
+    # print(process_train_delay(sentence))
+
+    print(processs_contingencies(sentence))
 
     # train_station_model()
     # mistake = "Norwich"
