@@ -4,13 +4,14 @@ Created on Sun Oct 27 13:25:49 2019
 @author: Alvin Lu
 """
 import nltk
-import pandas
+# import pandas
 import spacy
 import string
 import re
 import Database_controller as dc
+import nltk
 
-from nltk import word_tokenize
+from nltk.corpus import treebank
 from spacy.lang.en.stop_words import stopword
 from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.neighbors import KNeighborsClassifier
@@ -33,23 +34,33 @@ def process_sentence(raw_input):
     print("############################### Tokenisation ###############################")
     raw_input = pre_processing(raw_input)
     doc = nlp(raw_input)
+    print(doc)
     for token in doc:
         print("%10s %10s %5s %5s %10s %10s %r" %(token.text, token.head.text, token.pos_, token.tag_, 
         token.dep_, token.lemma_, token.is_stop))
     print()
 
-    get_entities(doc)
-    get_dependencies(doc)
+    get_entities_spacy(doc)
+    get_dependencies_spacy(doc)
+    return doc
 
-def get_entities(doc):
-    print("############################### Entities ###############################")
+def get_entities_spacy(doc):
+    print("############################### Spacy Entities ###############################")
     for ent in doc.ents:
         print(ent.text, ent.label_)
     print()
     return doc.ents
 
-def get_dependencies(doc):
-    print("############################### Dependencies ###############################")
+def get_dependencies_nltk(tagged):
+    print("############################### NLTK Dependencies ###############################")
+    chunks = nltk.ne_chunk(tagged, binary=False)
+    for chunk in chunks:
+        print()
+    print()
+    return chunks
+
+def get_dependencies_spacy(doc):
+    print("############################### Spacy Dependencies ###############################")
     for chunk in doc.noun_chunks:
         print("%10s %10s %10s %10s" %(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text))
     print()
@@ -59,10 +70,6 @@ def get_dependencies(doc):
 def calculate_similarity(word_1, word_2):
     return 0
 
-#Return the processed sentence depending on input
-def process_intent(raw_input, intent):
-    return 0
-
 ##################################################################################################
 #                                        Error recovery
 ##################################################################################################
@@ -70,7 +77,6 @@ def train_station_model():
     rows = dc.get_all_station()
     names, codes = name_code_split(rows)
     names = preprocess_data(names)
-
     kNN = KNeighborsClassifier(n_neighbors=3, weights='distance')
     kNN.fit(names, codes)
     dump(kNN, "station_model.joblib")
@@ -78,7 +84,7 @@ def train_station_model():
 def name_code_split(rows):
     names = []
     codes = []
-    for name, code in rows:
+    for code, name in rows:
         names.append(name)
         codes.append(code)
     return names, codes
@@ -92,7 +98,7 @@ def predict(name):
     model = load("station_model.joblib")
     vectoriser = HashingVectorizer(n_features=20)
     vector = vectoriser.transform([name])
-    return model.predict(name)
+    return model.predict(vector)
 
 ##################################################################################################
 #                               Additional Sentence Proccessing
@@ -148,7 +154,7 @@ def replace_abbreviations(text):
 
 #Use NLTK library to tokenize
 def tokenize(text):
-    tokens = word_tokenize(text)  # W+ means that either a word character (A-Za-z0-9_) or a dash (-) can go there.
+    tokens = nltk.word_tokenize(text)  # W+ means that either a word character (A-Za-z0-9_) or a dash (-) can go there.
     return tokens
 
 #Use NLTK libray to indentify the POS Tagging of each word, For example-> going (tag: verb)
@@ -238,6 +244,42 @@ def getTfidfVectorizer(data_X_Y):
 def process_train_booking(sentence):
     return 0
 
+def retrieve_org_dest(spacy, nltk):
+    entities = get_entities_spacy(spacy)
+    dependencies = get_dependencies_spacy(spacy)
+    origin = None
+    destination = None
+    for chunk in dependencies:
+        if chunk.root.head.text == "to":
+            destination = chunk.text
+        elif chunk.root.head.test == "from":
+            origin = chunk.text
+    if origin == None or destination == None:
+        locations = []
+        for entity in entities:
+            if entity.label_ == "GPE" or entity.label_ == "FAC":
+                locations.append(entity.text)
+        if len(locations) == 2:
+            origin = location[0]
+            destination = location[1]
+    return origin, destination
+
+def retrieve_ticket_type(spacy, nltk):
+    if "single" in spacy:
+        return "single"
+    elif "return" in spacy:
+        return "return"
+    elif "open return" in spacy:
+        return "open"
+    else:
+        return None
+
+def retrive_date(spacy, nltk):
+    return 0
+
+def retrive_time(spacy, nltk):
+    return 0
+
 ##################################################################################################
 #                                     Train delay processing
 ###################################################################################################
@@ -259,8 +301,11 @@ def processs_contingencies(sentence):
 def main():
     sentence = input("Please enter something: ")
     process_sentence(sentence)
-    train_station_model()
-    predict("Nowrich")
+
+    # train_station_model()
+    # mistake = "Norwich"
+    # print("Prediting spelling mistake for ", mistake)
+    # print(predict(mistake))
     
 if __name__ == '__main__':
     main()

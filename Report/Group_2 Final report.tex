@@ -62,19 +62,15 @@ As components will be developed independently, all codes will be uploaded to Git
 \subsection{Languages, Packages, Tools}
 
 \subsubsection{Language}
-The chatbot will be developed in Python using other packages that may be originally written in other languages. For User interface, it will be written in HTML and CSS.
+Following the requirement, the chatbot will be developed mainly in \textit{Python}. \textit{Python} contains a vast library of packages and framework that supports the development of an intelligent system which will significantly reduce the amount of time needed for development. Aside from that, the User interface will be developed using HTML and CSS and supported by \textit{Flask}.
 
 \subsubsection{Packages}
-For \textbf{Natural language processing}, spaCy is currently the package chosen for the development of the chatbot. spaCy is a natural language processing package developed for Python programs. It also provides guides on utilising the text entered for deep learning which would work well with other Python packages that will be used. \textbf{Web scraping} wise, BeautifulSoup will be used as the package for web scraping. Tests will need to be run on different \textbf{Predictive models} to decide which model works best for the train delay problem. The package that will be used for this is SciKit learn. Currently, there are 2 packages being considered for \textbf{reasoning engine} which is durable and PyKnow.
-
-For ticketing data and historical train data, the information will initially be sourced from BR fares and the national rail database.
+For Natural language processing, there are two packages that can be used to support the development: \textit{SpaCy} and \textit{NLTK}.
 
 SpaCy, NLTK, Scrapy, Selenium, BeautifulSoup, Sci-kit learn, Numpy, SQLite, Joblib, Experta, HSP
 
 \subsubsection{Tools}
-Visual studio code
-Github
-DB Browser
+The chatbot will be developed using \textit{Visual Studio Code}, a code editor that allows development of python software and it also includes packages for error checking and syntax highlighting. Visual studio code also allows editing of other file types such as \textit{HTML}, \textit{CSS} and \textit{csv} files all with error checking and syntax highlighting available. In terms of database management, DB Browser is a software that allows viewing and managing of data. Having a database management software allows testing whether if database interaction is successful between modules and also allow manual analysis of collected data.
 
 \subsection{Work Plan}
 \begin{sideways}
@@ -124,7 +120,11 @@ DB Browser
 
  
 \subsection{The Architecture of the chatbot}
-
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Chatbot_Structure}
+	\caption{Structure of the chatbot }\label{fig:Chatbot_Structure}
+\end{figure}
 \subsection{User Interface} 
 The user interface will be created using \textit{HTML} and \textit{CSS} as it provides portability and flexibility during development ans usage. HTML and CSS provides a simple framework for updating and customising the visuals allowing replication of the chatbot across sites with different designs. The user interface will be connected to the back-end using Python \textit{Flask}. While the current plan is to deploy the chatbot online and embedded within a website, existing frameworks such as \textit{Django} and \textit{PhoneGap}.
 
@@ -133,21 +133,39 @@ Natural language processing mainly rely on the \textit{SpaCy} framework to filte
 
 NLP will be the link between the chatbot and background functions that handles train booking, delay prediction and contingency planning. The system will extract information such as location, dates and key words using token tagging and dependencies trained by existing models provided by the framework. Location and date in the sentences will be usually be obtained using the entity tagger present in \textit{SpaCy}. Each function will aim to retrieve a set of pre-defined information.
 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.7\textwidth]{NLP_Prototype}
+	\caption{A prototype of Natural language processing. The system tokenises provided sentence and finds the entities and dependencies }\label{fig:NLP_Prototype}
+\end{figure}
+
 Error prevention will also be implemented into the system where spelling mistakes on station names by using trained models to predict the which location is the most likely station that is intended by the user.
 
 \subsection{Reasoning engine}
 The reasoning engine will be trained using K-nearest neighbours with a database of sentences tagged with intention. The model will be used to predict the intent of sentences entered by users. The sentences will be tagged with '\textbf{B}', '\textbf{C}', '\textbf{D}' and '\textbf{N}' representing \textbf{B}ooking, \textbf{C}ontingencies, \textbf{D}elays and \textbf{N}ormal conversations. Additional training data can potentially be added into the database to improve prediction accuracy in the future. The model is trained by vectorising the sentences. The vectors are then hashed to decrease the size to accommodate future growth. As the model predicts by comparing sentence similarity, sentences that contains different location name will still be classified accurately without the need for the specific sentence to be included in the model.
 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Reasoning_Prototype}
+	\caption{Reasoning engine for the chatbot }\label{fig:Reasoning_Prototype}
+\end{figure}
+
 The decision to utilise kNN is to ensure that majority of inputs can be recognised. The model can be constantly updated to adapt to the way user requests for different services. This will allow the system to continue to function efficiently as communication methods change in the future which pre-defined rules might not be able to achieve. As the model predicts by sentence similarity, additional intents can be added easily in the future to expand functionality of the chatbot.
 
 \subsection{Website scraping}
-This module will utilise functions from the \textit{Scrapy}, \textit{BeautifulSoup} and \textit{Selenium} to complete the a booking form and scraping ticket data from the link returned from the form submission. The cheapest train ticket will be retrieved from the list of tickets available and along with the web link, returned to the user for booking.
+This module will utilise functions from the \textit{Scrapy}, \textit{BeautifulSoup} and \textit{Selenium} to complete the a booking form and scraping ticket data from the link returned from the form submission. The cheapest train ticket will be retrieved from the list of tickets available and along with the web link, returned to the user for booking. Train ticket information is retrieved from the site \textit{Trainline} by entering auto completing the form using the information collected from conversation with the user and scraping info from the link returned from the form submission. \textit{Scrapy} was later removed from and the detailed explanation can be found in section \ref{Problems}
 
 \subsection{Knowledge-base}
-Contingency plans
+The knowledge-base will be used to store contingencies in the case of railroad disruptions. The module will use the package \textit{Experta}, a new branch of \textit{PyKnow} to define a ruled base inference system to retrieve contingencies. The rules will take the type of blockage (e.g. full or partial) the origin and destination pairs and the type of information the user is requesting. Using these information, the module will then return pre-set contingencies to the user.
+
+For the generation of rules, the information is extracted from the actual contingencies document of train service companies provided for this development. Using the simple rule and fact format of \textit{Experta}, extra rules can be potentially added in the future by staff with limited IT-experience.
 
 \subsection{Prediction Model}
+For prediction model, a neural network is used to predict the delays. From analysis of data acquired from \textit{HSP}, we noticed that although the departure delay is available, there isn't a clear connection between the data provided and the delay time therefore a case based reasoning such as kNN might not be able to provide an accurate prediction without the presence of stronger attribute such as delay reason. Additionally, kNN are lazy learners which might significantly increase the prediction time due to the large size of training dataset.
 
+Neural network was considered as the model for delay prediction as multi layer perceptrons aims to create a model that fits the data given instead of finding the training data that fits the unknown data best. Although utilising neural network might result in difficulties when visualising the model however it will produce a better prediction within a shorter time period once the a suitable setting is found.
+
+The model was later modified during implementation to use a heterogeneous ensemble instead of neural network. Details are explained in section \ref{Problems}.
 
 \subsection{Data Acquisition}
 Data acquisition is designed into the system in two parts. Firstly, historical train data will be acquired, processed and saved into the local database using the \textit{HSP} API which provides data of previous trains and their delays. Historical data can be acquired by providing parameters such as the start and end date of data needed, time and type of day. 3 years of data for trains travelling from Norwich to London Liverpool street will be extracted as the initial dataset for training but the system will allow further addition of data should it be needed. The historical data will contain the following list of information: Origin station, Destination station, Departure time, Departure delay, Arrival time, Arrival delay, Month of year, Type of Date, TOC code. By having Data acquisition built into the system, delay prediction can be expanded in the future to increase the coverage of different train routes. Another consideration during the design of data acquisition was the change of train operating companies or train routes in the future. An example can be seen where there was a new route added from Diss to Hatfield Peverel in 2018 which was not available before. Having in-built data acquisition will improve the ability to update the system without reliance on external software.
@@ -201,10 +219,10 @@ The final stage will be development of the chatbot controller that connects the 
 	\includegraphics[width=0.6\textwidth]{Stage_5}
 	\caption{Stage 5 of Development process }\label{fig:Stage 5}
 \end{figure}
-\subsection{Problems and Mitigations}
+\subsection{Problems and Mitigations} \label{Problems}
 During development of web scraping module, we found that the ticket data was generated dynamically using JavaScript. As a simple \textit{Scrapy Spider} does not retrieve html data generated dynamically, \textit{Selenium} web driver was used instead to retrieve the full web page and scraped using \textit{BeatifulSoup}.
 
-During evaluation of predictive models, most of models trained with the preset values obtained an extremely low $R^2$ value ($<$ 0.01) and returned highly inaccurate predictions. To improve the accuracy, we defined a list of different values for the settings of the models and by utilising cross validation, obtained the value setting that returns more accurate predictions and a higher $R^2$ value.
+During evaluation of predictive models, most of models trained with the preset values obtained an extremely low $R^2$ value ($<$ 0.01) and returned highly inaccurate predictions. To improve the accuracy, we defined a list of different values for the settings of the models and by utilising cross validation, obtained the value setting that returns more accurate predictions and a higher $R^2$ of between 0.55 to 0.4 with the prediction accuracy of $+/-0.6$ minutes. The neural network has 20 hidden layers with constant learning rate and it uses the \textit{adam} solver to find the optimum.
 
 To further address the issue, we modified the system to utilise a heterogeneous ensemble that uses a voting regressor to further improve the prediction accuracy.
 
@@ -222,7 +240,9 @@ After the system has been assembled, priority will be placed on white-box testin
 	\item Joe    - 
 	\item YuTing -
 \end{itemize}
+
 \section{Conclusion or Summary}
+Chatbot provides an efficient way to handle common questions and requests and with the introduction of Artificial intelligence and machine learning, The capability of chatbot has significantly improved. Additionally, organisations has begun to put priority in customer engagement which resulted in majority of organisations implementing chatbots on their selected platforms. The opportunity for us to develop a working chatbot prototype allowed to gain insight on the back-end structure of a chatbot which will be incredibly beneficial in this growing industry.
 
 \clearpage
 \bibliographystyle{agsm}

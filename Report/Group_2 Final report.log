@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2018.9.12)  2 JAN 2020 15:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2018.9.12)  3 JAN 2020 18:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -568,52 +568,69 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
  [1
 
 {c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Overfull \hbox (54.74704pt too wide) in paragraph at lines 120--121
+Overfull \hbox (54.74704pt too wide) in paragraph at lines 116--117
 [] 
  []
 
-[3] [4] [5
+[3] [4]
+<Chatbot_Structure.jpg, id=26, 783.92876pt x 518.93875pt>
+File: Chatbot_Structure.jpg Graphic file (type jpg)
+<use Chatbot_Structure.jpg>
+Package pdftex.def Info: Chatbot_Structure.jpg  used on input line 125.
+(pdftex.def)             Requested size: 500.484pt x 331.312pt.
+<NLP_Prototype.jpg, id=27, 465.99094pt x 353.44547pt>
+File: NLP_Prototype.jpg Graphic file (type jpg)
+<use NLP_Prototype.jpg>
+Package pdftex.def Info: NLP_Prototype.jpg  used on input line 138.
+(pdftex.def)             Requested size: 350.33727pt x 265.73601pt.
+ [5
 
-]
-<Stage_1.png, id=29, 600.3228pt x 402.7848pt>
+ <./Chatbot_Structure.jpg>]
+<Reasoning_Prototype.jpg, id=31, 281.55188pt x 41.7811pt>
+File: Reasoning_Prototype.jpg Graphic file (type jpg)
+<use Reasoning_Prototype.jpg>
+Package pdftex.def Info: Reasoning_Prototype.jpg  used on input line 149.
+(pdftex.def)             Requested size: 350.33727pt x 51.99161pt.
+ [6 <./NLP_Prototype.jpg> <./Reasoning_Prototype.jpg>] [7]
+<Stage_1.png, id=39, 600.3228pt x 402.7848pt>
 File: Stage_1.png Graphic file (type png)
 <use Stage_1.png>
-Package pdftex.def Info: Stage_1.png  used on input line 166.
+Package pdftex.def Info: Stage_1.png  used on input line 184.
 (pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
-<Stage_2.png, id=31, 600.3228pt x 402.7848pt>
+<Stage_2.png, id=41, 600.3228pt x 402.7848pt>
 File: Stage_2.png Graphic file (type png)
 <use Stage_2.png>
-Package pdftex.def Info: Stage_2.png  used on input line 176.
+Package pdftex.def Info: Stage_2.png  used on input line 194.
 (pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
- [6]
-<Stage_3.png, id=35, 600.3228pt x 402.7848pt>
+ [8 <./Stage_1.png>]
+<Stage_3.png, id=46, 600.3228pt x 402.7848pt>
 File: Stage_3.png Graphic file (type png)
 <use Stage_3.png>
-Package pdftex.def Info: Stage_3.png  used on input line 185.
+Package pdftex.def Info: Stage_3.png  used on input line 203.
 (pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
-<Stage_4.png, id=36, 600.3228pt x 402.7848pt>
+<Stage_4.png, id=47, 600.3228pt x 402.7848pt>
 File: Stage_4.png Graphic file (type png)
 <use Stage_4.png>
-Package pdftex.def Info: Stage_4.png  used on input line 193.
+Package pdftex.def Info: Stage_4.png  used on input line 211.
 (pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
- [7 <./Stage_1.png> <./Stage_2.png>]
-<Stage_5.png, id=43, 600.3228pt x 402.7848pt>
+<Stage_5.png, id=48, 600.3228pt x 402.7848pt>
 File: Stage_5.png Graphic file (type png)
 <use Stage_5.png>
-Package pdftex.def Info: Stage_5.png  used on input line 201.
+Package pdftex.def Info: Stage_5.png  used on input line 219.
 (pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
- [8 <./Stage_3.png> <./Stage_4.png>]
+ [9 <./Stage_2.png>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 207.
- [9 <./Stage_5.png>] [10] (./Group_2 Final report.bbl) [11
+(Font)              <10.95> on input line 225.
+ [10 <./Stage_3.png> <./Stage_4.png>] [11 <./Stage_5.png>] (./Group_2 Final rep
+ort.bbl) [12
 
 ]
 (./Group_2 Final report.aux) ) 
 Here is how much of TeX's memory you used:
- 15068 strings out of 492641
- 314573 string characters out of 6133116
- 414617 words of memory out of 5000000
- 18682 multiletter control sequences out of 15000+600000
+ 15088 strings out of 492641
+ 315016 string characters out of 6133116
+ 414714 words of memory out of 5000000
+ 18698 multiletter control sequences out of 15000+600000
  9157 words of font info for 32 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,8n,69p,1347b,764s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -626,10 +643,10 @@ texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2018/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2018/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmti10.pfb>
-Output written on "Group_2 Final report.pdf" (11 pages, 462973 bytes).
+Output written on "Group_2 Final report.pdf" (12 pages, 871288 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
- 57 compressed objects within 1 object stream
+ 96 PDF objects out of 1000 (max. 8388607)
+ 59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 38 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 53 words of extra memory for PDF output out of 10000 (max. 10000000)
 

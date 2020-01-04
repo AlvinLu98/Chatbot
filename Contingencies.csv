@@ -18,8 +18,8 @@ partial,norwich,diss,schedule,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
-partial,norwich,diss,advice,None,
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",,62
+partial,norwich,diss,advice,None,,63
 full,norwich,diss,schedule,"RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -40,8 +40,8 @@ full,norwich,diss,schedule,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
-full,norwich,diss,advice,6P40 / 6P41 to divert via Ely & Thetford,
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",,131
+full,norwich,diss,advice,6P40 / 6P41 to divert via Ely & Thetford,,132
 partial,diss,ipswich,schedule,"RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -62,8 +62,8 @@ partial,diss,ipswich,schedule,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",Diss to Haughley Junction Line Working
-partial,diss,ipswich,advice,Consider cancelling 6A33 / 6P40,Diss to Haughley Junction Line Working
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",Diss to Haughley Junction Line Working,59
+partial,diss,ipswich,advice,Consider cancelling 6A33 / 6P40,Diss to Haughley Junction Line Working,60
 partial,diss,ipswich,schedule,"RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         1 per hour: Greater Anglia G/E Services--<> \n\
@@ -91,9 +91,9 @@ partial,diss,ipswich,schedule,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",Haughley Junction to East Suffolk Junction Working
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",Haughley Junction to East Suffolk Junction Working,55
 partial,diss,ipswich,advice,"Freight to be diverted via London \n\
-            Monitor inbound freight, liaise with freight York & SSM Cambridge re-holding points",Haughley Junction to East Suffolk Junction Working
+            Monitor inbound freight, liaise with freight York & SSM Cambridge re-holding points",Haughley Junction to East Suffolk Junction Working,56
 partial,diss,ipswich,schedule,"RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         4 per hour: Greater Anglia G/E Services--<> \n\
@@ -115,9 +115,9 @@ partial,diss,ipswich,schedule,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",East Suffolk Junction to Ipswich Working
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",East Suffolk Junction to Ipswich Working,52
 partial,diss,ipswich,advice,"All 1Pxx services stop addl Stowmarket. \n\
-            If 2Wxx term stowmarket…bus service Ipswich-Needham Mkt-Stowmarket.",East Suffolk Junction to Ipswich Working
+            If 2Wxx term stowmarket…bus service Ipswich-Needham Mkt-Stowmarket.",East Suffolk Junction to Ipswich Working,53
 full,diss,stowmarket,schedule,"RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -144,8 +144,8 @@ full,diss,stowmarket,schedule,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
-full,diss,stowmarket,advice,Freight to be diverted via London Where possible,
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",,128
+full,diss,stowmarket,advice,Freight to be diverted via London Where possible,,129
 full,stowmarket,ipswich,schedule,"RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -172,8 +172,8 @@ full,stowmarket,ipswich,schedule,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",Haughley Junction Avaliable (GE24)
-full,stowmarket,ipswich,advice,Will require shunting in and out of the loop at Stowmarket,Haughley Junction Avaliable (GE24)
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",Haughley Junction Avaliable (GE24),122
+full,stowmarket,ipswich,advice,Will require shunting in and out of the loop at Stowmarket,Haughley Junction Avaliable (GE24),123
 full,stowmarket,ipswich,schedule,"RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -200,8 +200,8 @@ full,stowmarket,ipswich,schedule,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",London End Crossover Avaliable (GE24A)
-full,stowmarket,ipswich,advice,In the event that Stowmarket loop is not accessible and Stowmarket London End crossover can not be used.,London End Crossover Avaliable (GE24A)
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",London End Crossover Avaliable (GE24A),125
+full,stowmarket,ipswich,advice,In the event that Stowmarket loop is not accessible and Stowmarket London End crossover can not be used.,London End Crossover Avaliable (GE24A),126
 partial,ipswich,manningtree,advice,"RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         2 per hour: Greater Anglia G/E Services--<> \n\
@@ -223,8 +223,8 @@ partial,ipswich,manningtree,advice,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>""",
-partial,ipswich,manningtree,schedule,Consider extending services through to Manningtree / ECS to Mistley and return for PM peak & Off peak also where possible.,
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>""",,49
+partial,ipswich,manningtree,schedule,Consider extending services through to Manningtree / ECS to Mistley and return for PM peak & Off peak also where possible.,,50
 full,ipswich,manningtree,advice,"RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -249,10 +249,10 @@ full,ipswich,manningtree,advice,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",,119
 full,ipswich,manningtree,schedule,"Shunting to take place at Manningtree North Jn if available. Shunting can also take place at Mistley. Permission should be obtained from Operations \n\
             on-call level 2 to start passenger services from the down main platform (platform 3) at Manningtree if this is necessary. \n\
-            Divert freight via BurySt Edmunds & across country up to W9 traffic only",
+            Divert freight via BurySt Edmunds & across country up to W9 traffic only",,120
 partial,manningtree,colchester,schedule,"RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         2 per hour: Greater Anglia G/E Services--<> \n\
@@ -274,9 +274,9 @@ partial,manningtree,colchester,schedule,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",,45
 partial,manningtree,colchester,advice,"GriffinWharf may be blocked \n\
-             “Flighting” of trains is preferable to ensure as many trains through the sections as possible.",
+             “Flighting” of trains is preferable to ensure as many trains through the sections as possible.",,46
 full,manningtree,colchester,schedule,"RUNNING AS BOOKED \n\
                     AM PEAK \n\
                         All: Greater Anglia services that are unaffected by this incident--<> \n\
@@ -300,5 +300,5 @@ full,manningtree,colchester,schedule,"RUNNING AS BOOKED \n\
                     PM PEAK \n\
                         All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations> \n\
                     OFF-PEAK \n\
-                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",
-full,manningtree,colchester,advice,Divert freight via BurySt Edmunds & across country up to W9 traffic only,
+                        All: Greater Anglia--<All other services affected by this problem will be subject to cancellation and short notice alterations>",,106
+full,manningtree,colchester,advice,Must have a train crew manager on site at Chelmsford to do this. \n\ Divert freight via BurySt Edmunds & across country up to W9 traffic only,,107

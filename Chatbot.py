@@ -20,12 +20,15 @@ def process_message():
         if 'intent' in session:
             if session['intent'] == 'B':
                 print(session['intent'])
+                session['State'] = "Booking"
                 process_booking(sentence)
             elif session['intent'] == 'C':
                 print(session['intent'])
+                session['State'] = "Contingencies"
                 process_contingencies(sentence)
             elif session['intent'] == 'D':
                 print(session['intent'])
+                session['State'] = "Delay"
                 process_delay(sentence)
         else:
             session['intent'] = intent
@@ -46,5 +49,8 @@ def process_contingencies(sentence):
 def process_delay(sentence):
     return 0
 
+def quit_process():
+    return 0
+    
 if __name__ == '__main__':
     app.run(debug = True)

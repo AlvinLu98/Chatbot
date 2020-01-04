@@ -38,7 +38,9 @@ def predict(sentence):
 
 def main():
     train_model()
-    print(predict("Hello"))
+    sentence = "I want to book a train to London Liverpool street"
+    print(sentence)
+    print(predict(sentence))
 
 if __name__ == '__main__':
     main()

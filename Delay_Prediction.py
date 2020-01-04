@@ -174,9 +174,14 @@ def one_hot_encode_value(fit, value):
 ##################################################################################################
 #                                    Prediction & Evalutation
 ##################################################################################################
-def predict(model_file, datum):
+def predict_sets(model_file, datum):
     model = load(model_file) 
     return model.predict(datum)
+
+def predict(model_file, datum):
+    model = load(model_file) 
+    # print(model.get_params)
+    return model.predict([datum])
 
 def predict_values(model_file, dep, arr, dep_time, dep_delay, arr_time, month, day):
     input_data = format_data(dep, arr, dep_time, dep_delay, arr_time, month, day)
@@ -277,9 +282,10 @@ def main():
     # dump(best_val.best_estimator_, "BEST_NN.joblib")
 
     print("Decision Tree.....")
-    # train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
+    train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
     dt =  DecisionTreeRegressor()
     parameter_space = {
+        'criterion': ["mse", "mae", "friedman_mse"],
         'max_depth': [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
         'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     }
@@ -291,30 +297,43 @@ def main():
     print("Random forest.....")
     # train_random_forest(train_d, train_a, 4, None, "random_forest.joblib")
 
-    rf =  RandomForestRegressor()
-    parameter_space = {
-        'n_estimators': [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
-        'max_depth': [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
-        'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    }
-    best_forest = GridSearchCV(rf, parameter_space, n_jobs=-1, cv=3)
-    best_forest.fit(data, np.ravel(actual))
-    print("Best params: ", best_forest.best_params_)
-    dump(best_tree.best_estimator_, "BEST_Forest.joblib")
+    # rf =  RandomForestRegressor()
+    # parameter_space = {
+    #     'n_estimators': [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
+    #     'max_depth': [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
+    #     'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    # }
+    # best_forest = GridSearchCV(rf, parameter_space, n_jobs=-1, cv=3)
+    # best_forest.fit(data, np.ravel(actual))
+    # print("Best params: ", best_forest.best_params_)
+    # dump(best_tree.best_estimator_, "BEST_Forest.joblib")
+
+    print("Voting regressor.....")
+    nn = load("BEST_NN.joblib")
+    tree = load("BEST_Tree.joblib")
+
+    train_voting_regressor(train_d, train_a, (nn, tree), "Voting_Regressor.joblib")
 
     print("---------------------------------- Prediction ----------------------------------")   
     # nn_pred = predict("2_layer_NN.joblib", test_d)
     # dt_pred = predict("decision_tree_nomax.joblib", test_d)
     # rf_pred = predict("random_forest.joblib", test_d)
 
-    best_nn_pred = predict("BEST_NN.joblib", test_d)
+    best_nn_pred = predict_sets("BEST_NN.joblib", test_d)
     print(evaluate_r2_score(test_a, best_nn_pred))
 
-    best_tree_pred = predict("BEST_Tree.joblib", test_d)
+    print(predict("BEST_NN.joblib", test_d[1]), test_a[1])
+
+    best_tree_pred = predict_sets("BEST_Tree.joblib", test_d)
     print(evaluate_r2_score(test_a, best_tree_pred))
 
-    best_tree_pred = predict("BEST_Forest.joblib", test_d)
-    print(evaluate_r2_score(test_a, best_tree_pred))
+    print(predict("BEST_Tree.joblib", test_d[1]), test_a[1])
+
+    best_voting_pred = predict_sets("Voting_Regressor.joblib", test_d)
+    print(evaluate_r2_score(test_a, best_voting_pred))
+
+    # best_tree_pred = predict("BEST_Forest.joblib", test_d)
+    # print(evaluate_r2_score(test_a, best_tree_pred))
 
     # print(evaluate_r2_score(test_a, nn_pred))
     # print(evaluate_r2_score(test_a, dt_pred))

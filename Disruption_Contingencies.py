@@ -11,6 +11,8 @@ import Chatbot
 class BlockedRoute(Fact):
     pass
 
+class Time_of_day(Fact):
+    pass
 ###################################################################################
 #               Norwich to Diss (Partial / Full) (Used Trowse contingencies)
 ###################################################################################

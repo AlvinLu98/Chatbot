@@ -95,7 +95,7 @@ def training_model():
 def disruption_contingencies():
     conn = connect_DB("chatbot.db")
     cur = conn.cursor()
-    query = "CREATE TABLE IF NOT EXISTS Disruption(blockage VARCHAR(15), origin VARCHAR(40), destination VARCHAR(40), intent VARCHAR(15), contingency VARCHAR(1000))"
+    query = "CREATE TABLE IF NOT EXISTS Disruption(blockage VARCHAR(15), origin VARCHAR(40), destination VARCHAR(40), intent VARCHAR(15), contingency VARCHAR(1000), conditions VARCHAR(100), page INTEGER)"
     cur.execute("DROP TABLE IF EXISTS Disruption")
     cur.execute(query)
     with open('Disruption.csv') as csv_file:
@@ -114,8 +114,8 @@ def get_all_station():
     conn = connect_DB("chatbot.db")
     cur = conn.cursor()
 
-    sql_query = "SELECT * FROM Station?"
-    cur.execute(sql_query,)
+    sql_query = "SELECT * FROM Station"
+    cur.execute(sql_query)
     rows = cur.fetchall()
     conn.close()
     return rows
