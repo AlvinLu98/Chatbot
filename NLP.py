@@ -4,12 +4,13 @@ Created on Sun Oct 27 13:25:49 2019
 @author: Alvin Lu
 """
 import nltk
-# import pandas
+import pandas
 import spacy
 import string
 import re
 import Database_controller as dc
 import nltk
+import datetime
 
 from nltk.corpus import treebank
 from spacy.lang.en.stop_words import stopword
@@ -31,18 +32,24 @@ def pre_processing(raw_input):
 
 #Takes the raw input and returns tokenized words  
 def process_sentence(raw_input):
-    print("############################### Tokenisation ###############################")
+    print("############################### Spacy tokenisation ###############################")
     raw_input = pre_processing(raw_input)
     doc = nlp(raw_input)
-    print(doc)
     for token in doc:
         print("%10s %10s %5s %5s %10s %10s %r" %(token.text, token.head.text, token.pos_, token.tag_, 
         token.dep_, token.lemma_, token.is_stop))
     print()
 
+    print("############################### NLTK tokenisation ###############################")
+    tokenized = nltk.word_tokenize(raw_input)
+    tagged = nltk.pos_tag(tokenized)
+    for tag in tagged:
+        print(tag)
+
     get_entities_spacy(doc)
     get_dependencies_spacy(doc)
-    return doc
+    get_dependencies_nltk(tagged)
+    return doc, tagged
 
 def get_entities_spacy(doc):
     print("############################### Spacy Entities ###############################")
@@ -53,9 +60,9 @@ def get_entities_spacy(doc):
 
 def get_dependencies_nltk(tagged):
     print("############################### NLTK Dependencies ###############################")
-    chunks = nltk.ne_chunk(tagged, binary=False)
+    chunks = nltk.ne_chunk(tagged)
     for chunk in chunks:
-        print()
+        print(chunk)
     print()
     return chunks
 
@@ -242,17 +249,23 @@ def getTfidfVectorizer(data_X_Y):
 ##################################################################################################
 #Extract train booking info from the sentence
 def process_train_booking(sentence):
-    return 0
+    s, n = process_sentence(sentence)
+    origin, destination = retrieve_org_dest(s, n)
+    t_type = retrieve_ticket_type(sentence)
+    date = retrive_date(sentence)
+    hour, minute = retrive_time(sentence)
+    date, hour= process_time_date(date, hour)
+    return origin, destination, t_type, date, hour, minute
 
-def retrieve_org_dest(spacy, nltk):
-    entities = get_entities_spacy(spacy)
-    dependencies = get_dependencies_spacy(spacy)
+def retrieve_org_dest(s, n):
+    entities = get_entities_spacy(s)
+    dependencies = get_dependencies_spacy(s)
     origin = None
     destination = None
     for chunk in dependencies:
         if chunk.root.head.text == "to":
             destination = chunk.text
-        elif chunk.root.head.test == "from":
+        elif chunk.root.head.text == "from":
             origin = chunk.text
     if origin == None or destination == None:
         locations = []
@@ -264,22 +277,102 @@ def retrieve_org_dest(spacy, nltk):
             destination = location[1]
     return origin, destination
 
-def retrieve_ticket_type(spacy, nltk):
-    if "single" in spacy:
+def retrieve_ticket_type(sentence):
+    if "single" in sentence:
         return "single"
-    elif "return" in spacy:
+    elif "return" in sentence:
         return "return"
-    elif "open return" in spacy:
+    elif "open return" in sentence:
         return "open"
     else:
         return None
 
-def retrive_date(spacy, nltk):
-    return 0
+def retrive_date(sentence):
+    #https://stackoverflow.com/questions/31088509/identifying-dates-in-strings-using-nltk
+    date = re.findall(r'\d+\S\d+\S\d+', sentence)
+    if not date:
+        months = ['January','Febuary','March','April','May','June','July', 'August', 'September', 'October','November','December']
+        date = re.findall(r"(?=(\b"+'\s\d+|'.join(months)+r"\s\d+\b))", sentence)
+        for i, d in enumerate(date):
+            day = re.findall(r"\d", d)[0]
+            day = day.rjust(2, "0")
+            month = re.findall(r"(\b"+'|'.join(months)+r"\b)", d)[0]
+            month = month[:3]
+            now  = datetime.datetime.now()
+            year = str(now.year)[-2:]
+            d = day+"-"+month+"-"+year
+            date[i] = datetime.datetime.strptime(d, "%d-%b-%y")
+            # date[i] = day+"-"+month+"-"+year 
+        if not date:
+            pattern = r"(\b\d+\S{2}\s\bof\b\s"+r'|\d+\S{2}\s\bof\b\s'.join(months)+r"\b)"
+            date = re.findall(pattern, sentence)
+            for i, d in enumerate(date):
+                day = re.findall(r"\d", d)[0]
+                day = day.rjust(2, "0")
+                month = re.findall(r"(\b"+'|'.join(months)+r"\b)", d)[0]
+                month = month[:3]
+                now  = datetime.datetime.now()
+                year = str(now.year)[-2:]
+                d = day+"-"+month+"-"+year
+                date[i] = datetime.datetime.strptime(d, "%d-%b-%y")
+                # date[i] = day+"-"+month+"-"+year
+    if not date:
+        now  = datetime.datetime.now()
+        if "today" in sentence:
+            day = str(now.day)
+            day = day.rjust(2, "0")
+            month = str(now.month)
+            month = month.rjust(2, "0")
+            year = str(now.year)[-2:]
+            date = day+"-"+month+"-"+year
+            date = [datetime.datetime.strptime(date, "%d-%m-%y")]
+        elif "tomorrow" in sentence:
+            tomorrow = now + datetime.timedelta(days=1)
+            day = str(tomorrow.day)
+            day = day.rjust(2, "0")
+            month = str(tomorrow.month)
+            month = month.rjust(2, "0")
+            year = str(tomorrow.year)[-2:]
+            date = day+"-"+month+"-"+year
+            date = [datetime.datetime.strptime(date, "%d-%m-%y")]
+    return date
 
-def retrive_time(spacy, nltk):
-    return 0
+def retrive_time(sentence):
+    time = re.findall(r'\d{2}:\d{2}', sentence)
+    hour = [None for i in range(len(time))]
+    minute = [None for i in range(len(time))]
+    if time is not None:
+        for i, t in enumerate(time): 
+            hour[i] = int(t[:2])
+            minute[i] = int(t[-2:])
+    if not time:
+        if "now" in sentence:
+            now  = datetime.datetime.now()
+            hour = [now.hour]
+            minute = [now.minute]
+    for i, m in enumerate(minute):
+        if m != 0:
+            if m < 15:
+                minute[i] = 15
+            elif m < 30:
+                minute[i] = 30
+            elif m < 45:
+                minute[i] = 45
+            else:
+                minute[i] = 0
+                hour[i] = hour[i] + 1
+    return hour, minute
 
+def process_time_date(date, hour):
+    if len(date) == len(hour):
+        for i, d in enumerate(date):
+            if hour is not None and hour[i] > 23:
+               date[i] = d + datetime.timedelta(days=1)
+               hour[i] = 0
+    return date, hour
+            
+    
+        
 ##################################################################################################
 #                                     Train delay processing
 ###################################################################################################
@@ -301,6 +394,8 @@ def processs_contingencies(sentence):
 def main():
     sentence = input("Please enter something: ")
     process_sentence(sentence)
+
+    print(process_train_booking(sentence))
 
     # train_station_model()
     # mistake = "Norwich"
