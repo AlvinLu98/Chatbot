@@ -365,5 +365,49 @@ def main():
     # result = cross_validate_model(kNN, data, actual, 3)
     # print(result['test_r2'])
 
+##################################################################################################
+#                                        Yuting's Functions
+##################################################################################################
+from sklearn.naive_bayes import BernoulliNB
+from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import LinearSVC
+from sklearn.neural_network import MLPClassifier
+#################################################################
+#               Different Models Selector
+#################################################################
+def modelSelector(classifier):
+    if classifier == 'NB_Multinomial':
+        model = MultinomialNB()  # _Naive Bayes classifier for multinomial models
+        # Multinomial - good for when your features (categorical or continupous)
+        # describe discrete frequency counts (eg. word counts)
+    elif classifier == 'NB_Gaussian':
+        model = GaussianNB()  # Gaussian Naive Bayes (GaussianNB)
+        # Good for making predictions from normally distributed features
+    elif classifier == 'NB_Bernoulli':
+        model = BernoulliNB(binarize=False)  # _Naive Bayes classifier for multivariate Bernoulli models.
+        # Good for making predictions from binary features
+    elif classifier == 'LR':
+        model = LogisticRegression(solver='lbfgs')
+    elif classifier == 'DT':
+        model = DecisionTreeClassifier(random_state=0)
+    elif classifier == 'SVM':
+        model = LinearSVC()
+    elif classifier == 'MLP':
+        model = MLPClassifier(solver='lbfgs')
+    return model
+
+def splitDataSet(features_nd, result, train_size, test_size):
+    X_train, X_test, y_train, y_test = train_test_split(
+        features_nd.toarray(),
+        result,  # can measure either fake or polarity
+        train_size=train_size,
+        test_size=test_size,
+        random_state=1234
+    )
+
+
 if __name__ == '__main__':
     main()
