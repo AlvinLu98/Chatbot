@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="/static/Chatbot.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/Chatbot.js"></script>
 </head>
 
 <body>
@@ -43,13 +44,12 @@
                 </div>
             </div>
             <br>
-            <form id="userChat" action="{{url_for('message')}}" method="POST">
+            <form id="user_chat">
                 <input type="text" name="chat" id="chatbox" placeholder="Type here and press 'Enter' key to send">
                 <input type="submit" hidden>
             </form>
         </div>
     </div>
-
     <!-- bottom -->
     <div class="bottom">
         <div class="bottom-block clearfix">

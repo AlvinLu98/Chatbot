@@ -430,3 +430,7 @@ a {
     font-size: 12px;
     color: #9fa0a0;
 }
+
+.chat_info div {
+    margin-top: 10px;
+}

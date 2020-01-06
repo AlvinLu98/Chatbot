@@ -20,7 +20,7 @@ def setup_database():
     # historical_data()
     intent_data()
     test_data()
-    disruption_contingencies()
+    # disruption_contingencies()
 
 def station_data():
     conn = connect_DB("chatbot.db")
@@ -55,7 +55,7 @@ def general_conversation():
 def intent_data():
     conn = connect_DB("chatbot.db")
     cur = conn.cursor()
-    query = "CREATE TABLE IF NOT EXISTS Intent_sentence(sentence VARCHAR(300), intent CHAR(1))"
+    query = "CREATE TABLE IF NOT EXISTS Intent_sentence(sentence VARCHAR(300) PRIMARY KEY, intent CHAR(1))"
     cur.execute("DROP TABLE IF EXISTS Intent_sentence")
     cur.execute(query)
     with open('Sentence_Intent.csv') as csv_file:
@@ -101,7 +101,7 @@ def disruption_contingencies():
     with open('Disruption.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
-            sql_query = "INSERT INTO Disruption VALUES(?,?);"
+            sql_query = "INSERT INTO Disruption VALUES(?,?,?,?,?);"
             sql_data = (row[0], row[1], row[2], row[3], row[4])
             cur.execute(sql_query, sql_data)
     conn.commit()
@@ -197,11 +197,11 @@ def get_all_intent_sentences():
     conn.close()
     return rows
 
-def add_intent_sentences(sentence):
+def add_intent_sentences(sentence, intent):
     conn = connect_DB("chatbot.db")
     cur = conn.cursor()
-    sql_query = "INSERT INTO Intent_sentence VALUES(?, ?)"
-    data = (sentence[0], sentence[1])
+    sql_query = "INSERT OR REPLACE INTO Intent_sentence VALUES(?, ?)"
+    data = (sentence, intent)
     cur.execute(sql_query, data)
     conn.commit()
     conn.close()
@@ -230,6 +230,17 @@ def get_contingency(blockage, origin, destination, intent):
     rows = cur.fetchall()
     conn.close()
     return rows
+
+##################################################################################################
+#                                      Casual conversations
+##################################################################################################
+def add_new_convo(sentence, response):
+    conn = connect_DB("chatbot.db")
+    cur = conn.cursor()
+    sql_query = "INSERT INTO Conversation VALUES(?,?);"
+    sql_data = (sentence, response)
+    cur.execute(sql_query, sql_data)
+
 ##################################################################################################
 #                                           Testing
 ##################################################################################################

@@ -11,11 +11,13 @@ import re
 import Database_controller as dc
 import nltk
 import datetime
+import difflib
 
 from nltk.corpus import treebank
 from spacy.lang.en.stop_words import stopword
 from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import LabelBinarizer
 
 from joblib import dump, load
 
@@ -25,26 +27,24 @@ nlp = spacy.load("en_core_web_lg")
 #                                   Basic sentence processing
 ##################################################################################################
 def pre_processing(raw_input):
-    raw_input = lower_case(raw_input)
-    raw_input = remove_punct(raw_input)
     raw_input = replace_abbreviations(raw_input)
     return raw_input
 
 #Takes the raw input and returns tokenized words  
 def process_sentence(raw_input):
-    print("############################### Spacy tokenisation ###############################")
+    # print("############################### Spacy tokenisation ###############################")
     raw_input = pre_processing(raw_input)
     doc = nlp(raw_input)
-    for token in doc:
-        print("%10s %10s %5s %5s %10s %10s %r" %(token.text, token.head.text, token.pos_, token.tag_, 
-        token.dep_, token.lemma_, token.is_stop))
-    print()
+    # for token in doc:
+    #     print("%10s %10s %5s %5s %10s %10s %r" %(token.text, token.head.text, token.pos_, token.tag_, 
+    #     token.dep_, token.lemma_, token.is_stop))
+    # print()
 
-    print("############################### NLTK tokenisation ###############################")
+    # print("############################### NLTK tokenisation ###############################")
     tokenized = nltk.word_tokenize(raw_input)
     tagged = nltk.pos_tag(tokenized)
-    for tag in tagged:
-        print(tag)
+    # for tag in tagged:
+    #     print(tag)
 
     get_entities_spacy(doc)
     get_dependencies_spacy(doc)
@@ -52,42 +52,30 @@ def process_sentence(raw_input):
     return doc, tagged
 
 def get_entities_spacy(doc):
-    print("############################### Spacy Entities ###############################")
-    for ent in doc.ents:
-        print(ent.text, ent.label_)
-    print()
+    # print("############################### Spacy Entities ###############################")
+    # for ent in doc.ents:
+    #     print(ent.text, ent.label_)
+    # print()
     return doc.ents
 
 def get_dependencies_nltk(tagged):
-    print("############################### NLTK Dependencies ###############################")
+    # print("############################### NLTK Dependencies ###############################")
     chunks = nltk.ne_chunk(tagged)
-    for chunk in chunks:
-        print(chunk)
-    print()
+    # for chunk in chunks:
+    #     print(chunk)
+    # print()
     return chunks
 
 def get_dependencies_spacy(doc):
-    print("############################### Spacy Dependencies ###############################")
-    for chunk in doc.noun_chunks:
-        print("%10s %10s %10s %10s" %(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text))
-    print()
+    # print("############################### Spacy Dependencies ###############################")
+    # for chunk in doc.noun_chunks:
+    #     print("%10s %10s %10s %10s" %(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text))
+    # print()
     return doc.noun_chunks
-
-#Calculates the similarity between two words
-def calculate_similarity(word_1, word_2):
-    return 0
 
 ##################################################################################################
 #                                        Error recovery
 ##################################################################################################
-def train_station_model():
-    rows = dc.get_all_station()
-    names, codes = name_code_split(rows)
-    names = preprocess_data(names)
-    kNN = KNeighborsClassifier(n_neighbors=3, weights='distance')
-    kNN.fit(names, codes)
-    dump(kNN, "station_model.joblib")
-
 def name_code_split(rows):
     names = []
     codes = []
@@ -96,16 +84,15 @@ def name_code_split(rows):
         codes.append(code)
     return names, codes
 
-def preprocess_data(text):
-    vectoriser = HashingVectorizer(n_features=20)
-    vector = vectoriser.transform(text)
-    return vector
+def get_closest_name(location):
+    rows = get_all_station()
+    names, codes = name_code_split(rows)
+    #https://kite.com/python/examples/2465/difflib-find-the-2-closest-matches-between-a-string-and-a-list-of-strings
+    return difflib.get_close_matches(location, names, n=3)
 
-def predict(name):
-    model = load("station_model.joblib")
-    vectoriser = HashingVectorizer(n_features=20)
-    vector = vectoriser.transform([name])
-    return model.predict(vector)
+def get_all_station():
+    rows = dc.get_all_station()
+    return rows
 
 ##################################################################################################
 #                               Additional Sentence Proccessing
@@ -146,7 +133,7 @@ def replace_abbreviations(text):
     # to find the abbreviation of have
     pat_ve = re.compile("(?<=[a-zA-Z])\'ve")
 
-    new_text = pat_letter.sub(' ', text).strip().lower()  # 去符号，去字节前，和字节后的whitspaces（去无意义的空格），全部变小写
+    new_text = pat_letter.sub(' ', text).strip()
     new_text = pat_is.sub(r"\1 is", new_text)
     new_text = pat_s.sub("", new_text)
     new_text = pat_s2.sub("", new_text)
@@ -263,22 +250,34 @@ def retrieve_org_dest(s, n):
     dependencies = get_dependencies_spacy(s)
     origin = None
     destination = None
+    set_org = False
+    set_dest = False
     for chunk in dependencies:
         if chunk.root.head.text == "to":
-            destination = chunk.text
+            destination = get_closest_name(chunk.text)[0]
+            set_dest = True
         elif chunk.root.head.text == "from":
-            origin = chunk.text
+            origin = get_closest_name(chunk.text)[0]
+            set_org = True
     if origin == None or destination == None:
         locations = []
         for entity in entities:
             if entity.label_ == "GPE" or entity.label_ == "FAC" or entity.label_ == "PERSON":
                 locations.append(entity.text)
         if len(locations) == 2:
-            origin = locations[0]
-            destination = locations[1]
-        elif len(locations) == 1:
-            origin = locations[0]
-            destination = locations[0]
+            if not set_org:
+                origin = get_closest_name(locations[0])[0]
+            if not set_dest:
+                destination = get_closest_name(locations[1])[0]
+        elif len(locations) == 1 and not set_dest and not set_org:
+            origin = get_closest_name(locations[0])[0]
+            destination = get_closest_name(locations[0])[0]
+    if destination == origin:
+        rows = get_all_station()
+        names, codes = name_code_split(rows)
+        for token in s:
+            if token.text in names:
+                destination = token.text
     return origin, destination
 
 def retrieve_ticket_type(sentence):
@@ -294,6 +293,9 @@ def retrieve_ticket_type(sentence):
 def retrive_date(sentence):
     #https://stackoverflow.com/questions/31088509/identifying-dates-in-strings-using-nltk
     date = re.findall(r'\d+\S\d+\S\d+', sentence)
+    if len(date) > 0:
+        for i,d in enumerate(date):
+            date[i] = datetime.datetime.strptime(d, "%d/%b/%y")
     if not date:
         months = ['January','Febuary','March','April','May','June','July', 'August', 'September', 'October','November','December']
         date = re.findall(r"(?=(\b"+'\s\d+|'.join(months)+r"\s\d+\b))", sentence)
@@ -348,6 +350,7 @@ def retrive_date(sentence):
             year = str(nextMonth.year)[-2:]
             date = day+"-"+month+"-"+year
             date = [datetime.datetime.strptime(date, "%d-%m-%y")]
+
     return date
 
 def retrive_train_time(sentence):
@@ -385,10 +388,13 @@ def process_time_date(date, hour):
     return date, hour
             
 def process_amount(sentence):
-    amount = re.findall(r'\d+\s\btickets?\b', sentence)
-    amount = re.findall(r'\d+', amount[0])
-    print(amount)
-    return amount
+    amount = re.findall(r'\d+\s\S+\s\btickets?\b', sentence)
+    if len(amount) == 0:
+        amount = re.findall(r'\d+\s\btickets?\b', sentence)
+    if len(amount) > 0:
+        amount = re.findall(r'\d+', amount[0])
+        return amount[0]
+    return None
         
 ##################################################################################################
 #                                     Train delay processing
@@ -420,30 +426,30 @@ def delay_time(sentence):
     return None
 
 def retrieve_times(sentence):
-    time = re.findall(r'\d{2}:\d{2}', sentence)
+    time = re.findall(r'\d+:\d{2}', sentence)
     hour = [None for i in range(len(time))]
     minute = [None for i in range(len(time))]
-
     if time is not None:
         for i, t in enumerate(time): 
-            hour[i] = int(t[:2])
-            minute[i] = int(t[-2:])
+            split = t.split(":")
+            hour[i] = split[0].rjust(2, "0")
+            minute[i] = split[1].rjust(2, "0")
 
     times = [None for i in range(len(time))]
     for i in range(len(times)):
-        times[i] = datetime.time(hour[i], minute[i], 0)
+        times[i] = hour[i] + minute[i]
 
     dep_time = None
     arr_time = None
     if len(times) == 2:
         if times[0] < times[1]:
-            if times[0].hour != 0:
+            if int(hour[0]) != 0:
                 dep_time = times[0]
                 arr_time = times[1]
             else:
                 dep_time = times[1]
                 arr_time = times[0]
-        elif times[1].hour != 0:
+        elif int(hour[1]) != 0:
             dep_time = times[1]
             arr_time = times[0]
         else:
@@ -468,8 +474,10 @@ def processs_contingencies(sentence):
 def retrieve_blockage(sentence):
     blockage = re.findall(r'\S+\s\bblockage\b', sentence)
     if len(blockage) > 0:
-        blockage = blockage[0].split(' ', 1)[0]
-    return blockage
+        blockage = blockage[0].split(' ', 1)[0].lower()
+        return blockage
+    else:
+        return None
 
 def retrieve_cont_intent(sentence):
     if "advice" in sentence:
@@ -485,7 +493,7 @@ def retrieve_cont_intent(sentence):
 
 def main():
     sentence = input("Please enter something: ")
-    process_sentence(sentence)
+    # process_sentence(sentence)
 
     # print(process_train_booking(sentence))
 
@@ -493,10 +501,8 @@ def main():
 
     print(processs_contingencies(sentence))
 
-    # train_station_model()
-    # mistake = "Norwich"
-    # print("Prediting spelling mistake for ", mistake)
-    # print(predict(mistake))
+    # mistake = "Dis"
+    # print(get_closest_name(mistake))
     
 if __name__ == '__main__':
     main()

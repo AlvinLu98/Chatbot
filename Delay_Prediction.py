@@ -1,6 +1,6 @@
 import Database_controller
 import numpy as np
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, LabelBinarizer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
@@ -136,14 +136,13 @@ def split_data(data, actual, t_size):
     return train_d, test_d, train_a, test_a
 
 def format_data(dep, arr, dep_time, dep_delay, arr_time, month, day):
-    dep_arr = dep + " to  " + arr
+    dep_arr = dep + " to " + arr + "\n"
     dep_arr_list = []
-    with open("Train_routes.txt", 'r') as tr:
+    with open("Trained_routes.txt", 'r') as tr:
         for rows in tr:
             dep_arr_list.append(rows)
-    print(dep_arr_list)
     
-    one_hot_encode_value(dep_arr_list, dep_arr)
+    dep_arr = one_hot_encode_value(dep_arr_list, dep_arr)
     
     months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
     month = one_hot_encode_value(months, month)
@@ -154,21 +153,15 @@ def format_data(dep, arr, dep_time, dep_delay, arr_time, month, day):
     time_of_day = ["night", "morning", "afternoon", "evening"]
     dep_time = categorise_time_timeofday([dep_time])
     arr_time = categorise_time_timeofday([arr_time])
-    dep_time = one_hot_encode_value(time_of_day, dep_time)
-    arr_time = one_hot_encode_value(time_of_day, arr_time)
-
-    input_data = np.concatenate((dep_arr, dep_time, dep_delay, arr_time, month, day), axis=1)
+    dep_time = one_hot_encode_value(time_of_day, dep_time[0])
+    arr_time = one_hot_encode_value(time_of_day, arr_time[0])
+    input_data = np.concatenate((dep_arr, dep_time, [[int(dep_delay)]], arr_time, month, day), axis=1)
     return input_data
 
 def one_hot_encode_value(fit, value):
-    le = LabelEncoder()
-    ohe = OneHotEncoder(sparse=False)
-
-    le.fit(fit)
-    int_encoded = le.transform([value])
-    int_encoded = int_encoded.reshape(len(int_encoded), 1)
-    print(int_encoded)
-    one_hot_encoded = ohe.fit_transform(int_encoded)
+    lb = LabelBinarizer()
+    lb.fit(fit)
+    one_hot_encoded = lb.transform([value])
     return one_hot_encoded
 
 ##################################################################################################
@@ -185,7 +178,8 @@ def predict(model_file, datum):
 
 def predict_values(model_file, dep, arr, dep_time, dep_delay, arr_time, month, day):
     input_data = format_data(dep, arr, dep_time, dep_delay, arr_time, month, day)
-    return predict(model_file, input_data)
+    model = load(model_file) 
+    return model.predict(input_data)
 
 
 def evaluate_mean_abs_err(actual, predicted):
@@ -262,12 +256,12 @@ def train_voting_regressor(training, actual, estimators, file_name):
 ##################################################################################################
 def main():
     print("-------------------------------- Pre-processing --------------------------------")
-    data, actual = data_preprocessing()
+    # data, actual = data_preprocessing()
 
-    train_d, test_d, train_a, test_a = split_data(data, actual, 0.4)
+    # train_d, test_d, train_a, test_a = split_data(data, actual, 0.4)
 
-    train_d, train_a = shuffleData(train_d, train_a)
-    data, actual = shuffleData(data, actual)
+    # train_d, train_a = shuffleData(train_d, train_a)
+    # data, actual = shuffleData(data, actual)
 
     print("----------------------------------- Training -----------------------------------")
     print("Neural Network.....")
@@ -281,18 +275,18 @@ def main():
     # print("Best params: ", best_val.best_params_)
     # dump(best_val.best_estimator_, "BEST_NN.joblib")
 
-    print("Decision Tree.....")
-    train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
-    dt =  DecisionTreeRegressor()
-    parameter_space = {
-        'criterion': ["mse", "mae", "friedman_mse"],
-        'max_depth': [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
-        'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    }
-    best_tree = GridSearchCV(dt, parameter_space, n_jobs=-1, cv=3)
-    best_tree.fit(data, np.ravel(actual))
-    print("Best params: ", best_tree.best_params_)
-    dump(best_tree.best_estimator_, "BEST_Tree.joblib")
+    # print("Decision Tree.....")
+    # train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
+    # dt =  DecisionTreeRegressor()
+    # parameter_space = {
+    #     'criterion': ["mse", "mae", "friedman_mse"],
+    #     'max_depth': [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
+    #     'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    # }
+    # best_tree = GridSearchCV(dt, parameter_space, n_jobs=-1, cv=3)
+    # best_tree.fit(data, np.ravel(actual))
+    # print("Best params: ", best_tree.best_params_)
+    # dump(best_tree.best_estimator_, "BEST_Tree.joblib")
 
     print("Random forest.....")
     # train_random_forest(train_d, train_a, 4, None, "random_forest.joblib")
@@ -308,29 +302,29 @@ def main():
     # print("Best params: ", best_forest.best_params_)
     # dump(best_tree.best_estimator_, "BEST_Forest.joblib")
 
-    print("Voting regressor.....")
-    nn = load("BEST_NN.joblib")
-    tree = load("BEST_Tree.joblib")
+    # print("Voting regressor.....")
+    # nn = load("BEST_NN.joblib")
+    # tree = load("BEST_Tree.joblib")
 
-    train_voting_regressor(train_d, train_a, (nn, tree), "Voting_Regressor.joblib")
+    # train_voting_regressor(train_d, train_a, (nn, tree), "Voting_Regressor.joblib")
 
     print("---------------------------------- Prediction ----------------------------------")   
     # nn_pred = predict("2_layer_NN.joblib", test_d)
     # dt_pred = predict("decision_tree_nomax.joblib", test_d)
     # rf_pred = predict("random_forest.joblib", test_d)
 
-    best_nn_pred = predict_sets("BEST_NN.joblib", test_d)
-    print(evaluate_r2_score(test_a, best_nn_pred))
+    # best_nn_pred = predict_sets("BEST_NN.joblib", test_d)
+    # print(evaluate_r2_score(test_a, best_nn_pred))
 
-    print(predict("BEST_NN.joblib", test_d[1]), test_a[1])
+    # print(predict("BEST_NN.joblib", test_d[1]), test_a[1])
 
-    best_tree_pred = predict_sets("BEST_Tree.joblib", test_d)
-    print(evaluate_r2_score(test_a, best_tree_pred))
+    # best_tree_pred = predict_sets("BEST_Tree.joblib", test_d)
+    # print(evaluate_r2_score(test_a, best_tree_pred))
 
-    print(predict("BEST_Tree.joblib", test_d[1]), test_a[1])
+    # print(predict("BEST_Tree.joblib", test_d[1]), test_a[1])
 
-    best_voting_pred = predict_sets("Voting_Regressor.joblib", test_d)
-    print(evaluate_r2_score(test_a, best_voting_pred))
+    # best_voting_pred = predict_sets("Voting_Regressor.joblib", test_d)
+    # print(evaluate_r2_score(test_a, best_voting_pred))
 
     # best_tree_pred = predict("BEST_Forest.joblib", test_d)
     # print(evaluate_r2_score(test_a, best_tree_pred))
@@ -364,6 +358,8 @@ def main():
     # kNN = KNeighborsRegressor(n_neighbors=10)
     # result = cross_validate_model(kNN, data, actual, 3)
     # print(result['test_r2'])
+
+    print(predict_values("BEST_NN.joblib", "NRW", "COL", "1200", 10, "1400", 1, "SUNDAY"))
 
 if __name__ == '__main__':
     main()
