@@ -147,16 +147,19 @@ def process_training(sentence):
         Database_controller.add_intent_sentences(train, 'B')
         session.clear()
         Reasoning.train_model()
+        session['state'] = 'B'
         return "Training completed"
     elif 'Contingencies' in  sentence:
         Database_controller.add_intent_sentences(train, 'C')
         session.clear()
         Reasoning.train_model()
+        session['state'] = 'C'
         return "Training completed"
     elif 'Delay' in sentence:
         Database_controller.add_intent_sentences(train, 'D')
         session.clear()
         Reasoning.train_model()
+        session['state'] = 'D'
         return "Training completed"
     elif 'Casual' in sentence:
         session['state'] = "T_C"

@@ -329,17 +329,17 @@ def main():
     # dump(best_val.best_estimator_, "BEST_NN_2.joblib")
 
     print("Decision Tree.....")
-    # train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
-    # dt =  DecisionTreeRegressor()
-    # parameter_space = {
-    #     'criterion': ["mse", "mae", "friedman_mse"],
-    #     'max_depth': [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
-    #     'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    # }
-    # best_tree = GridSearchCV(dt, parameter_space, n_jobs=-1, cv=3)
-    # best_tree.fit(data, np.ravel(actual))
-    # print("Best params: ", best_tree.best_params_)
-    # dump(best_tree.best_estimator_, "BEST_Tree.joblib")
+    train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
+    dt =  DecisionTreeRegressor()
+    parameter_space = {
+        'criterion': ["mse", "mae", "friedman_mse"],
+        'max_depth': [None, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
+        'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    }
+    best_tree = GridSearchCV(dt, parameter_space, n_jobs=-1, cv=3)
+    best_tree.fit(data, np.ravel(actual))
+    print("Best params: ", best_tree.best_params_)
+    dump(best_tree.best_estimator_, "BEST_Tree_2.joblib")
 
     print("Random forest.....")
     # train_random_forest(train_d, train_a, 4, None, "random_forest.joblib")
@@ -359,10 +359,11 @@ def main():
     # train_gradient_boosting(train_d, train_a, "Gradient_Boosting.joblib")
 
     print("Voting regressor.....")
-    # nn = MLPRegressor(early_stopping=True, hidden_layer_sizes=(20,32), max_iter=2000)
-    # tree = DecisionTreeRegressor(max_depth=8, random_state=4)
+    nn = MLPRegressor(early_stopping=True, hidden_layer_sizes=(20,32), max_iter=2000)
+    nn2 = MLPRegressor(early_stopping=True, hidden_layer_sizes=(2,64), max_iter=2000)
+    tree = DecisionTreeRegressor(max_depth=8, random_state=4)
 
-    # train_voting_regressor(train_d, train_a, [("Neural",nn) ,("Tree",tree)], "Voting_Regressor.joblib")
+    train_voting_regressor(train_d, train_a, [("Neural_1",nn), ("Neural_2",nn2) ,("Tree",tree)], "Voting_Regressor.joblib")
 
     print("---------------------------------- Prediction ----------------------------------")   
     lin_pred = predict_sets("Linear_Regressor.joblib", test_d)
@@ -405,6 +406,7 @@ def main():
     best_nn = load("BEST_NN.joblib")
     best_nn_2 = load("BEST_NN_2.joblib")
     best_tree = load("BEST_Tree.joblib")
+    best_tree_2 = load("BEST_Tree.joblib")
 
     print("Neural Network 1: ", best_nn.get_params())
     print()
@@ -412,7 +414,10 @@ def main():
     print("Neural Network 2: ", best_nn_2.get_params())
     print()
 
-    print("Decision Tree: ", best_tree.get_params())
+    print("Decision Tree 1: ", best_tree.get_params())
+    print()
+
+    print("Decision Tree 2: ", best_tree_2.get_params())
 
 if __name__ == '__main__':
     main()
