@@ -8,8 +8,8 @@ intents = {
     'B' : 'Booking a ticket',
     'C' : 'Getting contingencies',
     'D' : 'Delay prediction',
-    'N' : ''
 }
+Database_controller.setup_database()
 
 @app.route('/')
 def index():
@@ -19,18 +19,18 @@ def index():
 @app.route('/message', methods=['POST'])
 def message():
     sentence = request.form['message']
-    print("Sentence: ", sentence)
     if "Quit" in sentence:
         session.clear()
         return jsonify(message = "Current running task ended, Goodbye!")
     response = Database_controller.get_chat_response(sentence)
     if len(response) == 0:
         if 'state' in session:
+            print(session)
             response = handle_intent(sentence)
             return jsonify(message = response)
         else:
             intent, prob = Reasoning.predict(sentence)
-            if(prob > 0.8):
+            if(prob > 0.9):
                 Database_controller.add_intent_sentences(sentence, intent)
                 Reasoning.train_model()
                 session['state'] = intent
@@ -45,9 +45,9 @@ def message():
     else:
         if len(response) > 1:
             i = randrange(len(response))
-            return jsonify(message = response[i])
+            return jsonify(message = response[i][1])
         else:
-            return jsonify(message = response[0])
+            return jsonify(message = response[0][1])
 
 def handle_intent(sentence):
     if session['state'] == 'B':
@@ -77,17 +77,17 @@ def process_booking(sentence):
         if session['Ticket Type'] == "return":
             values = get_data(data_list_return)
             form_filler = Form_Automation.Form_filler()
-            url = form_filler.return_ticket('https://www.thetrainline.com/', values[0], values[1], values[2], values[3].strftime("%m/%d/%y"), values[4], values[5], values[6], values[7].strftime("%m/%d/%y"), values[8], values[9])
+            url = form_filler.return_ticket('https://www.thetrainline.com/', values[0], values[1], values[2], values[3].strftime("%d/%m/%y"), values[4], values[5], values[7].strftime("%d/%m/%y"), values[8], values[9], values[6])
             scraper = Web_Scraping.process_tickets()
             scraper.get_page(url)
             cheapest = scraper.get_cheapest()
-            response = f"The cheapest {values[2]} ticket found is: " + cheapest + "<br/>URL for the ticket: " + url
+            response = f"The cheapest {values[2]} ticket found is: " + cheapest + "<br/>URL for the ticket: <a href='" + url + "'> Ticket </a>"
             session.clear()
             return response
         else:
             values = get_data(data_list)
             form_filler = Form_Automation.Form_filler()
-            url = form_filler.single_ticket('https://www.thetrainline.com/', values[0], values[1], values[2], values[3].strftime("%m/%d/%y"), values[4], values[5], values[6])
+            url = form_filler.single_ticket('https://www.thetrainline.com/', values[0], values[1], values[2], values[3].strftime("%d/%m/%y"), values[4], values[5], values[6])
             scraper = Web_Scraping.process_tickets()
             scraper.get_page(url)
             cheapest = scraper.get_cheapest()
@@ -108,7 +108,6 @@ def process_contingencies(sentence):
     check = check_session(data_list)
     if check is None:
         values = get_data(data_list)
-        print(values)
         response = Disruption_Contingencies.respond(values)
         if response is not None:
             response = f"{values[3]} for {values[0]} blockage from {values[1]} to {values[2]} is: <br/>" + response
@@ -123,7 +122,6 @@ def process_contingencies(sentence):
 def process_delay(sentence):
     data_list = ['Origin', 'Destination', 'Departure time', 'Departure delay', 'Arrival time', 'Month', 'Day']
     origin, destination, dep_time, dep_delay, arr_time, month, day = NLP.process_train_delay(sentence)
-    print(sentence, NLP.process_train_delay(sentence))
     if "Origin" not in session and origin == destination:
         destination = None
     if "Departure time" not in session and dep_time == arr_time:
@@ -135,7 +133,6 @@ def process_delay(sentence):
         values = get_data(data_list)
         values[0] = Database_controller.get_station_name(values[0])[0][0]
         values[1] = Database_controller.get_station_name(values[1])[0][0]
-        print(values[0], values[1])
         delay  = Delay_Prediction.predict_values("BEST_NN.joblib", values[0], values[1], values[2], values[3], values[4], values[5], values[6])
         response = "Your predicted delay is: " + str(int(round(delay[0]))) + " minutes"
         session.clear()
@@ -170,6 +167,7 @@ def process_training(sentence):
 def train_conversation(response):
     sentence = session['train_sent']
     Database_controller.add_new_convo(sentence, response)
+    session.clear()
     return "Training completed"
 
 def add_to_session(data_list, data_values):
@@ -190,52 +188,52 @@ def handle_ticket_types(origin, destination, t_type, date, hour, minute, amount,
         session['Ticket Type'] = t_type
     if 'Ticket Type' in session and session['Ticket Type'] == "return":
         if len(date) == 1 and 'Departure Date' not in session:
-            date = date[0]
+            dep_date = date[0]
             ret_date = None
         elif len(date) == 1 and 'Departure Date' in session:
             ret_date = date[0]
-            date = None
+            dep_date = None
         elif len(date) == 2:
-            date = date[0]
+            dep_date = date[0]
             ret_date = date[1]
         else:
-            date = None
+            dep_date = None
             ret_date = None
         if len(hour) == 1 and len(minute) == 1 and 'Departure Hour' not in session:
-            hour = hour[0]
+            dep_hour = hour[0]
             ret_hour = None
-            minute = minute[0]
+            dep_minute = minute[0]
             ret_min = None
         elif len(hour) == 1 and len(minute) == 1 and 'Departure Hour' in session:
             ret_hour = hour[0]
-            hour = None
+            dep_hour = None
             ret_min = minute[0]
-            minute = None
+            dep_minute = None
         elif len(hour) == 2 and len(minute) == 2:
-            hour = hour[0]
+            dep_hour = hour[0]
             ret_hour = hour[1]
-            minute = minute[0]
+            dep_minute = minute[0]
             ret_min = minute[1]
         else:
             hour = None
             ret_hour = None
             minute = None
             ret_min = None
-        data_values = [origin, destination, t_type, date, hour, minute, amount, ret_date, ret_hour, ret_min]
+        data_values = [origin, destination, t_type, dep_date, dep_hour, dep_minute, amount, ret_date, ret_hour, ret_min]
         add_to_session(data_list_return, data_values)
         check = check_session(data_list_return)
     else:
         if len(date) == 1:
-            date = date[0]
+            dep_date = date[0]
         else:
-            date = None
+            dep_date = None
         if len(hour) == 1 and len(minute) == 1:
-            hour = hour[0]
-            minute = minute[0]
+            dep_hour = hour[0]
+            dep_minute = minute[0]
         else:
-            hour = None
-            minute = None
-        data_values = [origin, destination, t_type, date, hour, minute, amount]
+            dep_hour = None
+            dep_minute = None
+        data_values = [origin, destination, t_type, dep_date, dep_hour, dep_minute, amount]
         add_to_session(data_list, data_values)
         check = check_session(data_list)
     time  = ["Hour", "Minute", "Departure Hour", "Departure Minute"]

@@ -295,7 +295,16 @@ def retrive_date(sentence):
     date = re.findall(r'\d+\S\d+\S\d+', sentence)
     if len(date) > 0:
         for i,d in enumerate(date):
-            date[i] = datetime.datetime.strptime(d, "%d/%b/%y")
+            date[i] = re.findall(r'\d+', date[i])
+            if len(date[i]) == 3:
+                if len(date[i][2]) == 2:
+                    date[i][2] = "20" + date[i][2]
+                if len(date[i][0]) < 2:
+                    date[i][0] = date[i][0].rjust(2, "0")
+                if len(date[i][1]) < 2:
+                    date[i][1] = date[i][1].rjust(2, "0")
+                d = date[i][0]+"/"+date[i][1]+"/"+date[i][2]
+            date[i] = datetime.datetime.strptime(d, "%d/%m/%Y")
     if not date:
         months = ['January','Febuary','March','April','May','June','July', 'August', 'September', 'October','November','December']
         date = re.findall(r"(?=(\b"+'\s\d+|'.join(months)+r"\s\d+\b))", sentence)
@@ -308,7 +317,6 @@ def retrive_date(sentence):
             year = str(now.year)[-2:]
             d = day+"-"+month+"-"+year
             date[i] = datetime.datetime.strptime(d, "%d-%b-%y")
-            # date[i] = day+"-"+month+"-"+year 
         if not date:
             pattern = r"(\b\d+\S{2}\s\bof\b\s"+r'|\d+\S{2}\s\bof\b\s'.join(months)+r"\b)"
             date = re.findall(pattern, sentence)
@@ -321,7 +329,6 @@ def retrive_date(sentence):
                 year = str(now.year)[-2:]
                 d = day+"-"+month+"-"+year
                 date[i] = datetime.datetime.strptime(d, "%d-%b-%y")
-                # date[i] = day+"-"+month+"-"+year
     if not date:
         now  = datetime.datetime.now()
         if "today" in sentence:
@@ -495,11 +502,11 @@ def main():
     sentence = input("Please enter something: ")
     # process_sentence(sentence)
 
-    # print(process_train_booking(sentence))
+    print(process_train_booking(sentence))
 
     # print(process_train_delay(sentence))
 
-    print(processs_contingencies(sentence))
+    # print(processs_contingencies(sentence))
 
     # mistake = "Dis"
     # print(get_closest_name(mistake))

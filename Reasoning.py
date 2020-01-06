@@ -44,7 +44,7 @@ def predict(sentence):
 
 def main():
     train_model()
-    sentence = "I need the schedule between Norwich to Colchester"
+    sentence = "Help"
     print(sentence)
     print(predict(sentence))
 

@@ -17,10 +17,8 @@ def connect_DB(dbfile):
 def setup_database():
     station_data()
     general_conversation()
-    # historical_data()
     intent_data()
     test_data()
-    # disruption_contingencies()
 
 def station_data():
     conn = connect_DB("chatbot.db")
@@ -91,22 +89,6 @@ def training_model():
     cur.execute(query)
     conn.commit
     conn.close
-
-def disruption_contingencies():
-    conn = connect_DB("chatbot.db")
-    cur = conn.cursor()
-    query = "CREATE TABLE IF NOT EXISTS Disruption(blockage VARCHAR(15), origin VARCHAR(40), destination VARCHAR(40), intent VARCHAR(15), contingency VARCHAR(1000), conditions VARCHAR(100), page INTEGER)"
-    cur.execute("DROP TABLE IF EXISTS Disruption")
-    cur.execute(query)
-    with open('Disruption.csv') as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        for row in csv_reader:
-            sql_query = "INSERT INTO Disruption VALUES(?,?,?,?,?);"
-            sql_data = (row[0], row[1], row[2], row[3], row[4])
-            cur.execute(sql_query, sql_data)
-    conn.commit()
-    conn.close()
-
 ##################################################################################################
 #                                         Booking queries
 ##################################################################################################
@@ -216,30 +198,18 @@ def get_chat_response(chat):
     rows = cur.fetchall()
     conn.close()
     return rows
-
-##################################################################################################
-#                                      Contingency queries
-##################################################################################################
-def get_contingency(blockage, origin, destination, intent):
-    conn = connect_DB("chatbot.db")
-    cur = conn.cursor()
-
-    sql_query = "SELECT * FROM Contingencies WHERE blockage = ? AND origin = ? AND destination = ? AND intent = ?"
-    sql_data = (blockage, origin, destination, intent)
-    cur.execute(sql_query, sql_data)
-    rows = cur.fetchall()
-    conn.close()
-    return rows
-
+    
 ##################################################################################################
 #                                      Casual conversations
 ##################################################################################################
 def add_new_convo(sentence, response):
     conn = connect_DB("chatbot.db")
     cur = conn.cursor()
-    sql_query = "INSERT INTO Conversation VALUES(?,?);"
+    sql_query = "INSERT INTO Conversation VALUES(?,?)"
     sql_data = (sentence, response)
     cur.execute(sql_query, sql_data)
+    conn.commit()
+    conn.close
 
 ##################################################################################################
 #                                           Testing
@@ -248,6 +218,8 @@ if __name__ == '__main__':
     setup_database()
     rows = get_station_name("Norwich")
     rows2 = get_station_code("NRW")
+
+    add_new_convo("When were you created?", "I was created in 2019")
 
     # for row in rows:
     #     print(row[1])
