@@ -7,7 +7,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor, VotingRegressor
+from sklearn.ensemble import RandomForestRegressor, VotingRegressor, GradientBoostingRegressor
+from sklearn.linear_model import Ridge
+from sklearn.svm import LinearSVR
 
 from sklearn.model_selection import train_test_split, cross_validate, GridSearchCV
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -216,6 +218,24 @@ def train_weighted_kNN(training, actual, k, file_name):
     return kNN
 
 ##################################################################################################
+#                                       Linear regression
+##################################################################################################
+def train_ridge_reg(training, actual, file_name):
+    rid_reg = Ridge(random_state=2)
+    rid_reg.fit(training, np.ravel(actual))
+    dump(rid_reg, file_name)
+    return rid_reg
+
+##################################################################################################
+#                                       Support vector machine
+##################################################################################################
+def train_SVC(training, actual, file_name):
+    svc = LinearSVR()
+    svc.fit(training, np.ravel(actual))
+    dump(svc, file_name)
+    return svc
+
+##################################################################################################
 #                                          Neural Network 
 ##################################################################################################
 def train_neural_network(training, actual, h_layers, state, file_name):
@@ -243,11 +263,20 @@ def train_random_forest(training, actual, n_trees, depth, file_name):
     return rf
 
 ##################################################################################################
+#                                        Gradient boosting
+##################################################################################################
+def train_gradient_boosting(training, actual, file_name):
+    gb = GradientBoostingRegressor()
+    gb.fit(training, np.ravel(actual))
+    dump(gb, file_name)
+    return gb
+
+##################################################################################################
 #                                        Voting regressor
 ##################################################################################################
 def train_voting_regressor(training, actual, estimators, file_name):
     vr = VotingRegressor(estimators)
-    vr.fit(training, actual)
+    vr.fit(training, np.ravel(actual))
     dump(vr, file_name)
     return vr
 
@@ -256,26 +285,50 @@ def train_voting_regressor(training, actual, estimators, file_name):
 ##################################################################################################
 def main():
     print("-------------------------------- Pre-processing --------------------------------")
-    # data, actual = data_preprocessing()
+    data, actual = data_preprocessing()
 
-    # train_d, test_d, train_a, test_a = split_data(data, actual, 0.4)
+    train_d, test_d, train_a, test_a = split_data(data, actual, 0.4)
 
     # train_d, train_a = shuffleData(train_d, train_a)
     # data, actual = shuffleData(data, actual)
 
     print("----------------------------------- Training -----------------------------------")
+    print("Ridge Regressor.....")
+    # train_ridge_reg(train_d, train_a, "Linear_Regressor.joblib")
+    # ridge_reg = Ridge()
+    # parameter_space = {
+    #     'alpha': [1.0, 2.0, 3.0, 5.0, 10.0],
+    #     'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    # }
+    # best_val = GridSearchCV(ridge_reg, parameter_space, n_jobs=-1, cv=3)
+    # best_val.fit(data, np.ravel(actual))
+    # print("Best params: ", best_val.best_params_)
+    # dump(best_val.best_estimator_, "BEST_Ridge.joblib")
+    
+    print("Support Vector Machine.....")
+    # train_SVC(train_d, train_a, "SVC.joblib")
+    # ridge_reg = Ridge()
+    # parameter_space = {
+    #     'C': [1.0, 1.5, 2.0, 3.0, 5.0, 10.0],
+    #     'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    # }
+    # best_val = GridSearchCV(ridge_reg, parameter_space, n_jobs=-1, cv=3)
+    # best_val.fit(data, np.ravel(actual))
+    # print("Best params: ", best_val.best_params_)
+    # dump(best_val.best_estimator_, "BEST_Ridge.joblib")
+
     print("Neural Network.....")
     # train_neural_network(train_d, train_a, (5, 32), 4, "2_layer_NN.joblib")
     # mlp = MLPRegressor(early_stopping=True, max_iter=2000)
     # parameter_space = {
-        
+    #     'hidden_layer_sizes': [(3,32), (20,32), (20,64), (4,64), (3,64), (3,128), (2,128), (2,64)]
     # }
     # best_val = GridSearchCV(mlp, parameter_space, n_jobs=-1, cv=3)
     # best_val.fit(data, np.ravel(actual))
     # print("Best params: ", best_val.best_params_)
-    # dump(best_val.best_estimator_, "BEST_NN.joblib")
+    # dump(best_val.best_estimator_, "BEST_NN_2.joblib")
 
-    # print("Decision Tree.....")
+    print("Decision Tree.....")
     # train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
     # dt =  DecisionTreeRegressor()
     # parameter_space = {
@@ -302,64 +355,64 @@ def main():
     # print("Best params: ", best_forest.best_params_)
     # dump(best_tree.best_estimator_, "BEST_Forest.joblib")
 
-    # print("Voting regressor.....")
-    # nn = load("BEST_NN.joblib")
-    # tree = load("BEST_Tree.joblib")
+    print("Gradient boosting.....")
+    # train_gradient_boosting(train_d, train_a, "Gradient_Boosting.joblib")
 
-    # train_voting_regressor(train_d, train_a, (nn, tree), "Voting_Regressor.joblib")
+    print("Voting regressor.....")
+    # nn = MLPRegressor(early_stopping=True, hidden_layer_sizes=(20,32), max_iter=2000)
+    # tree = DecisionTreeRegressor(max_depth=8, random_state=4)
+
+    # train_voting_regressor(train_d, train_a, [("Neural",nn) ,("Tree",tree)], "Voting_Regressor.joblib")
 
     print("---------------------------------- Prediction ----------------------------------")   
-    # nn_pred = predict("2_layer_NN.joblib", test_d)
-    # dt_pred = predict("decision_tree_nomax.joblib", test_d)
-    # rf_pred = predict("random_forest.joblib", test_d)
+    lin_pred = predict_sets("Linear_Regressor.joblib", test_d)
+    print(evaluate_r2_score(test_a, lin_pred))
+    
+    svc_pred = predict_sets("SVC.joblib", test_d)
+    print(evaluate_r2_score(test_a, svc_pred))
 
-    # best_nn_pred = predict_sets("BEST_NN.joblib", test_d)
-    # print(evaluate_r2_score(test_a, best_nn_pred))
+    nn_pred = predict_sets("2_layer_NN.joblib", test_d)
+    print(evaluate_r2_score(test_a, nn_pred))
 
-    # print(predict("BEST_NN.joblib", test_d[1]), test_a[1])
+    dt_pred = predict_sets("decision_tree_nomax.joblib", test_d)
+    print(evaluate_r2_score(test_a, dt_pred))
 
-    # best_tree_pred = predict_sets("BEST_Tree.joblib", test_d)
-    # print(evaluate_r2_score(test_a, best_tree_pred))
+    gb_pred = predict_sets("Gradient_Boosting.joblib", test_d)
+    print(evaluate_r2_score(test_a, gb_pred))
 
-    # print(predict("BEST_Tree.joblib", test_d[1]), test_a[1])
+    rf_pred = predict_sets("random_forest.joblib", test_d)
+    print(evaluate_r2_score(test_a, rf_pred))
 
-    # best_voting_pred = predict_sets("Voting_Regressor.joblib", test_d)
-    # print(evaluate_r2_score(test_a, best_voting_pred))
+    # best_ridge_pred = predict_sets("BEST_Ridge.joblib", test_d)
+    # print(evaluate_r2_score(test_a, best_ridge_pred))
+
+    best_nn_pred = predict_sets("BEST_NN.joblib", test_d)
+    print(evaluate_r2_score(test_a, best_nn_pred))
+
+    best_nn_pred = predict_sets("BEST_NN_2.joblib", test_d)
+    print(evaluate_r2_score(test_a, best_nn_pred))
+
+    best_tree_pred = predict_sets("BEST_Tree.joblib", test_d)
+    print(evaluate_r2_score(test_a, best_tree_pred))
+
+    best_voting_pred = predict_sets("Voting_Regressor.joblib", test_d)
+    print(evaluate_r2_score(test_a, best_voting_pred))
 
     # best_tree_pred = predict("BEST_Forest.joblib", test_d)
     # print(evaluate_r2_score(test_a, best_tree_pred))
 
-    # print(evaluate_r2_score(test_a, nn_pred))
-    # print(evaluate_r2_score(test_a, dt_pred))
-    # print(evaluate_r2_score(test_a, rf_pred))
+    print("----------------------------------- Values ------------------------------------")
+    best_nn = load("BEST_NN.joblib")
+    best_nn_2 = load("BEST_NN_2.joblib")
+    best_tree = load("BEST_Tree.joblib")
 
-    print("----------------------------------- Testing ------------------------------------")
-    # print("Neural network.....")
-    # nn = MLPRegressor(hidden_layer_sizes=(2,), solver='sgd', random_state=3, max_iter=1000)
-    # result = cross_validate_model(nn, data, np.ravel(actual), 3)
-    # print(result['test_r2'])
+    print("Neural Network 1: ", best_nn.get_params())
+    print()
 
-    # print("Decision tree.....")
-    # dt = DecisionTreeRegressor()
-    # result = cross_validate_model(dt, data, actual, 3)
-    # print(result['test_r2'])
+    print("Neural Network 2: ", best_nn_2.get_params())
+    print()
 
-    # print("Random forest.....")
-    # rf = RandomForestRegressor(n_estimators=4)
-    # result = cross_validate_model(rf, data, actual, 3)
-    # print(result['test_r2'])
-
-    # print("3NN.....")
-    # kNN_3 = KNeighborsRegressor(n_neighbors=3)
-    # result = cross_validate_model(kNN_3, data, actual, 3)
-    # print(result['test_r2'])
-
-    # print("10NN.....")
-    # kNN = KNeighborsRegressor(n_neighbors=10)
-    # result = cross_validate_model(kNN, data, actual, 3)
-    # print(result['test_r2'])
-
-    print(predict_values("BEST_NN.joblib", "NRW", "COL", "1200", 10, "1400", 1, "SUNDAY"))
+    print("Decision Tree: ", best_tree.get_params())
 
 if __name__ == '__main__':
     main()
