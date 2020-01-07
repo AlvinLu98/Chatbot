@@ -18,11 +18,12 @@ from joblib import dump, load
 ##################################################################################################
 #                                        Data preparation
 ##################################################################################################
+#Gets the training data from the database
 def get_training_data():
     rows = Database_controller.get_all_historical_data()
     return rows
 
-
+#Pre-process the data into binary categories
 def data_preprocessing():
     rows = get_training_data()
     t_size = len(rows)
@@ -85,6 +86,7 @@ def data_preprocessing():
      axis=1)
     return t_data, t_act_delay
 
+#One hot encode the given dataset
 def one_hot_encode_data(data):
     le = LabelEncoder()
     ohe = OneHotEncoder(sparse=False)
@@ -93,6 +95,7 @@ def one_hot_encode_data(data):
     int_encoded = int_encoded.reshape(len(int_encoded), 1)
     return ohe.fit_transform(int_encoded)
 
+#Categorise the times into different time of day
 def categorise_time_timeofday(data):
     #https://thispointer.com/python-6-different-ways-to-create-dictionaries/
     c_time = {}
@@ -104,6 +107,7 @@ def categorise_time_timeofday(data):
     c_data = [c_time[time[:2] ] for time in data]
     return c_data
 
+#Categorise the times into peak and off peak
 def categorise_time_peak(data, day_of_week):
     c_peak = {'WEEKDAY':{}, 'SATURDAY':{}, 'SUNDAY':{}}
     c_peak['WEEKDAY'].update(dict.fromkeys(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09'], "Off-peak"))
@@ -126,6 +130,7 @@ def categorise_time_peak(data, day_of_week):
         else:
             c_data[i] = c_peak['SUNDAY'][time[:2]]
 
+#Shuffles the data input and output randomly
 def shuffleData(data, actual):
     #https://tech.pic-collage.com/tips-of-numpy-shuffle-multiple-arrays-e4fb3e7ae2a
     permutation = np.random.permutation(data.shape[0])
@@ -133,10 +138,12 @@ def shuffleData(data, actual):
     actual = actual[permutation]
     return data, actual
 
+#Splits the data into training and testing pairs
 def split_data(data, actual, t_size):
     train_d, test_d, train_a, test_a = train_test_split(data, actual, test_size=t_size, random_state=4)
     return train_d, test_d, train_a, test_a
 
+#Formats prediction inputs into binary categories
 def format_data(dep, arr, dep_time, dep_delay, arr_time, month, day):
     dep_arr = dep + " to " + arr + "\n"
     dep_arr_list = []
@@ -169,27 +176,32 @@ def one_hot_encode_value(fit, value):
 ##################################################################################################
 #                                    Prediction & Evalutation
 ##################################################################################################
+#Predicts a set of data
 def predict_sets(model_file, datum):
     model = load(model_file) 
     return model.predict(datum)
 
+#Predicts a single data
 def predict(model_file, datum):
     model = load(model_file) 
     # print(model.get_params)
     return model.predict([datum])
 
+#Predicts the delay given separate input values
 def predict_values(model_file, dep, arr, dep_time, dep_delay, arr_time, month, day):
     input_data = format_data(dep, arr, dep_time, dep_delay, arr_time, month, day)
     model = load(model_file) 
     return model.predict(input_data)
 
-
+#Returns the mean absolute error
 def evaluate_mean_abs_err(actual, predicted):
     return mean_absolute_error(actual, predicted)
 
+#Returns the mean squared absolute error
 def evaluate_mean_sqr_err(actual, predicted):
     return mean_squared_error(actual, predicted)
 
+#Returns an R^2 value
 def evaluate_r2_score(actual, predicted):
     return r2_score(actual, predicted)
 
@@ -318,22 +330,25 @@ def main():
     # dump(best_val.best_estimator_, "BEST_Ridge.joblib")
 
     print("Neural Network.....")
-    # train_neural_network(train_d, train_a, (5, 32), 4, "2_layer_NN.joblib")
-    # mlp = MLPRegressor(early_stopping=True, max_iter=2000)
-    # parameter_space = {
-    #     'hidden_layer_sizes': [(3,32), (20,32), (20,64), (4,64), (3,64), (3,128), (2,128), (2,64)]
-    # }
-    # best_val = GridSearchCV(mlp, parameter_space, n_jobs=-1, cv=3)
-    # best_val.fit(data, np.ravel(actual))
-    # print("Best params: ", best_val.best_params_)
-    # dump(best_val.best_estimator_, "BEST_NN_2.joblib")
+    train_neural_network(train_d, train_a, (5, 32), 4, "2_layer_NN.joblib")
+    mlp = MLPRegressor(early_stopping=True, max_iter=2000)
+    parameter_space = {
+        'hidden_layer_sizes': [(3,32), (20,32), (20,64), (4,64), (3,64), (3,128), (2,128), (2,64), (2,12), (3,12), (3,22), (3,10)],
+        'random_state': [None, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        'learning_rate_init': [0.001, 0.01, 0.02],
+        'alpha': [0.0001, 0.01, 0.09]
+    }
+    best_val = GridSearchCV(mlp, parameter_space, n_jobs=-1, cv=3)
+    best_val.fit(data, np.ravel(actual))
+    print("Best params: ", best_val.best_params_)
+    dump(best_val.best_estimator_, "BEST_NN_3.joblib")
 
     print("Decision Tree.....")
     train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
     dt =  DecisionTreeRegressor()
     parameter_space = {
         'criterion': ["mse", "mae", "friedman_mse"],
-        'max_depth': [None, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
+        'max_depth': [None, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 2578],
         'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     }
     best_tree = GridSearchCV(dt, parameter_space, n_jobs=-1, cv=3)
@@ -367,44 +382,48 @@ def main():
 
     print("---------------------------------- Prediction ----------------------------------")   
     lin_pred = predict_sets("Linear_Regressor.joblib", test_d)
-    print("Linear regression:      ", evaluate_r2_score(test_a, lin_pred), evaluate_mean_abs_err(test_a, lin_pred))
+    print("Linear regression:      % 2.5f %2.5f" %(evaluate_r2_score(test_a, lin_pred), evaluate_mean_abs_err(test_a, lin_pred)))
     
     svc_pred = predict_sets("SVC.joblib", test_d)
-    print("Support vactor machine: ", evaluate_r2_score(test_a, svc_pred), evaluate_mean_abs_err(test_a, svc_pred))
+    print("Support vactor machine: % 2.5f %2.5f" %(evaluate_r2_score(test_a, svc_pred), evaluate_mean_abs_err(test_a, svc_pred)))
 
     nn_pred = predict_sets("2_layer_NN.joblib", test_d)
-    print("Neural network:         ", evaluate_r2_score(test_a, nn_pred), evaluate_mean_abs_err(test_a, nn_pred))
+    print("Neural network:         % 2.5f %2.5f" %(evaluate_r2_score(test_a, nn_pred), evaluate_mean_abs_err(test_a, nn_pred)))
 
     dt_pred = predict_sets("decision_tree_nomax.joblib", test_d)
-    print("Decision tree:          ", evaluate_r2_score(test_a, dt_pred), evaluate_mean_abs_err(test_a, dt_pred))
+    print("Decision tree:          % 2.5f %2.5f" %(evaluate_r2_score(test_a, dt_pred), evaluate_mean_abs_err(test_a, dt_pred)))
 
     gb_pred = predict_sets("Gradient_Boosting.joblib", test_d)
-    print("Gradient boosting:      ", evaluate_r2_score(test_a, gb_pred), evaluate_mean_abs_err(test_a, gb_pred))
+    print("Gradient boosting:      % 2.5f %2.5f" %(evaluate_r2_score(test_a, gb_pred), evaluate_mean_abs_err(test_a, gb_pred)))
 
     rf_pred = predict_sets("random_forest.joblib", test_d)
-    print("Random forest:          ", evaluate_r2_score(test_a, rf_pred), evaluate_mean_abs_err(test_a, rf_pred))
+    print("Random forest:          % 2.5f %2.5f" %(evaluate_r2_score(test_a, rf_pred), evaluate_mean_abs_err(test_a, rf_pred)))
 
     best_nn_pred = predict_sets("BEST_NN.joblib", test_d)
-    print("Best neural network 1:  ", evaluate_r2_score(test_a, best_nn_pred), evaluate_mean_abs_err(test_a, best_nn_pred))
+    print("Best neural network 1:  % 2.5f %2.5f" %(evaluate_r2_score(test_a, best_nn_pred), evaluate_mean_abs_err(test_a, best_nn_pred)))
 
     best_nn_pred_2 = predict_sets("BEST_NN_2.joblib", test_d)
-    print("Best neural network 2:    ", evaluate_r2_score(test_a, best_nn_pred_2), evaluate_mean_abs_err(test_a, best_nn_pred_2))
+    print("Best neural network 2:  % 2.5f %2.5f" %(evaluate_r2_score(test_a, best_nn_pred_2), evaluate_mean_abs_err(test_a, best_nn_pred_2)))
+
+    best_nn_pred_3 = predict_sets("BEST_NN_3.joblib", test_d)
+    print("Best neural network 3:  % 2.5f %2.5f" %(evaluate_r2_score(test_a, best_nn_pred_2), evaluate_mean_abs_err(test_a, best_nn_pred_3)))
 
     best_tree_pred = predict_sets("BEST_Tree.joblib", test_d)
-    print("Best decision tree 1:     ", evaluate_r2_score(test_a, best_tree_pred), evaluate_mean_abs_err(test_a, best_tree_pred))
+    print("Best decision tree 1:   % 2.5f %2.5f" %(evaluate_r2_score(test_a, best_tree_pred), evaluate_mean_abs_err(test_a, best_tree_pred)))
 
-    best_tree_pred_2 = predict_sets("BEST_Tree_2.joblib", test_d)
-    print("Best decision tree 1:     ", evaluate_r2_score(test_a, best_tree_pred_2), evaluate_mean_abs_err(test_a, best_tree_pred_2))
+    # best_tree_pred_2 = predict_sets("BEST_Tree_2.joblib", test_d)
+    # print("Best decision tree 1:     %2.5f %2.5f" %(evaluate_r2_score(test_a, best_tree_pred_2), evaluate_mean_abs_err(test_a, best_tree_pred_2)))
 
     voting_pred = predict_sets("Voting_Regressor.joblib", test_d)
-    print("Voting regression:        ", evaluate_r2_score(test_a, best_voting_pred), evaluate_mean_abs_err(test_a, voting_pred))
+    print("Voting regression:      % 2.5f %2.5f" %(evaluate_r2_score(test_a, voting_pred), evaluate_mean_abs_err(test_a, voting_pred)))
 
-    best_forest_pred = predict("BEST_Forest.joblib", test_d)
-    print("Best random forest:       ", evaluate_r2_score(test_a, best_tree_pred), evaluate_mean_abs_err(test_a, best_forest_pred))
+    # best_forest_pred = predict("BEST_Forest.joblib", test_d)
+    # print("Best random forest:       %2.5f %2.5f" %(evaluate_r2_score(test_a, best_tree_pred), evaluate_mean_abs_err(test_a, best_forest_pred)))
 
     print("----------------------------------- Values ------------------------------------")
     best_nn = load("BEST_NN.joblib")
     best_nn_2 = load("BEST_NN_2.joblib")
+    best_nn_3 = load("BEST_NN_3.joblib")
     best_tree = load("BEST_Tree.joblib")
     best_tree_2 = load("BEST_Tree.joblib")
 
@@ -414,10 +433,13 @@ def main():
     print("Neural Network 2: ", best_nn_2.get_params())
     print()
 
+    print("Neural Network 2: ", best_nn_3.get_params())
+    print()
+
     print("Decision Tree 1: ", best_tree.get_params())
     print()
 
-    print("Decision Tree 2: ", best_tree_2.get_params())
+    # print("Decision Tree 2: ", best_tree_2.get_params())
 
 if __name__ == '__main__':
     main()

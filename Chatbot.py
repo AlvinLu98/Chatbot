@@ -1,17 +1,24 @@
+#Functions from Flask
 from flask import Flask, session, redirect, url_for, escape, request, render_template, jsonify, Response
-from random import randrange
-import NLP, Reasoning, Database_controller, Delay_Prediction, Web_Scraping, Disruption_Contingencies, Form_Automation, Weather
-from datetime import datetime
 
+#Importing other python files
+import NLP, Reasoning, Database_controller, Delay_Prediction, Web_Scraping, Disruption_Contingencies, Form_Automation, Weather
+
+#Other functions
+from datetime import datetime
+from random import randrange
+
+#Initiating flask
 app = Flask(__name__)
 app.secret_key="AI_Chatbot"
+
+#List of intents the chatbot recognises
 intents = {
     'B' : 'Booking a ticket',
     'C' : 'Getting contingencies',
     'D' : 'Delay prediction',
     'W' : 'Checking weather'
 }
-Database_controller.setup_database()
 
 @app.route('/')
 def index():
@@ -51,6 +58,9 @@ def message():
         else:
             return jsonify(message = response[0][1])
 
+##################################################################################################
+#                                        Intent processing
+##################################################################################################
 def handle_intent(sentence):
     if session['state'] == 'B':
         response = process_booking(sentence)
@@ -193,12 +203,19 @@ def process_weather(sentence):
     else:
         return "Please enter the location"
 
+##################################################################################################
+#                                        Database training
+##################################################################################################
 def train_conversation(response):
     sentence = session['train_sent']
     Database_controller.add_new_convo(sentence, response)
     session.clear()
     return "Training completed"
 
+
+##################################################################################################
+#                                        Handling states
+##################################################################################################
 def add_to_session(data_list, data_values):
      for i, data in enumerate(data_list):
         if data not in session:
@@ -212,6 +229,9 @@ def check_session(data_list):
             return data
     return None
 
+##################################################################################################
+#                                        Helper functions
+##################################################################################################
 def handle_ticket_types(origin, destination, t_type, date, hour, minute, amount, data_list, data_list_return):
     if t_type is not None and 'Ticket Type' not in session:
         session['Ticket Type'] = t_type
@@ -278,9 +298,6 @@ def get_data(data_list):
     for data in data_list:
         values.append(session[data])
     return values
-
-def quit_process():
-    return 0
 
 if __name__ == '__main__':
     app.run(debug = True)

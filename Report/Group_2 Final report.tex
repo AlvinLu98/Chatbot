@@ -126,11 +126,11 @@ The chatbot will be developed using \textit{Visual Studio Code}, a code editor t
 	\caption{Structure of the chatbot }\label{fig:Chatbot_Structure}
 \end{figure}
 \subsection{User Interface} 
-The user interface is created using \textit{HTML} and \textit{CSS} as it provides portability and flexibility during development ans usage. HTML and CSS provides a simple framework for updating and customising the visuals allowing replication of the chatbot across sites with different designs. The user interface is be connected to the back-end using Python \textit{Flask}. While the current plan is to deploy the chatbot online and embedded within a website, existing frameworks such as \textit{Django} and \textit{PhoneGap} can be used to deploy the chatbot across a wider range of platforms.
+The user interface is created using \textit{HTML} and \textit{CSS} as it provides portability and flexibility during development ans usage. HTML and CSS provides a simple framework for updating and customising the visuals allowing replication of the chatbot across sites with different designs. The user interface is be connected to the back-end using Python \textit{Flask}. While the current plan is to deploy the chatbot online and embedded within a website, existing frameworks such as \textit{Django} and \textit{PhoneGap} can be used to deploy the chatbot across a wider range of platforms. To improve user experience, the current date and time is also printed on the screen.
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.8\textwidth]{UI}
+	\includegraphics[width=0.9\textwidth]{UI}
 	\caption{User interface }\label{fig:UI}
 \end{figure}
 
@@ -152,7 +152,7 @@ The methods for information extraction are hierarchical, defined by the specific
 Error prevention will also be implemented into the system where spelling mistakes on station names by using trained models to predict the which location is the most likely station that is intended by the user.
 
 \subsection{Reasoning engine}
-The reasoning engine was trained using K-nearest neighbours with a database of sentences tagged with intention. The model will be used to predict the intent of sentences entered by users. The sentences will be tagged with '\textbf{B}', '\textbf{C}', '\textbf{D}' and '\textbf{N}' representing \textbf{B}ooking, \textbf{C}ontingencies, \textbf{D}elays and \textbf{N}ormal conversations. Additional training data can potentially be added into the database to improve prediction accuracy in the future. The model is trained by vectorising the sentences. The vectors are then hashed to decrease the size to accommodate future growth. As the model predicts by comparing sentence similarity, sentences that contains different location name will still be classified accurately without the need for the specific sentence to be included in the model.
+The reasoning engine was trained using K-nearest neighbours with a database of sentences tagged with intention. The model will be used to predict the intent of sentences entered by users. The sentences will be tagged with '\textbf{B}', '\textbf{C}', '\textbf{D}' and '\textbf{W}' representing \textbf{B}ooking, \textbf{C}ontingencies, \textbf{D}elays and \textbf{W}eather. Additional training data can potentially be added into the database to improve prediction accuracy in the future. The model is trained by vectorising the sentences. The vectors are then hashed to decrease the size to accommodate future growth. As the model predicts by comparing sentence similarity, sentences that contains different location name will still be classified accurately without the need for the specific sentence to be included in the model.
 
 \begin{figure}[!htb]
 	\centering
@@ -177,6 +177,12 @@ Neural network was considered as the model for delay prediction as multi layer p
 
 The model was later modified during implementation with consideration placed on heterogeneous ensembles and a wider range of prediction models. Details are explained in section \ref{Problems}.
 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.99\textwidth]{Prediction}
+	\caption{$R^2$ results and mean absolute error of different prediction models. Below shows the parameters of the best models}\label{fig:Prediction}
+\end{figure}
+
 \subsection{Data Acquisition}
 Data acquisition is designed into the system in two parts. Firstly, historical train data will be acquired, processed and saved into the local database using the \textit{HSP} API which provides data of previous trains and their delays. Historical data can be acquired by providing parameters such as the start and end date of data needed, time and type of day. 3 years of data for trains travelling from Norwich to London Liverpool street will be extracted as the initial dataset for training but the system will allow further addition of data should it be needed. The historical data will contain the following list of information: Origin station, Destination station, Departure time, Departure delay, Arrival time, Arrival delay, Month of year, Type of Date, TOC code. By having Data acquisition built into the system, delay prediction can be expanded in the future to increase the coverage of different train routes. Another consideration during the design of data acquisition was the change of train operating companies or train routes in the future. An example can be seen where there was a new route added from Diss to Hatfield Peverel in 2018 which was not available before. Having in-built data acquisition will improve the ability to update the system without reliance on external software.
 
@@ -188,7 +194,7 @@ The system database is be created using the package \textit{SQLite}. It will fun
 \subsection{Chatbot controller} 
 The chatbot controller is the main program that connects all the functionalities together. It accepts input from the UI, processes the sentence using NLP module, predicts intent of the user and completes the task specified. The chatbot uses different agents for each specific tasks. Agents are invoked when the intent is predicted initially and will continue their task until its completion or termination. Current state of the agent is saved in the session cookies and will update according to the pace of the user which allows experienced users to complete tasks faster while also accommodating newer users. This is made possible by the modular information extraction in the NLP modules.
 
-The chatbot controller also accepts sentence training when the intent prediction probability is lower than a certain level. The chatbot will prompt the user to respond with the type of task they were intending with the sentence and update the back-end model according to their response. The controller also supports casual conversations where it will reply pre-trained sentences that are not linked to any specific task.
+The chatbot controller also accepts sentence training when the intent prediction probability is lower than a certain level. The chatbot will prompt the user to respond with the type of task they were intending with the sentence and update the back-end model according to their response. The controller supports casual conversations where it will reply pre-trained sentences that are not linked to any specific task. Users can also request current weather data of locations by entering sentences regarding to it.
 
 \section{Implementation}
 \subsection{Development stages} \label{Dev. stages}
@@ -237,7 +243,7 @@ The final stage will be development of the chatbot controller that connects the 
 \subsection{Problems and Mitigations} \label{Problems}
 During development of web scraping module, we found that the ticket data was generated dynamically using JavaScript. As a simple \textit{Scrapy Spider} does not retrieve html data generated dynamically, \textit{Selenium} web driver was used instead to retrieve the full web page and scraped using \textit{BeatifulSoup}.
 
-During evaluation of predictive models, most of models trained with the preset values obtained an extremely low $R^2$ value ($<$ 0.01) and returned highly inaccurate predictions. To improve the accuracy, we defined a list of different values for the settings of the models and by utilising cross validation, obtained the value setting that returns more accurate predictions and a higher $R^2$ of between 0.55 to 0.4 with the prediction accuracy of $+/-0.6$ minutes. This accuracy is sufficient as the predictions are rounded up to the nearest minute making the potential difference to be $+/- 1$ minute. The neural network has 20 hidden layers with constant learning rate and it uses the \textit{adam} solver to find the optimum.
+During evaluation of predictive models, most of models trained with the preset values obtained an extremely low $R^2$ value ($<$ 0.01) and returned highly inaccurate predictions. To improve the accuracy, we defined a list of different values for the settings of the models and by utilising cross validation, obtained the value setting that returns more accurate predictions and a higher $R^2$ of between 0.55 to 0.4 with the prediction accuracy of $+/-2$ minutes. The neural network has 20 hidden layers with constant learning rate and it uses the \textit{adam} solver to find the optimum.
 
 To further address the issue, we modified the system to utilise a heterogeneous ensemble that uses a voting regressor to further improve the prediction accuracy. However, after several test using various combinations of models such as decision trees and support vector machines, the ensemble still scored a lower $R^2$ value compared to the neural network therefore the neural network will be used as the model for delay prediction.
 

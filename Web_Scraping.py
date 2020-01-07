@@ -59,6 +59,9 @@ class process_tickets():
         cheapest_list = set(cheapest_list)
         return cheapest_list
 
+##################################################################################################
+#                                       Testing and Training
+##################################################################################################
 def main():
     test = process_tickets()
 

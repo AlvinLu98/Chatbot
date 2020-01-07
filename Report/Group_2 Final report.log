@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2018.9.12)  7 JAN 2020 00:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2018.9.12)  7 JAN 2020 02:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -578,11 +578,11 @@ File: Chatbot_Structure.jpg Graphic file (type jpg)
 <use Chatbot_Structure.jpg>
 Package pdftex.def Info: Chatbot_Structure.jpg  used on input line 125.
 (pdftex.def)             Requested size: 500.484pt x 331.312pt.
-<UI.jpg, id=27, 1015.92047pt x 567.24422pt>
+<UI.jpg, id=27, 1016.29688pt x 567.24422pt>
 File: UI.jpg Graphic file (type jpg)
 <use UI.jpg>
 Package pdftex.def Info: UI.jpg  used on input line 133.
-(pdftex.def)             Requested size: 400.38872pt x 223.56133pt.
+(pdftex.def)             Requested size: 450.43253pt x 251.40587pt.
  [5
 
  <./Chatbot_Structure.jpg>]
@@ -596,59 +596,65 @@ File: Reasoning_Prototype.jpg Graphic file (type jpg)
 <use Reasoning_Prototype.jpg>
 Package pdftex.def Info: Reasoning_Prototype.jpg  used on input line 159.
 (pdftex.def)             Requested size: 350.33727pt x 51.99161pt.
- [6 <./UI.jpg>] [7 <./NLP_Prototype.jpg> <./Reasoning_Prototype.jpg>] [8]
-<Stage_1.png, id=43, 600.3228pt x 402.7848pt>
+ [6 <./UI.jpg>] [7 <./NLP_Prototype.jpg> <./Reasoning_Prototype.jpg>]
+<Prediction.jpg, id=40, 747.91922pt x 325.215pt>
+File: Prediction.jpg Graphic file (type jpg)
+<use Prediction.jpg>
+Package pdftex.def Info: Prediction.jpg  used on input line 182.
+(pdftex.def)             Requested size: 495.48189pt x 215.45143pt.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 183.
+ [8 <./Prediction.jpg>]
+<Stage_1.png, id=45, 600.3228pt x 402.7848pt>
 File: Stage_1.png Graphic file (type png)
 <use Stage_1.png>
-Package pdftex.def Info: Stage_1.png  used on input line 199.
+Package pdftex.def Info: Stage_1.png  used on input line 205.
 (pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
-<Stage_2.png, id=45, 600.3228pt x 402.7848pt>
+ [9]
+<Stage_2.png, id=50, 600.3228pt x 402.7848pt>
 File: Stage_2.png Graphic file (type png)
 <use Stage_2.png>
-Package pdftex.def Info: Stage_2.png  used on input line 209.
+Package pdftex.def Info: Stage_2.png  used on input line 215.
 (pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
- [9 <./Stage_1.png>]
-<Stage_3.png, id=50, 600.3228pt x 402.7848pt>
+<Stage_3.png, id=51, 600.3228pt x 402.7848pt>
 File: Stage_3.png Graphic file (type png)
 <use Stage_3.png>
-Package pdftex.def Info: Stage_3.png  used on input line 218.
+Package pdftex.def Info: Stage_3.png  used on input line 224.
 (pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
-<Stage_4.png, id=51, 600.3228pt x 402.7848pt>
+ [10 <./Stage_1.png> <./Stage_2.png>]
+<Stage_4.png, id=57, 600.3228pt x 402.7848pt>
 File: Stage_4.png Graphic file (type png)
 <use Stage_4.png>
-Package pdftex.def Info: Stage_4.png  used on input line 226.
+Package pdftex.def Info: Stage_4.png  used on input line 232.
 (pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
- [10 <./Stage_2.png> <./Stage_3.png>]
-<Stage_5.png, id=57, 600.3228pt x 402.7848pt>
+<Stage_5.png, id=58, 600.3228pt x 402.7848pt>
 File: Stage_5.png Graphic file (type png)
 <use Stage_5.png>
-Package pdftex.def Info: Stage_5.png  used on input line 234.
+Package pdftex.def Info: Stage_5.png  used on input line 240.
 (pdftex.def)             Requested size: 300.29344pt x 201.47794pt.
- [11 <./Stage_4.png> <./Stage_5.png>]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 240.
- [12] (./Group_2 Final report.bbl) [13] (./Group_2 Final report.aux) ) 
+ [11 <./Stage_3.png> <./Stage_4.png>] [12 <./Stage_5.png>]
+(./Group_2 Final report.bbl) [13] (./Group_2 Final report.aux) ) 
 Here is how much of TeX's memory you used:
- 15094 strings out of 492641
- 315073 string characters out of 6133116
- 414721 words of memory out of 5000000
- 18703 multiletter control sequences out of 15000+600000
+ 15100 strings out of 492641
+ 315178 string characters out of 6133116
+ 414732 words of memory out of 5000000
+ 18708 multiletter control sequences out of 15000+600000
  9157 words of font info for 32 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,8n,69p,1347b,764s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texli
-ve/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2018/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2018/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2018/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr17.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pf
-b><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/tex
-live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on "Group_2 Final report.pdf" (13 pages, 1069008 bytes).
+<c:/texlive/201
+8/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2018/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2018/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+17.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/
+texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2
+018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on "Group_2 Final report.pdf" (13 pages, 1391217 bytes).
 PDF statistics:
- 101 PDF objects out of 1000 (max. 8388607)
+ 102 PDF objects out of 1000 (max. 8388607)
  62 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 58 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 63 words of extra memory for PDF output out of 10000 (max. 10000000)
 

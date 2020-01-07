@@ -26,6 +26,7 @@ nlp = spacy.load("en_core_web_lg")
 ##################################################################################################
 #                                   Basic sentence processing
 ##################################################################################################
+#Compiles a list of pre-processing functions
 def pre_processing(raw_input):
     raw_input = replace_abbreviations(raw_input)
     return raw_input
@@ -51,6 +52,7 @@ def process_sentence(raw_input):
     get_dependencies_nltk(tagged)
     return doc, tagged
 
+#Gets the list of entities using spacy
 def get_entities_spacy(doc):
     # print("############################### Spacy Entities ###############################")
     # for ent in doc.ents:
@@ -58,6 +60,7 @@ def get_entities_spacy(doc):
     # print()
     return doc.ents
 
+#Gets the list of dependencies using nltk
 def get_dependencies_nltk(tagged):
     # print("############################### NLTK Dependencies ###############################")
     chunks = nltk.ne_chunk(tagged)
@@ -66,6 +69,7 @@ def get_dependencies_nltk(tagged):
     # print()
     return chunks
 
+#Gets the list of dependencies using spacy
 def get_dependencies_spacy(doc):
     # print("############################### Spacy Dependencies ###############################")
     # for chunk in doc.noun_chunks:
@@ -76,6 +80,7 @@ def get_dependencies_spacy(doc):
 ##################################################################################################
 #                                        Error recovery
 ##################################################################################################
+#Splits data from Station table into the name and code
 def name_code_split(rows):
     names = []
     codes = []
@@ -84,12 +89,14 @@ def name_code_split(rows):
         codes.append(code)
     return names, codes
 
+#Gets the station name that's closest to the given name
 def get_closest_name(location):
     rows = get_all_station()
     names, codes = name_code_split(rows)
     #https://kite.com/python/examples/2465/difflib-find-the-2-closest-matches-between-a-string-and-a-list-of-strings
     return difflib.get_close_matches(location, names, n=3)
 
+#Retrieves the list of stations
 def get_all_station():
     rows = dc.get_all_station()
     return rows
@@ -148,7 +155,7 @@ def replace_abbreviations(text):
 
 #Use NLTK library to tokenize
 def tokenize(text):
-    tokens = nltk.word_tokenize(text)  # W+ means that either a word character (A-Za-z0-9_) or a dash (-) can go there.
+    tokens = nltk.word_tokenize(text) 
     return tokens
 
 #Use NLTK libray to indentify the POS Tagging of each word, For example-> going (tag: verb)
@@ -157,8 +164,8 @@ def pos_tag(tokenized_list):
     return tag
 
 #Base on the tag, return the word by lemmatizer, For example: going (tag: verb) => go
-def get_wordnet_pos(
-        treebank_tag):  # https://stackoverflow.com/questions/15586721/wordnet-lemmatization-and-pos-tagging-in-python
+def get_wordnet_pos(treebank_tag):  
+    # https://stackoverflow.com/questions/15586721/wordnet-lemmatization-and-pos-tagging-in-python
     if treebank_tag.startswith('J'):
         return nltk.corpus.wordnet.ADJ
     elif treebank_tag.startswith('V'):
@@ -183,19 +190,10 @@ def lemmatizing(tokenized_tag_list):
             lemmatized.append(tokenized_tag[0])
     return lemmatized
 
-#Remove meaning less stop words
+#Remove stop words
 def remove_stopwords(tokenized_list):
     text = [word for word in tokenized_list if word not in stopword]  # To remove all stopwords
     return text
-
-
-#1. replace_abbreviations
-#2. tokenize
-#3. pos_tag
-#4. lemmatizing (based on pos_tag)
-#5. remove_stopwords
-
-#6. Vectorizer (Unigram, Bigram, TF-IDF)
 
 ###############CountVectorizer###############
 from sklearn.feature_extraction.text import CountVectorizer
@@ -245,6 +243,7 @@ def process_train_booking(sentence):
     amount = process_amount(sentence)
     return origin, destination, t_type, date, hour, minute, amount
 
+#Retrieve the origin destination pair from the processed sentence
 def retrieve_org_dest(s, n):
     entities = get_entities_spacy(s)
     dependencies = get_dependencies_spacy(s)
@@ -280,12 +279,14 @@ def retrieve_org_dest(s, n):
                 destination = token.text
     return origin, destination
 
+#Retrieve a list of locations found in the sentence
 def retrieve_loc(s, n):
     entities = get_entities_spacy(s)
     for entity in entities:
         if entity.label_ == "GPE" or entity.label_ == "FAC" or entity.label_ == "PERSON":
             return entity.text
 
+#Retrieve the type of ticket
 def retrieve_ticket_type(sentence):
     if "single" in sentence:
         return "single"
@@ -296,6 +297,7 @@ def retrieve_ticket_type(sentence):
     else:
         return None
 
+#Retrieve dates in the session 
 def retrive_date(sentence):
     #https://stackoverflow.com/questions/31088509/identifying-dates-in-strings-using-nltk
     date = re.findall(r'\d+\S\d+\S\d+', sentence)
@@ -366,6 +368,7 @@ def retrive_date(sentence):
 
     return date
 
+#Retrieve times found in sentences and formats it into quarters of the hour
 def retrive_train_time(sentence):
     time = re.findall(r'\d{2}:\d{2}', sentence)
     hour = [None for i in range(len(time))]
@@ -392,6 +395,7 @@ def retrive_train_time(sentence):
                 hour[i] = hour[i] + 1
     return hour, minute
 
+#Checks if there is a day difference between departure and arrival
 def process_time_date(date, hour):
     if len(date) == len(hour):
         for i, d in enumerate(date):
@@ -399,7 +403,8 @@ def process_time_date(date, hour):
                date[i] = d + datetime.timedelta(days=1)
                hour[i] = 0
     return date, hour
-            
+
+#Retrieves the amount of tickets from sentence     
 def process_amount(sentence):
     amount = re.findall(r'\d+\s\S+\s\btickets?\b', sentence)
     if len(amount) == 0:
@@ -429,6 +434,7 @@ def process_train_delay(sentence):
 
     return origin, destination, dep_time, dep_delay, arr_time, month, day
 
+#Retrieves the amount of minutes the train was delayed
 def delay_time(sentence):
     delay = re.findall(r'\d+\s\bminutes?\b', sentence)
     if not delay:
@@ -438,6 +444,7 @@ def delay_time(sentence):
         return int(delay[0])
     return None
 
+#Retrieve times in the sentence
 def retrieve_times(sentence):
     time = re.findall(r'\d+:\d{2}', sentence)
     hour = [None for i in range(len(time))]
@@ -484,6 +491,7 @@ def processs_contingencies(sentence):
     intent = retrieve_cont_intent(sentence)
     return origin, destination, blockage, intent
 
+#Retrieve the blockage type from the sentence
 def retrieve_blockage(sentence):
     blockage = re.findall(r'\S+\s\bblockage\b', sentence)
     if len(blockage) > 0:
@@ -492,6 +500,7 @@ def retrieve_blockage(sentence):
     else:
         return None
 
+#Retrieve the intent for the contingencies
 def retrieve_cont_intent(sentence):
     if "advice" in sentence:
         return "advice"
