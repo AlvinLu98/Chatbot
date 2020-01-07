@@ -5,7 +5,7 @@ import Database_controller
 
 from joblib import dump, load
 
-intents = ['B', 'C', 'D']
+intents = ['B', 'C', 'D', 'W']
 
 def get_data():
     rows = Database_controller.get_all_intent_sentences()
@@ -44,7 +44,7 @@ def predict(sentence):
 
 def main():
     train_model()
-    sentence = "Help"
+    sentence = "How is the weather in Norwich"
     print(sentence)
     print(predict(sentence))
 

@@ -280,6 +280,12 @@ def retrieve_org_dest(s, n):
                 destination = token.text
     return origin, destination
 
+def retrieve_loc(s, n):
+    entities = get_entities_spacy(s)
+    for entity in entities:
+        if entity.label_ == "GPE" or entity.label_ == "FAC" or entity.label_ == "PERSON":
+            return entity.text
+
 def retrieve_ticket_type(sentence):
     if "single" in sentence:
         return "single"

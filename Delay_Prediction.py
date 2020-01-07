@@ -359,48 +359,48 @@ def main():
     # train_gradient_boosting(train_d, train_a, "Gradient_Boosting.joblib")
 
     print("Voting regressor.....")
-    nn = MLPRegressor(early_stopping=True, hidden_layer_sizes=(20,32), max_iter=2000)
-    nn2 = MLPRegressor(early_stopping=True, hidden_layer_sizes=(2,64), max_iter=2000)
-    tree = DecisionTreeRegressor(max_depth=8, random_state=4)
+    # nn = MLPRegressor(early_stopping=True, hidden_layer_sizes=(20,32), max_iter=2000)
+    # nn2 = MLPRegressor(early_stopping=True, hidden_layer_sizes=(2,64), max_iter=2000)
+    # tree = DecisionTreeRegressor(max_depth=8, random_state=4)
 
-    train_voting_regressor(train_d, train_a, [("Neural_1",nn), ("Neural_2",nn2) ,("Tree",tree)], "Voting_Regressor.joblib")
+    # train_voting_regressor(train_d, train_a, [("Neural_1",nn), ("Neural_2",nn2) ,("Tree",tree)], "Voting_Regressor.joblib")
 
     print("---------------------------------- Prediction ----------------------------------")   
     lin_pred = predict_sets("Linear_Regressor.joblib", test_d)
-    print(evaluate_r2_score(test_a, lin_pred))
+    print("Linear regression:      ", evaluate_r2_score(test_a, lin_pred), evaluate_mean_abs_err(test_a, lin_pred))
     
     svc_pred = predict_sets("SVC.joblib", test_d)
-    print(evaluate_r2_score(test_a, svc_pred))
+    print("Support vactor machine: ", evaluate_r2_score(test_a, svc_pred), evaluate_mean_abs_err(test_a, svc_pred))
 
     nn_pred = predict_sets("2_layer_NN.joblib", test_d)
-    print(evaluate_r2_score(test_a, nn_pred))
+    print("Neural network:         ", evaluate_r2_score(test_a, nn_pred), evaluate_mean_abs_err(test_a, nn_pred))
 
     dt_pred = predict_sets("decision_tree_nomax.joblib", test_d)
-    print(evaluate_r2_score(test_a, dt_pred))
+    print("Decision tree:          ", evaluate_r2_score(test_a, dt_pred), evaluate_mean_abs_err(test_a, dt_pred))
 
     gb_pred = predict_sets("Gradient_Boosting.joblib", test_d)
-    print(evaluate_r2_score(test_a, gb_pred))
+    print("Gradient boosting:      ", evaluate_r2_score(test_a, gb_pred), evaluate_mean_abs_err(test_a, gb_pred))
 
     rf_pred = predict_sets("random_forest.joblib", test_d)
-    print(evaluate_r2_score(test_a, rf_pred))
-
-    # best_ridge_pred = predict_sets("BEST_Ridge.joblib", test_d)
-    # print(evaluate_r2_score(test_a, best_ridge_pred))
+    print("Random forest:          ", evaluate_r2_score(test_a, rf_pred), evaluate_mean_abs_err(test_a, rf_pred))
 
     best_nn_pred = predict_sets("BEST_NN.joblib", test_d)
-    print(evaluate_r2_score(test_a, best_nn_pred))
+    print("Best neural network 1:  ", evaluate_r2_score(test_a, best_nn_pred), evaluate_mean_abs_err(test_a, best_nn_pred))
 
-    best_nn_pred = predict_sets("BEST_NN_2.joblib", test_d)
-    print(evaluate_r2_score(test_a, best_nn_pred))
+    best_nn_pred_2 = predict_sets("BEST_NN_2.joblib", test_d)
+    print("Best neural network 2:    ", evaluate_r2_score(test_a, best_nn_pred_2), evaluate_mean_abs_err(test_a, best_nn_pred_2))
 
     best_tree_pred = predict_sets("BEST_Tree.joblib", test_d)
-    print(evaluate_r2_score(test_a, best_tree_pred))
+    print("Best decision tree 1:     ", evaluate_r2_score(test_a, best_tree_pred), evaluate_mean_abs_err(test_a, best_tree_pred))
 
-    best_voting_pred = predict_sets("Voting_Regressor.joblib", test_d)
-    print(evaluate_r2_score(test_a, best_voting_pred))
+    best_tree_pred_2 = predict_sets("BEST_Tree_2.joblib", test_d)
+    print("Best decision tree 1:     ", evaluate_r2_score(test_a, best_tree_pred_2), evaluate_mean_abs_err(test_a, best_tree_pred_2))
 
-    # best_tree_pred = predict("BEST_Forest.joblib", test_d)
-    # print(evaluate_r2_score(test_a, best_tree_pred))
+    voting_pred = predict_sets("Voting_Regressor.joblib", test_d)
+    print("Voting regression:        ", evaluate_r2_score(test_a, best_voting_pred), evaluate_mean_abs_err(test_a, voting_pred))
+
+    best_forest_pred = predict("BEST_Forest.joblib", test_d)
+    print("Best random forest:       ", evaluate_r2_score(test_a, best_tree_pred), evaluate_mean_abs_err(test_a, best_forest_pred))
 
     print("----------------------------------- Values ------------------------------------")
     best_nn = load("BEST_NN.joblib")

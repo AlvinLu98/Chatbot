@@ -1,6 +1,7 @@
-from flask import Flask, session, redirect, url_for, escape, request, render_template, jsonify, session
+from flask import Flask, session, redirect, url_for, escape, request, render_template, jsonify, Response
 from random import randrange
-import NLP, Reasoning, Database_controller, Delay_Prediction, Web_Scraping, Disruption_Contingencies, Form_Automation
+import NLP, Reasoning, Database_controller, Delay_Prediction, Web_Scraping, Disruption_Contingencies, Form_Automation, Weather
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key="AI_Chatbot"
@@ -8,6 +9,7 @@ intents = {
     'B' : 'Booking a ticket',
     'C' : 'Getting contingencies',
     'D' : 'Delay prediction',
+    'W' : 'Checking weather'
 }
 Database_controller.setup_database()
 
@@ -40,7 +42,7 @@ def message():
             else:
                 session['state'] = "T"
                 session['train_sent'] = sentence
-                response = "I'm not sure what you are trying to do. Please enter either 'Booking', 'Contingencies, 'Delay' or 'Casual' to let me know what was your intent"
+                response = "I'm not sure what you are trying to do. Please enter either 'Booking', 'Contingencies, 'Delay', 'Casual' or 'Weather' to let me know what was your intent"
                 return jsonify(message = response)
     else:
         if len(response) > 1:
@@ -60,6 +62,8 @@ def handle_intent(sentence):
         response = process_training(sentence)
     elif session['state'] == 'T_C':
         response = train_conversation(sentence)
+    elif session['state'] == 'W':
+        response = process_weather(sentence)
     else:
         response = "I'm not sure what to do"
     return response
@@ -114,6 +118,7 @@ def process_contingencies(sentence):
             session.clear()
             return response
         else:
+            session.clear()
             return "I don't have the answer"
     else:
         response = "Please enter the: " + check
@@ -148,25 +153,46 @@ def process_training(sentence):
         session.clear()
         Reasoning.train_model()
         session['state'] = 'B'
-        return "Training completed"
+        handle_intent(train)
     elif 'Contingencies' in  sentence:
         Database_controller.add_intent_sentences(train, 'C')
         session.clear()
         Reasoning.train_model()
         session['state'] = 'C'
-        return "Training completed"
+        handle_intent(train)
     elif 'Delay' in sentence:
         Database_controller.add_intent_sentences(train, 'D')
         session.clear()
         Reasoning.train_model()
         session['state'] = 'D'
-        return "Training completed"
+        handle_intent(train)
+    elif 'Weather' in sentence:
+        Database_controller.add_intent_sentences(train, 'W')
+        session.clear()
+        Reasoning.train_model()
+        session['state'] = 'W'
+        handle_intent(train)
+
     elif 'Casual' in sentence:
         session['state'] = "T_C"
         return "How should I respond to this sentence?"
     else:
         return "Invalid input!"
         
+def process_weather(sentence):
+    s, n = NLP.process_sentence(sentence)
+    loc = NLP.retrieve_loc(s, n)
+    if loc is not None:
+        weather = Weather.get_weather(loc)
+        if weather is not None:
+            response = weather.get_detailed_status() + " in " + loc + "<br/> Temperature: " + str(weather.get_temperature(unit='celsius')['temp'])
+            session.clear()
+            return response
+        else:
+            return "Weather for " + loc + " not available"
+    else:
+        return "Please enter the location"
+
 def train_conversation(response):
     sentence = session['train_sent']
     Database_controller.add_new_convo(sentence, response)

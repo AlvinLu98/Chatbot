@@ -44,7 +44,6 @@ body {
     min-height: 400px;
     max-height: 500px;
     overflow-y: auto;
-    /*line-height: 20px;*/
 }
 
 #chatInfo {
@@ -68,6 +67,10 @@ body {
     height: 10%;
     width: 100%;
     /*margin-top: 140px;*/
+}
+
+#clock {
+    float: right;
 }
 
 
