@@ -10,6 +10,11 @@ $(document).ready(_ => {
     </div>
     `)
         $('#chatbox').val('')
+        $('#chatInfo').append(`
+    <div class="bot-response" id="loading">
+        ......
+    </div>
+    `)
         process_message(input_mes)
     })
 
@@ -31,10 +36,11 @@ $(document).ready(_ => {
 
 function process_message(message) {
     $.post("/message", { message: message }, data => {
+        $("#loading").remove();
         $('#chatInfo').append(`
-    <div class="bot-response">
-        ${data.message}
-    </div>
-`)
+        <div class="bot-response">
+            ${data.message}
+        </div>
+    `)
     })
 }

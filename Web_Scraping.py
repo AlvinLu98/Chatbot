@@ -47,9 +47,11 @@ class process_tickets():
 
     def get_cheapest_return(self):
         soup = BeautifulSoup(self.browser.page_source, 'html.parser')
-        cheapest = soup.find(class_="_cjzfgo").find('span').getText()
+        cheapest = soup.find(class_="_cjzfgo")
         if not cheapest:
             cheapest = self.get_cheapest_single()
+        else:
+            cheapest = cheapest.find('span').getText()
         return cheapest
 
     def get_all_cheapest(self, cheapest):

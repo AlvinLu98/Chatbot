@@ -251,12 +251,12 @@ def retrieve_org_dest(s, n):
     destination = None
     set_org = False
     set_dest = False
-    for chunk in dependencies:
-        if chunk.root.head.text == "to":
-            destination = get_closest_name(chunk.text)[0]
+    for ent in entities:
+        if s[ent.start - 1].text == "to":
+            destination = get_closest_name(ent.text)[0]
             set_dest = True
-        elif chunk.root.head.text == "from":
-            origin = get_closest_name(chunk.text)[0]
+        elif s[ent.start - 1].text == "from":
+            origin = get_closest_name(ent.text)[0]
             set_org = True
     if origin == None or destination == None:
         locations = []
@@ -271,12 +271,15 @@ def retrieve_org_dest(s, n):
         elif len(locations) == 1 and not set_dest and not set_org:
             origin = get_closest_name(locations[0])[0]
             destination = get_closest_name(locations[0])[0]
-    if destination == origin:
-        rows = get_all_station()
-        names, codes = name_code_split(rows)
-        for token in s:
-            if token.text in names:
-                destination = token.text
+        else:
+            rows = get_all_station()
+            names, codes = name_code_split(rows)
+            for token in s:
+                if token.text in names and origin is None:
+                    origin = token.text
+                    destination = token.text
+                elif token.text in names:
+                    destination = token.text
     return origin, destination
 
 #Retrieve a list of locations found in the sentence
@@ -290,10 +293,10 @@ def retrieve_loc(s, n):
 def retrieve_ticket_type(sentence):
     if "single" in sentence:
         return "single"
-    elif "return" in sentence:
-        return "return"
     elif "open return" in sentence:
         return "open"
+    elif "return" in sentence:
+        return "return"
     else:
         return None
 
@@ -329,7 +332,7 @@ def retrive_date(sentence):
             pattern = r"(\b\d+\S{2}\s\bof\b\s"+r'|\d+\S{2}\s\bof\b\s'.join(months)+r"\b)"
             date = re.findall(pattern, sentence)
             for i, d in enumerate(date):
-                day = re.findall(r"\d", d)[0]
+                day = re.findall(r"\d+", d)[0]
                 day = day.rjust(2, "0")
                 month = re.findall(r"(\b"+'|'.join(months)+r"\b)", d)[0]
                 month = month[:3]
@@ -365,7 +368,11 @@ def retrive_date(sentence):
             year = str(nextMonth.year)[-2:]
             date = day+"-"+month+"-"+year
             date = [datetime.datetime.strptime(date, "%d-%m-%y")]
-
+    if len(date) == 2:
+        if date[0] > date[1]:
+            temp = date[0]
+            date[0] = date[1]
+            date[1] = temp
     return date
 
 #Retrieve times found in sentences and formats it into quarters of the hour
@@ -409,9 +416,18 @@ def process_amount(sentence):
     amount = re.findall(r'\d+\s\S+\s\btickets?\b', sentence)
     if len(amount) == 0:
         amount = re.findall(r'\d+\s\btickets?\b', sentence)
+    if len(amount) == 0:
+        amount = re.findall(r'\s\d+\s', sentence)
     if len(amount) > 0:
         amount = re.findall(r'\d+', amount[0])
         return amount[0]
+    elif len(amount) == 0:
+        amount = re.findall(r'\ba\b\s\S+\s\bticket?\b', sentence)
+    if len(amount) == 0:
+        amount = re.findall(r'\ba\b\s\bticket?\b', sentence)
+    if len(amount) > 0:
+        amount[0] = "1"
+        return amount
     return None
         
 ##################################################################################################
@@ -514,7 +530,8 @@ def retrieve_cont_intent(sentence):
 ##################################################################################################
 
 def main():
-    sentence = input("Please enter something: ")
+    # sentence = input("Please enter something: ")
+    sentence = "I want to book 2 return tickets from Norwich to London Liverpool Street returning on 15:00 on the 30th of January and going at 14:00 on the 24th of January"
     # process_sentence(sentence)
 
     print(process_train_booking(sentence))

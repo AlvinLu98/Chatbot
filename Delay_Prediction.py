@@ -348,7 +348,7 @@ def main():
     dt =  DecisionTreeRegressor()
     parameter_space = {
         'criterion': ["mse", "mae", "friedman_mse"],
-        'max_depth': [None, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 2578],
+        'max_depth': [None, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
         'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     }
     best_tree = GridSearchCV(dt, parameter_space, n_jobs=-1, cv=3)
