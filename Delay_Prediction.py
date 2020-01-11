@@ -330,31 +330,31 @@ def main():
     # dump(best_val.best_estimator_, "BEST_Ridge.joblib")
 
     print("Neural Network.....")
-    train_neural_network(train_d, train_a, (5, 32), 4, "2_layer_NN.joblib")
-    mlp = MLPRegressor(early_stopping=True, max_iter=2000)
-    parameter_space = {
-        'hidden_layer_sizes': [(3,32), (20,32), (20,64), (4,64), (3,64), (3,128), (2,128), (2,64), (2,12), (3,12), (3,22), (3,10)],
-        'random_state': [None, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-        'learning_rate_init': [0.001, 0.01, 0.02],
-        'alpha': [0.0001, 0.01, 0.09]
-    }
-    best_val = GridSearchCV(mlp, parameter_space, n_jobs=-1, cv=3)
-    best_val.fit(data, np.ravel(actual))
-    print("Best params: ", best_val.best_params_)
-    dump(best_val.best_estimator_, "BEST_NN_3.joblib")
+    # train_neural_network(train_d, train_a, (5, 32), 4, "2_layer_NN.joblib")
+    # mlp = MLPRegressor(early_stopping=True, max_iter=2000)
+    # parameter_space = {
+    #     'hidden_layer_sizes': [(3,32), (20,32), (20,64), (4,64), (3,64), (3,128), (2,128), (2,64), (2,12), (3,12), (3,22), (3,10)],
+    #     'random_state': [None, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    #     'learning_rate_init': [0.001, 0.01, 0.02],
+    #     'alpha': [0.0001, 0.01, 0.09]
+    # }
+    # best_val = GridSearchCV(mlp, parameter_space, n_jobs=-1, cv=3)
+    # best_val.fit(data, np.ravel(actual))
+    # print("Best params: ", best_val.best_params_)
+    # dump(best_val.best_estimator_, "BEST_NN_3.joblib")
 
     print("Decision Tree.....")
-    train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
-    dt =  DecisionTreeRegressor()
-    parameter_space = {
-        'criterion': ["mse", "mae", "friedman_mse"],
-        'max_depth': [None, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
-        'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    }
-    best_tree = GridSearchCV(dt, parameter_space, n_jobs=-1, cv=3)
-    best_tree.fit(data, np.ravel(actual))
-    print("Best params: ", best_tree.best_params_)
-    dump(best_tree.best_estimator_, "BEST_Tree_2.joblib")
+    # train_decision_tree(train_d, train_a, None, "decision_tree_nomax.joblib")
+    # dt =  DecisionTreeRegressor()
+    # parameter_space = {
+    #     'criterion': ["mse", "mae", "friedman_mse"],
+    #     'max_depth': [None, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25],
+    #     'random_state': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    # }
+    # best_tree = GridSearchCV(dt, parameter_space, n_jobs=-1, cv=3)
+    # best_tree.fit(data, np.ravel(actual))
+    # print("Best params: ", best_tree.best_params_)
+    # dump(best_tree.best_estimator_, "BEST_Tree_2.joblib")
 
     print("Random forest.....")
     # train_random_forest(train_d, train_a, 4, None, "random_forest.joblib")
