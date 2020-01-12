@@ -1,0 +1,30 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+
+\title{Individual Report}
+\author{Joe Newman}
+\date{}
+\begin{document}
+
+\maketitle
+
+
+\section{Contribution}
+As a group we agreed on the following contribution for each team member:
+\begin{itemize}
+	\item \textbf{Alvin}  - \textbf{40\%}
+	\item \textbf{Joe}    - \textbf{30\%} 
+	\item \textbf{YuTing} - \textbf{30\%}
+\end{itemize}
+
+
+\section{MY Contribution}
+I was responsible for going through the Network Rail / Greater Anglia Contingency Plans and extracting the relevant information. I then proceeded to create logic statements for the train journeys from Colchester to Norwich, which had to take into account the whether your ticket is during am, pm or off peak. The tracks can be obstructed either partially or fully which creates multiple scenarios. For example, even thought the tracks may be partially obstructed, services can remain unaffected, however freight scheduling could be changed during a specified time (am, pm or off peak). Schedules may also be amended with diversions and train shuttles being implemented, or the train may be cancelled. The company also gave specific advice on where to send the freight or more information on the diversions taking place, so I split the statements that involved schedule changes and advice. On two occasions between two stations there are multiple obstructions points along the track. So, cases for each location where created as the scheduling and advice given changes depending on what part of the track is blocked. 
+
+I then began the creation of the module responsible for the processing of the contingencies. This will look into what the origin and destination of your train journey is and depending on the obstruction will give the appropriate scheduling change and the advice. 
+
+I was also tasked with the testing of the chatbot and seeing if I can find any bugs by trying to break the program. Whilst testing, I also looked into what improvements could be made allowing for a smoother experience overall. Initially the program had a few bugs. For example, the chatbot used to prompt the user for the origin twice, with no mention of the destination of the journey. The program would then proceed to create a booking with the location of the origin and destination being the same. There was also another issue of when inputting specific stations, the chatbot would ask for the origin and skip over destination by prompting you for the ticket type. Similar to the previous example, the origin and destination would be logged as the same, allowing for no tickets to be found. I also began looking into what responses the program will and wont recognise, how it dealt with the latter and improvements that could be implemented, such as suggestions on increasing the range of formats the chatbot will recognise. The testing allowed for the streamlining of the chatbot and also made the program feel a little more natural to use. 
+
+\end{document}
+
