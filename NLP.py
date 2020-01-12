@@ -263,6 +263,12 @@ def retrieve_org_dest(s, n):
         for entity in entities:
             if entity.label_ == "GPE" or entity.label_ == "FAC" or entity.label_ == "PERSON":
                 locations.append(entity.text)
+        if origin == None or destination == None:
+             for chunk in dependencies:
+                if chunk.root.head.text == "to":
+                    destination = get_closest_name(chunk.text)[0] 
+                elif chunk.root.head.text == "from":
+                    origin = get_closest_name(chunk.text)[0]  
         if len(locations) == 2:
             if not set_org:
                 origin = get_closest_name(locations[0])[0]
