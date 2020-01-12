@@ -65,9 +65,11 @@ As components will be developed independently, all codes will be uploaded to Git
 Following the requirement, the chatbot will be developed mainly in \textit{Python}. \textit{Python} contains a vast library of packages and framework that supports the development of an intelligent system which will significantly reduce the amount of time needed for development. Aside from that, the User interface will be developed using HTML and CSS and supported by \textit{Flask}.
 
 \subsubsection{Packages}
-For Natural language processing, there are two packages that can be used to support the development: \textit{SpaCy} and \textit{NLTK}.
+For Natural language processing, there are two packages that can be used to support the development: \textit{SpaCy} and \textit{NLTK}. Both packages allow tokenises and groups words together using a model that it was trained on. These packages can be used to assist in extracting information needed for the different tasks especially location and intent. For the current implementation, database can be developed in \textit{SQLite} as it provides a quick implementation of a full SQL engine. This will allow execution of a database without a working server.
 
-SpaCy, NLTK, Scrapy, Selenium, BeautifulSoup, Sci-kit learn, Numpy, SQLite, Joblib, Experta, HSP
+Prediction model can be created and tested using the \textit{Sci-kit learn} package. With the support from \textit{Numpy} for data pre-processing and \textit{Joblib} file format for storage of models, Various different models can be created and tested with our dataset and models trained can be saved permanently without the need of retraining. In terms of historical train data, the \textit{HSP} API provides an intensive record of historical train data which can be retrieved using an account for the API. There are several packages available for knowledge-base such as pyke however \textit{Experta} provides a relatively simpler syntax for a rule-based inference system. \textit{Experta} is a branch of the \textit{pyKnow} package and uses the same format as its predecessor.
+
+Website scraping can be achieved by utilising \textit{Scrapy}, \textit{BeautifulSoup} and \textit{Selenium}. \textit{Scrapy} implements web crawlers called "Spiders" that are contained within a class. Each spider are specialised in the information they scrape online. \textit{BeautifulSoup} has similar functions in which they can scrape html for information but \textit{Selenium} is capable of interacting with a webpage such as completing forms and clicking buttons.
 
 \subsubsection{Tools}
 The chatbot will be developed using \textit{Visual Studio Code}, a code editor that allows development of python software and it also includes packages for error checking and syntax highlighting. Visual studio code also allows editing of other file types such as \textit{HTML}, \textit{CSS} and \textit{csv} files all with error checking and syntax highlighting available. In terms of database management, DB Browser is a software that allows viewing and managing of data. Having a database management software allows testing whether if database interaction is successful between modules and also allow manual analysis of collected data.
@@ -126,7 +128,7 @@ The chatbot will be developed using \textit{Visual Studio Code}, a code editor t
 	\caption{Structure of the chatbot }\label{fig:Chatbot_Structure}
 \end{figure}
 \subsection{User Interface} 
-The user interface is created using \textit{HTML} and \textit{CSS} as it provides portability and flexibility during development ans usage. HTML and CSS provides a simple framework for updating and customising the visuals allowing replication of the chatbot across sites with different designs. The user interface is be connected to the back-end using Python \textit{Flask}. While the current plan is to deploy the chatbot online and embedded within a website, existing frameworks such as \textit{Django} and \textit{PhoneGap} can be used to deploy the chatbot across a wider range of platforms. To improve user experience, the current date and time is also printed on the screen.
+The user interface is created using \textit{HTML} and \textit{CSS} as it provides portability and flexibility during development ans usage. HTML and CSS provides a simple framework for updating and customising the visuals allowing replication of the chatbot across sites with different designs. The user interface is be connected to the back-end using Python \textit{Flask}. While the current plan is to deploy the chatbot online and embedded within a website, existing frameworks such as \textit{Django} and \textit{PhoneGap} can be used to deploy the chatbot across a wider range of platforms. To improve user experience, the current date and time is also printed on the screen. The UI was designed to resemble a physical train ticket to create sense of familiarity to the users.
 
 \begin{figure}[!htb]
 	\centering
@@ -259,8 +261,15 @@ After the system has been assembled, priority will be placed on white-box testin
 \begin{itemize}
 	\item \textbf{Alvin}  - \textbf{40\%} Main developer for Delay prediction, Web scraping and NLP. Completed report and responsible for bug fixing.
 	\item \textbf{Joe}    - \textbf{30\%}
-	\item \textbf{YuTing} - \textbf{30\%}
+	\item \textbf{YuTing} - \textbf{30\%} Part of NLP, prediction model and database. Responsible for video recording and editing for the chatbot.
 \end{itemize}
+
+\subsection{Evaluation}
+From the testing of the final product, the Chatbot is able to complete the required task to a decent standard. Although there are error prevention and detection in place, extra steps can be taken in the implementation to significantly improve the usability of the chatbot. Further improvements can also be made to increase the types of input the chatbot can accept. Currently, the response provided by the chatbot are simple and generic which can potentially be improved to increase the friendliness of the chatbot.
+
+The design of NLP provides the possibility of expansion due to its modular information extraction. This will allow future expansions such as getting live train data and listing places of interest in a given location. Currently, the prediction models doesn't provide an acceptable accuracy for prediction but through research it was revealed that the cause might be the insufficient significant variables provided. 
+
+Although there are improvements that can be made to this chatbot, we believe the current version is ready for deployment for further testing with clients.
 
 \section{Conclusion or Summary}
 Chatbot provides an efficient way to handle common questions and requests and with the introduction of Artificial intelligence and machine learning, The capability of chatbot has significantly improved. Additionally, organisations has begun to put priority in customer engagement which resulted in majority of organisations implementing chatbots on their selected platforms. The opportunity for us to develop a working chatbot prototype allowed to gain insight on the back-end structure of a chatbot which will be incredibly beneficial in this growing industry.

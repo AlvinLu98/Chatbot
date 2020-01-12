@@ -5,13 +5,13 @@ $(document).ready(_ => {
         e.preventDefault();
         const input_mes = $('#chatbox').val();
         $('#chatInfo').append(`
-    <div class="user-message" align="right">
+    <div class="user_message" align="right">
         ${input_mes}
     </div>
     `)
         $('#chatbox').val('')
         $('#chatInfo').append(`
-    <div class="bot-response" id="loading">
+    <div class="bot_response" id="loading">
         ......
     </div>
     `)
@@ -24,7 +24,6 @@ $(document).ready(_ => {
 
         function updateClock(clock) {
             clock.innerHTML = new Date().toLocaleString();
-            console.log($("#clock"))
         }
 
         setInterval(function() {
@@ -38,7 +37,7 @@ function process_message(message) {
     $.post("/message", { message: message }, data => {
         $("#loading").remove();
         $('#chatInfo').append(`
-        <div class="bot-response">
+        <div class="bot_response">
             ${data.message}
         </div>
     `)
