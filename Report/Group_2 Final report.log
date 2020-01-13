@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2018.9.12)  12 JAN 2020 14:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2018.9.12)  13 JAN 2020 01:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -637,7 +637,7 @@ Package pdftex.def Info: Stage_5.png  used on input line 242.
 Here is how much of TeX's memory you used:
  15100 strings out of 492641
  315178 string characters out of 6133116
- 416949 words of memory out of 5000000
+ 416948 words of memory out of 5000000
  18708 multiletter control sequences out of 15000+600000
  9157 words of font info for 32 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -651,7 +651,7 @@ amsfonts/cm/cmr12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmr17.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 ><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texl
 ive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on "Group_2 Final report.pdf" (14 pages, 1394037 bytes).
+Output written on "Group_2 Final report.pdf" (14 pages, 1394266 bytes).
 PDF statistics:
  105 PDF objects out of 1000 (max. 8388607)
  64 compressed objects within 1 object stream
