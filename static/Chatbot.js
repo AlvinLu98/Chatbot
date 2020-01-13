@@ -10,6 +10,7 @@ $(document).ready(_ => {
     </div>
     `)
         $('#chatbox').val('')
+        $('#chatbox').prop('disabled', true)
         $('#chatInfo').append(`
     <div class="bot_response" id="loading">
         ......
@@ -40,6 +41,7 @@ function process_message(message) {
         <div class="bot_response">
             ${data.message}
         </div>
-    `)
+        `)
+        $('#chatbox').prop('disabled', false)
     })
 }
