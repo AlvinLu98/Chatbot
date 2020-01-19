@@ -431,6 +431,8 @@ def process_amount(sentence):
         amount = re.findall(r'\ba\b\s\S+\s\bticket?\b', sentence)
     if len(amount) == 0:
         amount = re.findall(r'\ba\b\s\bticket?\b', sentence)
+    if len(amount) == 0:
+        amount = re.findall(r'\ban\b\s\S+\s\S+\s\bticket?\b', sentence)
     if len(amount) > 0:
         amount[0] = "1"
         return amount
