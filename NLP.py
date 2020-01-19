@@ -276,7 +276,11 @@ def retrieve_org_dest(s, n):
                 destination = get_closest_name(locations[1])[0]
         elif len(locations) == 1 and not set_dest and not set_org:
             origin = get_closest_name(locations[0])[0]
-            destination = get_closest_name(locations[0])[0]
+            rows = get_all_station()
+            names, codes = name_code_split(rows)
+            for token in s:
+                if token.text in names:
+                    destination = token.text
         else:
             rows = get_all_station()
             names, codes = name_code_split(rows)
@@ -294,6 +298,11 @@ def retrieve_loc(s, n):
     for entity in entities:
         if entity.label_ == "GPE" or entity.label_ == "FAC" or entity.label_ == "PERSON":
             return entity.text
+    rows = get_all_station()
+    names, codes = name_code_split(rows)
+    for token in s:
+        if token.text in names:
+            return token.text
 
 #Retrieve the type of ticket
 def retrieve_ticket_type(sentence):
@@ -539,14 +548,14 @@ def retrieve_cont_intent(sentence):
 
 def main():
     # sentence = input("Please enter something: ")
-    sentence = "I want to book 2 return tickets from Norwich to London Liverpool Street returning on 15:00 on the 30th of January and going at 14:00 on the 24th of January"
+    sentence = "I need the schedule for partial blockage between Norwich to Diss"
     # process_sentence(sentence)
 
-    print(process_train_booking(sentence))
+    # print(process_train_booking(sentence))
 
     # print(process_train_delay(sentence))
 
-    # print(processs_contingencies(sentence))
+    print(processs_contingencies(sentence))
 
     # mistake = "Dis"
     # print(get_closest_name(mistake))
