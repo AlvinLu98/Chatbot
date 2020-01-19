@@ -86,7 +86,7 @@ def process_booking(sentence):
     origin, destination, t_type, date, hour, minute, amount = NLP.process_train_booking(sentence)
     if "Origin" not in session and origin == destination:
         destination = None
-    if date is not None and date[0] < datetime.now():
+    if len(date) > 0 and date[0] < datetime.now():
         return "You can't enter dates that has passed!"
 
     check = handle_ticket_types(origin, destination, t_type, date, hour, minute, amount, data_list, data_list_return)
