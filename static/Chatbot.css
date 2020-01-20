@@ -4,27 +4,25 @@
 }
 
 body {
-    /*font: 15px arial, ans-srif;*/
-    /*padding-top: 15px;*/
-    /*padding-bottom: 15px; */
     color: #333;
+    width: 100%;
 }
 
 #bodybox {
-    margin: auto;
-    max-width: 80%;
-    /*height: 500px;*/
+    margin-left: 9vw;
+    margin-right: 9vw;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    width: 80%;
     font: 15px arial, sans-serif;
     border-style: solid;
     border-width: 1px;
-    padding-top: 20px;
-    padding-bottom: 25px;
-    padding-right: 25px;
-    padding-left: 25px;
+    padding-top: 1.5%;
+    padding-bottom: 30px;
+    padding-right: 1%;
+    padding-left: 1%;
     box-shadow: 5px 5px 5px grey;
     border-radius: 15px;
-    margin-top: 30px;
-    margin-bottom: 30px;
     background-color: #ff6600;
 }
 
@@ -33,7 +31,7 @@ body {
     background-color: #E2DBD6;
     border-width: 3px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 2%;
     margin-left: 20px;
     margin-right: 20px;
     padding-top: 10px;
@@ -61,11 +59,9 @@ body {
 }
 
 #chatbox {
-    /*border-style: solid;*/
     font: 17px arial, sans-serif;
     height: 10%;
     width: 100%;
-    /*margin-top: 140px;*/
 }
 
 #clock {
@@ -90,15 +86,13 @@ a {
 }
 
 .nav {
-    /*border: 1px solid black;*/
     height: 100px;
     background-color: #333333;
-    min-width: 1400px;
+    width: 100%;
 }
 
 .nav .nav-info {
-    /*border: 1px solid black;*/
-    width: 1190px;
+    width: 100%;
     margin: 0 auto;
     height: 99px;
 }
@@ -109,7 +103,7 @@ a {
 }
 
 .nav-info .nav-info-text {
-    width: 780px;
+    width: 65%;
     height: 99px;
     float: left;
     line-height: 99px;
@@ -118,7 +112,7 @@ a {
 .nav-info .nav-info-text li {
     float: left;
     list-style: none;
-    padding: 0px 34px;
+    padding: 0px 2vw;
     color: #fff;
 }
 
@@ -132,9 +126,8 @@ a {
 /*bottom*/
 
 .bottom {
-    /*border: 1px solid black;*/
-    height: 455px;
-    min-width: 1400px;
+    height: 350px;
+    width: 100%;
     background-color: #333333;
 }
 
@@ -144,19 +137,18 @@ a {
 
 .bottom .bottom-block {
     border: 1px solid #333333;
-    width: 1240px;
-    height: 335px;
+    width: 99%;
+    height: 250px;
     margin: 0 auto;
 }
 
 .bottom-block .block-1 {
     border-right: 1px solid #cccccc;
-    width: 285px;
-    height: 201px;
+    width: 25%;
+    height: 211px;
     float: left;
     margin-top: 40px;
     padding-left: 10px;
-    padding-top: 10px;
 }
 
 .block-1 .block-1-title-1 {
@@ -178,7 +170,6 @@ a {
 }
 
 .block-1 .block-1-inside {
-    /*border: 1px solid black;*/
     margin-top: 40px;
     width: 235px;
     letter-spacing: 1.5px;
@@ -235,19 +226,16 @@ a {
 
 .bottom-block .block-2 {
     border-right: 1px solid #cccccc;
-    width: 500px;
+    width: 40%;
     height: 211px;
     float: left;
     margin-top: 40px;
 }
 
 .block-2 .resources {
-    /*border: 1px solid black;*/
-    width: 400px;
+    width: 80%;
     height: 191px;
     margin: 0 auto;
-    margin-top: 10px;
-    /*background: url(img/QRcode-2.jpg) no-repeat 15% 100%;*/
 }
 
 .resources p {
@@ -255,19 +243,22 @@ a {
     letter-spacing: 2px;
 }
 
+.resources .r_title {
+    font-size: 12px;
+    letter-spacing: 2px;
+    clear: both;
+}
+
 .bottom-block .block-3 {
-    /*border-right: 1px solid #cccccc;*/
-    width: 436px;
-    height: 211px;
+    width: 32%;
+    height: 100%;
     float: right;
     margin-top: 40px;
 }
 
 .block-3 .linkInfo {
-    /*border: 1px solid black;*/
     height: 194px;
-    width: 374px;
-    margin-top: 10px;
+    width: 80%;
     margin-left: 60px;
 }
 
@@ -276,17 +267,22 @@ a {
     letter-spacing: 2px;
 }
 
-.bottom-block .footer {
+.footer {
     border-top: 1px solid #cccccc;
-    width: 1204px;
-    height: 52px;
+    width: 100%;
+    height: auto;
     margin: 0 auto;
-    margin-top: 283px;
+    margin-top: 10vh;
     text-align: center;
     font-size: 14.44px;
     color: #9fa0a0;
     line-height: 52px;
     letter-spacing: 1px;
+    background-color: #333333;
+}
+
+.bottom-block .footer p {
+    margin-left: 20vw;
 }
 
 .resourcelist p {
@@ -309,4 +305,43 @@ a {
 
 .chat_info div {
     margin-top: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    .nav-info .nav-info-text li {
+        float: left;
+        list-style: none;
+        color: #fff;
+        margin-bottom: 0;
+    }
+    .bottom {
+        width: 100%;
+        height: 130vh;
+        clear: both;
+        background-color: #333333;
+    }
+    .bottom-block .block-1 {
+        width: 100%;
+        padding: 0px;
+        padding-left: 10%;
+        padding-bottom: 10vh;
+        border-bottom: 1px solid #cccccc;
+        border-right: none;
+    }
+    .bottom-block .block-2 {
+        width: 100%;
+        padding-bottom: 10vh;
+        border-bottom: 1px solid #cccccc;
+        border-right: none;
+    }
+    .bottom-block .block-3 {
+        width: 100%;
+        margin-left: 5vw;
+        padding-bottom: 3vh;
+        border-bottom: 1px solid #cccccc;
+        border-right: none;
+    }
+    .footer {
+        border-top: none;
+    }
 }
