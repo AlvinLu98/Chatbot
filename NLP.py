@@ -335,7 +335,7 @@ def retrive_date(sentence):
         months = ['January','Febuary','March','April','May','June','July', 'August', 'September', 'October','November','December']
         date = re.findall(r"(?=(\b"+'\s\d+|'.join(months)+r"\s\d+\b))", sentence)
         for i, d in enumerate(date):
-            day = re.findall(r"\d", d)[0]
+            day = re.findall(r"\d+", d)[0]
             day = day.rjust(2, "0")
             month = re.findall(r"(\b"+'|'.join(months)+r"\b)", d)[0]
             month = month[:3]
@@ -550,14 +550,14 @@ def retrieve_cont_intent(sentence):
 
 def main():
     # sentence = input("Please enter something: ")
-    sentence = "I need the schedule for partial blockage between Norwich to Diss"
+    sentence = "January 25"
     # process_sentence(sentence)
 
-    # print(process_train_booking(sentence))
+    print(process_train_booking(sentence))
 
     # print(process_train_delay(sentence))
 
-    print(processs_contingencies(sentence))
+    # print(processs_contingencies(sentence))
 
     # mistake = "Dis"
     # print(get_closest_name(mistake))
